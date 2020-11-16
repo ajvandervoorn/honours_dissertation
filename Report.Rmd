@@ -1,0 +1,66 @@
+---
+title: "Improvements to the 'dvir' package"
+author: "Alexander van der Voorn"
+date: ""
+output: pdf_document
+header-includes:
+    #- \usepackage{setspace}\doublespacing
+    - \linespread{1.25}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+
+
+## Code speed
+
+One of the first things investigated in the package was the speed of running the code. Anecdotally, generating any R graphic with non-trivial \LaTeX text took a long time and as such improving the time efficiency of the package was desirous.
+
+To tackle this, the first task was to profile the existing code to see where the time was being spent when the code ran. We used our two examples: the simple $x - \mu$ and our motivating example.
+
+Using `profvis::profvis()` we were able to visually explore how the time was spent in these examples. In ten runs of the motivating example, the total average execution time was about 6269ms. Of this, about 3393ms on average, or 54%, was spent in calls to the `dvir` function `definePDFFont()`. 
+
+The purpose of `definePDFFont()` is to do a sweep of the DVI file from `grid.latex()` looking for all fonts required, before recording the font names in the font config file, searching the relevant directories for the font files and encoding the fonts. A variable `fonts` is saved with all this information. The further sweeps over the DVI file to determine the bounding box of each character and thus entire image, and to create grid grobs and viewports each redundantly called `definePDFFont()` rather than referring to the already stored variable `fonts` from the first sweep.
+
+This was therefore an easy and quick win - simply changing the subsequent sweeps to ignore the font-defining op code and instead referring to the `fonts` variable created from the font sweep.
+
+This resulted in fantastic savings. In 10 runs of the example after this change was made, the average total execution time was 3712ms. This is a reduction of 2557ms, or 41%. The average time spent in `definePDFFont()` was just 1292ms, 62% less than before. A saving of nearly two thirds in the function is consistent with removing two of the three font sweeps. 
+
+
+
+
+## Font support
+
+
+
+#### To do:
+
+-add examples of profiling, including averages of times, once checked on new Ubuntu 18.04 VM
+
+-Remember first `grid.latex()` run after loading `dvir` will spend more time writing XML font info to font config file, and later `grid.latex()` calls don't have to do this if they are using the same fonts
+
+-Differences in timings between Cairo and PDF
+
+<!--
+After op_font_def changed to op_ignore, what was the other op a few lines below we also ened to change and why? SOmething to do with referring to the fonts variable we saved in our seperate environment?
+STart fleshing out what the font sweep does above 
+Work out what metric and grid sweep do
+-->
+
+<!---
+### To check with formatting/style of writing
+
+-Should it be in the first person like "I" or "we", or use things like "it was discovered that..."
+
+-Present tense or past tense?
+
+-Need to research style and format for research papers and how contents page, numbering, figure, bibliography etc. work
+
+-Do I talk about my machine setup, like explain VMs etc.?
+
+
+--->
