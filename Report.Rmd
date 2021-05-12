@@ -27,7 +27,7 @@ mtext(expression(frac(mu ^ 2, 2)), side = 2, line = 3, las = 1)
 par(opar)
 ```
 
-This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX  but it is limited in its fonts. Compare the y-axis label above with how it would look if created in a \LaTeX  document.
+This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX, but it is limited in its fonts. Compare the y-axis label above with how it would look if created in a \LaTeX  document.
 
 ![The $y$-axis label from above, if it were created in \LaTeX](Figures/muSquaredOverTwo.PNG){width=5%}
 
@@ -47,6 +47,19 @@ The difference is stark and there are several approaches in R which can get us c
 
 What we want is a middle ground - being able to harness the power of \TeX  and its typsetting capabilities in R graphics on our choice of text or equation. This is where the `dvir` package comes in.
 
+The `dvir` package provides a simple user interface, in the style of the R `grid` graphics package [Reference R grid graphics here], by way of the `grid.latex()` function:
+
+  - [**Example:** example of grid-based plot, changing labels and/or title with `grid.latex()`. Maybe ggplot2?]
+
+## So why the project?
+
+The `dvir` package works really well for a lot of 'base' cases. The power of this package though is by ensuring it is comprehensive enough for a user to create all the \TeX on their R graphics without having to leave R and go to \LaTeX 
+
+* Speed of the package, specifically the time taken between submitting a `grid.latex()` command and the typset \TeX  appearing on the graphics device.
+* 
+
+
+
 `dvir`, in a simplified form, works as follows:
 
 - A high level function provided by the package, `grid.latex()`, is called with the \TeX  code of the expression or text to be displayed on the R graphic.
@@ -60,7 +73,7 @@ grid.latex("$x - \\mu$")
 
   - [**Example:** TeX document with pre- and post-amble]
   
-* This TeX document is then processed using the local TeX installation to create a DVI (DeVice Independent) file. A DVI file describes the visual layout of the document to produce but is not specific to any type of output file (PDF, HTML, etc.)
+* This TeX document is then processed using the local \TeX installation to create a DVI (DeVice Independent) file. A DVI file describes the visual layout of the document to produce but is not specific to any type of output file (PDF, HTML, etc.)
   
 * The DVI file is read into R. DVI files are binary so are not easily readable by humans but `dvir::readDVI()` allows us to inspect the information inside.
 
