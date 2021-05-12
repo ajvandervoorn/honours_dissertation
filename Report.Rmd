@@ -12,6 +12,12 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%')
 ```
 
+## Executive summary
+
+...goes here....
+
+Is this the same as an abstract, or something different? Google says they are different (Executive summary = this report condensed to a paragraph, abstract = description of the things you'll find in the report, without explicitly mentioning the actual content)
+
 ## Introduction
 
 R has the ability to display mathematical symbols and equations in graphics using the "*plotmath*" feature, interpreting everything within a call to `expression()` as a mathematical equation.
@@ -63,9 +69,25 @@ By keeping things "in R" users only need to learn R (and basic \TeX) code to cre
 * adding the ability to align TeX text to a *baseline* - the natural line on which characters sit
 
 
-## Background to `dvir`
+## Background to TeX and `dvir`
 
-`dvir`, in a simplified form, works as follows:
+### TeX
+
+\TeX is a program to format and typeset text, and includes some basic macros to do this. \LaTeX is a higher-level implementation of \TeX, essentially consisting of a lot more macros, creating a much more user-friendly interface to \TeX. For example, \LaTeX allows one to create a document with numbered sections, title pages and bibliographies without having to write complicated \TeX macros themself. There are other programs that do similar things to \LaTeX too.
+
+#### DVI
+
+A \TeX or \LaTeX file is just plain text, so there obviously needs to be a step from 
+
+Explain DVI more here (and less in)
+
+
+### The (pre-existing) `dvir` package
+
+#### (not sure how to make clear this is all stuff that was in 'dvir' before any of my work (and the fact I didn't change any of this high level stuff))  
+
+
+`dvir`, in a simplified form, works by undertaking the following steps:
 
 - A high level function provided by the package, `grid.latex()`, is called with the \TeX  code of the expression or text to be displayed on the R graphic.
 
@@ -74,17 +96,17 @@ library(dvir)
 grid.latex("$x - \\mu$")
 ```
   
-* `dvir` creates a TeX document with the expression and a changeable default preamble and postamble.
+1. `dvir` creates a TeX document with the expression and a changeable default preamble and postamble.
 
   - [**Example:** TeX document with pre- and post-amble]
   
-* This TeX document is then processed using the local \TeX installation to create a DVI (DeVice Independent) file. A DVI file describes the visual layout of the document to produce but is not specific to any type of output file (PDF, HTML, etc.)
+2. This TeX document is then processed using the local \TeX installation to create a DVI (DeVice Independent) file. A DVI file describes the visual layout of the document to produce but is not specific to any type of output file (PDF, HTML, etc.)
   
-* The DVI file is read into R. DVI files are binary so are not easily readable by humans but `dvir::readDVI()` allows us to inspect the information inside.
+3. The DVI file is read into R. DVI files are binary so are not easily readable by humans but `dvir::readDVI()` allows us to inspect the information inside.
 
   - [**Example:** Extract of DVI file using `readDVI()` (not the whole thing, just the bit relevant to our example ($x - \mu$))]
   
-* Three 'sweeps' of the DVI file are completed to extract necessary information about what to display in R (and how to display it):
+4. Three 'sweeps' of the DVI file are completed to extract necessary information about what to display in R (and how to display it):
   
   + Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a `fontconfig` file.
   
@@ -92,7 +114,7 @@ grid.latex("$x - \\mu$")
   
   + Grid sweep: Convert all text and symbols into *grobs* (grid graphical objects) 
 
-* These *grobs* are then displayed in the R graphics device.
+5. These *grobs* are then displayed in the R graphics device.
 
 
 ## Code speed (part 1) - remove redundant `font` sweeps
@@ -165,7 +187,28 @@ But why to each of these steps? Need to flesh out more why they achieve what we 
 
 - [**Example:** Profiling results (`profvis()` and `profmem()` showing speed improvement)]
 
-## Gradient fills
+## Linear gradient fills
+
+### TikZ and `dvir`
+
+TikZ is a \TeX package that allows drawing of pictures in \TeX documents:
+
+- [**Example:** simple TikZ drawing (circles with labels, and an arrow maybe)]
+
+- [**Example:** more complicated TikZ drawing]
+
+The original DVI file specification
+
+`dvir` already had functionality to include TikZ drawings in R [reference Paul dvir TikZ report].
+
+- [**Example:** replicate one of the above examples in R]
+
+
+
+
+
+
+
 
 New R version (currently in development 4.1.*) supports gradient fills in `grid` graphics.
 
