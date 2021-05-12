@@ -39,8 +39,9 @@ This provides us with most of the symbols used for equations, such as brackets a
 
 The difference is stark and there are several approaches in R which can get us closer to the \LaTeX  result (Murrell, 2018 [Revisiting Mathematical Equations in R: The 'dvir' package]).
 
-- Do I include examples of the following approaches (whether replicating examples from original report (with credit), or creating my own)?
-
+<!--- 
+for these examples following, say that Paul's report descirbes the limitations of these approaches, and replicate the examples
+--->
   - [**Example:** use `extrafont` and `fontcm` packages, embed CM fonts in PDF]
 
   - [**Example:** use `tikzDevice` package, which creates PGF/TikZ version of plot (and as such converts all text in plot to LaTeX (including labels))]
@@ -53,12 +54,16 @@ The `dvir` package provides a simple user interface, in the style of the R `grid
 
 ## So why the project?
 
-The `dvir` package works really well for a lot of 'base' cases. The power of this package though is by ensuring it is comprehensive enough for a user to create all the \TeX on their R graphics without having to leave R and go to \LaTeX 
+The `dvir` package already worked really well in a lot of cases. There were however plenty more desirable features of \TeX and its extensions though that could not yet be implemented in R by `dvir`. The power of this package is from ensuring it is comprehensive enough to meet a user's entire \TeX needs in R graphics without having to leave R to do annotations in \LaTeX itself (or Photoshop/Illustrator!). 
 
-* Speed of the package, specifically the time taken between submitting a `grid.latex()` command and the typset \TeX  appearing on the graphics device.
-* 
+By keeping things "in R" users only need to learn R (and basic \TeX) code to create their graphics and their work is in one place and easily reproducible. Obviously it may not be realistic to *completely* replicate \TeX in R, however there were several aspects of the package identified as having a lot of potential to greatly increase its usefulness. The aspects identified were:
+
+* the speed of the package - anecdotally some complex examples with many `grid.latex()` calls took a while to generate
+* expand the capability of creating TikZ drawings by adding support for linear gradient fills
+* adding the ability to align TeX text to a *baseline* - the natural line on which characters sit
 
 
+## Background to `dvir`
 
 `dvir`, in a simplified form, works as follows:
 
@@ -164,6 +169,8 @@ But why to each of these steps? Need to flesh out more why they achieve what we 
 
 New R version (currently in development 4.1.*) supports gradient fills in `grid` graphics.
 
+## Text baselines
+
 ## Font support (for reference, probably not to include in report)
 
 An issue we discovered, somewhat unintentionally, was our examples were not rendering correctly on Ubuntu 20.04. Previously `dvir` had been created and tested only on Ubuntu 18.04 (is this correct?)
@@ -184,6 +191,8 @@ Potential solutions to this:
       
 Paul's work at the end of 2020 has solved this problem in the the latest version of `dvir`: https://www.stat.auckland.ac.nz/~paul/Reports/dvir/type1/dvir-type1.html 
   
+
+## Conclusion/summary/Next steps
 
 
 
