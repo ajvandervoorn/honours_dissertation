@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%')
 
 ## Introduction
 
-R has the ability to display mathematical symbols and equations in graphics using the "*plotmath*" feature, interpretting everything within a call to `expression()` as a mathematical equation.
+R has the ability to display mathematical symbols and equations in graphics using the "*plotmath*" feature, interpreting everything within a call to `expression()` as a mathematical equation.
 
 <!--- Need to think of a better example than this one, ideally one that brings in our x - mu somehow --->
 
