@@ -171,26 +171,7 @@ New R version (currently in development 4.1.*) supports gradient fills in `grid`
 
 ## Text baselines
 
-## Font support (for reference, probably not to include in report)
 
-An issue we discovered, somewhat unintentionally, was our examples were not rendering correctly on Ubuntu 20.04. Previously `dvir` had been created and tested only on Ubuntu 18.04 (is this correct?)
-
-`dvir` on Ubuntu 20.04 did not reproduce our examples as expected - sometimes characters would display as a square with numbers inside (indicating there is no glyph for that given character in the incorrectly selected font), or the symbol was correct, but was the wrong font. It was discovered that the Computer Modern fonts weren't being used as the latest vesion of Pango (version 1.44 is used in Ubuntu 20.04) does not support True Type fonts. The `.pfb` Computer Modern fonts are on the computer, so Pango is specifically refusing to use them. I think the Cairo graphics device gave us the right characters, but wrong font, but pdf device gave us just the squares.
-
-Potential solutions to this:
-  
-  * Get an OpenType CM font (Like BaKoMa font) - at least CMSY font
-      This sort of worked, but the encodings of the font were wrong. Our mu came up as theta, for example
-      So we need to find CM font with correct encodings, or use something like fontforge (fonttools/ttx?) to manually edit encodings.
-      Paul found some other potential fonts that had the right encodings
-      If the above worked, then we'd need a way to install or edit the fonts on a user's computer.
-      
-  * Create 18.04 Docker Image, which dvir would call when it needs to do its TeX processing
-      Requires Docker on user's computer, for them to create a container using the image (which may be run automatically through dvir)
-      Have created a docker image, but docker file needs tidying (installs some things that are needed for Paul's report, not dvir itself)
-      
-Paul's work at the end of 2020 has solved this problem in the the latest version of `dvir`: https://www.stat.auckland.ac.nz/~paul/Reports/dvir/type1/dvir-type1.html 
-  
 
 ## Conclusion/summary/Next steps
 
