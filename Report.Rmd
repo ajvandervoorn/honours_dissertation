@@ -79,7 +79,7 @@ By keeping things "in R" users only need to learn R (and basic \TeX) code to cre
 
 A \TeX or \LaTeX file is just plain text, so there obviously needs to be a step from 
 
-Explain DVI more here (and less in)
+Explain DVI more here (and less in next section explaining dvir packages)
 
 
 ### The (pre-existing) `dvir` package
@@ -191,13 +191,15 @@ But why to each of these steps? Need to flesh out more why they achieve what we 
 
 ### TikZ and `dvir`
 
-TikZ is a \TeX package that allows drawing of pictures in \TeX documents:
+TikZ is a \TeX package that allows drawing of pictures and diagrams in \TeX documents [reference TikZ report/description]:
 
 - [**Example:** simple TikZ drawing (circles with labels, and an arrow maybe)]
 
-- [**Example:** more complicated TikZ drawing]
+- [**Example:** more complicated TikZ drawing, maybe with colouring and stuff]
 
-The original DVI file specification
+The original DVI specification only needed to account for text and typesetting (and can do the most basic of rectangles too!), and so was not designed with drawing and graphics in mind. The type of instruction in the DVI file are labelled with an "op code". Each op code described a type of instruction like defining fonts, setting characters to display and vertical and horizontal cursor movements. There were four op codes however, called *DVI specials*, that can contain almost any form of instruction or values needed, such as text colour, to create a document based on the DVI file, such as Postscript or PDF.
+
+The TikZ package uses these DVI specials to describe shapes, drawings and colours in PGF (portable graphics format).
 
 `dvir` already had functionality to include TikZ drawings in R [reference Paul dvir TikZ report].
 
