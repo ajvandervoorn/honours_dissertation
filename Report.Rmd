@@ -2,7 +2,10 @@
 title: "Improvements to the 'dvir' package"
 author: "Alexander van der Voorn"
 date: ""
-output: pdf_document
+output: 
+  pdf_document:
+    extra_dependencies:
+      tikz: null
 header-includes:
     #- \usepackage{setspace}\doublespacing
     - \linespread{1.25}
@@ -25,12 +28,19 @@ To do:
 
 -Do I need TikZ package for \TikZ macro to work?
 
+- Need to write it out with some examples by end of Tuesday, then wednesday morning do assignment (or other honours tasks), and Wednesday evening re-read and tidy up what doesn't read well
 
+- Do I need to add grid:: or dvir:: to the start of functions? Just the first instance? Or all of them? or none of them?
 
 Big examples to suss:
 
 - Profiling results (different examples, many runs, and two different types of speed ups)
+- See uni to do list for some notes on how best to do profiling (also check email drafts)
 
+
+
+
+Remember this Rmd file itself might be shared, so need to tidy it up. Include required packages etc.? Like 'dvir', hexView etc...
 --->
 
 
@@ -247,12 +257,105 @@ The following steps are required to implement these TikZ fills in `dvir`:
 
 3. Add the fill information when drawing the shape in R
 
-To tackle step 1, we need to update the `dvir` TikZ driver file to include information about the gradient and pagtern fills. As the `dvir` TikZ driver file is based on the SVG TikZ driver file, the SVG support for TikZ fills was used as a base to edit to make it specific to `dvir`.
+To tackle step 1, we need to update the `dvir` TikZ driver file to include information about the gradient and pattern fills. As the `dvir` TikZ driver file is based on the SVG TikZ driver file, the SVG support for TikZ fills was used as a base to edit to make it specific to `dvir`.
+
+<!---
+Assuming from here on that we only care about linear gradients
+
+Can I just talk about linear gradient fills here? The work could easily be extended (but wasn't) to radial gradients as well
+--->
+
+The information we require for the gradient fills from TikZ via the DVI file is as per the arguments for the `grid::linearGradient(...)`, which is used as an argument to `grid::gpar(fill = linearGradient(...))`, which itself is an argument to a `grid` drawing function, for example `grid::grid.rect(..., gp = gpar(fill = linearGradient(...)))`. The most important parts of defining a linear gradient fill is the colours and stops of the gradient fill. The stops of a gradient fill are the locations along the length of a gradient fill where the specified colours are. In between the stops, the gradient between stop colours either side occurs.
+
+The `colours` and `stops` arguments of `linearGradient()` are simply vectors of colours (a character vector of colour names of hexadecimal RGB values) and locations of those colours as a proportion of the distance between the start and end points of the gradient respectively. This obviously guides us as to what information we need to get from TikZ in the DVI file so we can pass it to `dvir`.
+
+Let us consider a simple example, a rectangle with an orange to green linear gradient fill:
+
+```{eval=FALSE}
+# Code from TeX should we want to know how to do this in TeX itself or reduce/simplify to print above the picture below. Could edit to be programatic (hide code chunk to define tikz picture code, then add that in here with results='asis' or generation of picture below)
+\documentclass{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}
+\filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);
+\end{tikzpicture}
+\end{document}
+```
+
+```{r results='asis', echo=FALSE}
+latexRect <- c("\\begin{center}",
+               "\\begin{tikzpicture}",
+               "\\filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);",
+               "\\end{tikzpicture}",
+               "\\end{center}")
+
+# y <- paste(latexRect, collapse = "")
+# cat(y)
+cat(latexRect)
+```
+
+The following is an extract of the DVI file when the rectangle above is generated using the SVG DVI driver included with the common \TeX{} distributions, `pgfsys-dvisvgm.def`. It has been edited slightly for readability.
+<!---
+The output of the linear gradient info below was element 52 after reading in the DVI file into R using 'readDVI()', in case we want to automate this later
+--->
+
+```
+xxx1         k=67
+             x=dvisvgm:raw <g transform="matrix(1,0,0,1,56.90549,28.45274)">{?nl} 
+xxx1         k=67
+             x=dvisvgm:raw <g transform="matrix(2.26802,0,0,1.134,0.0,0.0)">{?nl} 
+xxx1         k=66
+             x=dvisvgm:raw <g transform="matrix(0.0,1.0,-1.0,0.0,0.0,0.0)">{?nl} 
+xxx4         k=425
+             x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)">{?nl} 
+                            <stop offset=" 0.0" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 0.25" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 0.5" stop-color=" rgb(50.0%,75.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 0.75" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
+                            </linearGradient>{?nl} 
+xxx1         k=57
+             x=dvisvgm:raw <g transform="translate(-50.1875,-50.1875)"> 
+xxx1         k=97
+             x=dvisvgm:raw <rect width="100.375" height="100.375" style="fill:url(#pgfsh2); 
+                            stroke:none"/>{?nl} 
+```
+
+We can see from this that the linear gradient definition with stops and colours is defined within a `<linearGradient>` element and given an `id` attribute. In the `<rect>` element a CSS style definition sets the fill of the rectangle by referring to the `id` of the previously defined definition. We can see in the linear gradient definition there are colours defined as RGB values and their respective stops so now we need to get the `dvir` driver file to extract the same information in a "R-friendly" form.
+
+- Go to `dvir` driver file and see what I've added (and try work out what bit does what to explain it! Like it gets defined in one place, then passed to another function to do something else)
+
+- See my meeting progress notes on the matter
+
+- What have we had to change in driver file (and why?) - like specific bits of driver file
+
+- Before and after of DVI file for linear gradient fill (see new information displayed)
+
+- Why couldn't we go further?
+
+- Next steps
+
+
+<!---
+Remember to talk about the future steps, we need to do a parse of the gradient deifnitions and store them somewhere, then next parse for actual drawing we have to match up the id values
+
+Does SVG do it by actually drawing two rectangles? Or what?
+
+Do I need to explain SVG format at all?
+
+Do we even need to save linear gradient definition? Can it be used in different places, or is it always defined again if the exact same definition is used?
+--->
 
 
 ## Text baselines
 
+- Demonstrate problem (with example using grid.text), especially try multi line text maybe?
 
+- Describe algorithms for determining baselines one by one. In dviMoves, describe then the issues with choosing which one, and the potential algorithms for that
+
+- Describe function I made to calculate all baselines using these methods
+
+- Show result of all this :) (in LaTeX)
 
 ## Conclusion/summary/Next steps
 
