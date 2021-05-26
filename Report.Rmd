@@ -3,7 +3,7 @@ title: "Improvements to the 'dvir' package"
 author: "Alexander van der Voorn"
 date: ""
 output: 
-  pdf_document:
+  bookdown::pdf_document2:
     extra_dependencies:
       tikz: null
 header-includes:
@@ -13,6 +13,7 @@ header-includes:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%')
+library(dvir)
 ```
 
 <!---
@@ -26,7 +27,11 @@ To do:
 -Make report with template in emails, especially for bibliography and stuff
 -Remember TeX and LaTeX need {} at end
 
--Do I need TikZ package for \TikZ macro to work?
+-should I generate this report in R 4.1.x to do linear gradient stuff more easily?
+
+-Maybe don't use LateX Template, but use bookdown instead, (read book on it). Can copy across ideas from LaTeX template though 
+
+-Do I need TikZ package for \TikZ (formatted) macro to work?
 
 - Need to write it out with some examples by end of Tuesday, then wednesday morning do assignment (or other honours tasks), and Wednesday evening re-read and tidy up what doesn't read well
 
@@ -41,16 +46,155 @@ Big examples to suss:
 
 
 Remember this Rmd file itself might be shared, so need to tidy it up. Include required packages etc.? Like 'dvir', hexView etc...
+
+
+
+###
+### ADDITINAL NOTES TO SORT:
+###
+
+Talk about specials in linear gradient section
+    Similar to section explaining steps of dvir, explain steps of tikz, and then in my work explain exactly what steps it relates to (say my stuff helped with step 2,and step 3 and 4 come later
+    Get to "why" earlier in report. Before detailed explanation of dvir, state issues with it (slow, functionality limited like anything in development)
+    
+   Remember gotta finish dvir driver output
+
+   Need to do a discussion and next steps section for honours report
+
+    Paul's meeting notes - start reading, exploring, and experimenting
+    Send Paul my report again once I have examples and shit added
+    For honours talk - plan questions I could be asked, like "why not windows?"
+
+    Read last meeting notes
+    Reread all the tech notes, grid graphics info etc.
+    Update my repo on Github?
+      
+    Writeup
+      Keep updated on Github
+      Start with editing my honours notes with what feedback he gave on my last version
+      Get examples, start collecting and organising screenshots and things better (like profiling)
+      If unsure start with questions as "sub-headings", like:
+        What is dvir?
+        Why dvir?
+        What is TeX and LaTeX?
+        What problems are we trying to solve?
+        How have we tried to solve those problems so far?
+    
+    Google UoA Honours projects, I think Brendon might have put some info on his personal website?
+    
+    Things to check for last parses through:
+    -tense of writing (past tense for exisiting), be consistent with what work was done
+    -we vs I (use 'we' for working through an example) - just gotta be consistent
+    -Check dvir package is written same style everywhere (monospace? with quotes? ...)
+    -replace `dvir` with a TeX macro
+    -Check references all proper
+    -Check spelling and punctuation and grammar - for this, do one section at a time to check it all!
+    -Just read over it to make sure it reads well! - One section at a time
+    -Fancy formatting of LaTeX and TikZ?
+    -For spell check, maybe copy and paste to Word?
+    -Oxford commas?
+    -Figure labelling/captions/numbering (like 1.1, 1.2, 2.1....)
+    -Check if `dvir` is used at start of sentence. Replace with "The dvir package"?
+    -Ensure language is formal, remove any slang/casualness
+    - remember alpha/infinity sign got mixed up? Check output on report....
+    -Ensure writing has substance (no pointless sentences)
+    -Need to research style and format for research papers and how contents page, numbering, figure, bibliography etc. work
+    -Use bookdown guide for anything I ened help with in terms of formatting/layout
+    -Check full stops in bullet point lists and figure captions
+    
+    Questions for Paul:
+    -How do you "fail" the report?
+    -Do I need to repeat library(dvir) before any of the examples? Have added in report in setup code chunk
+    -xColor package warnings when I knit my report? Are they an issue
+    
+Need to edit/tidy code like what's use in Thomas Yee's example (tidy, remove comments, check indentation is good, check there's nothing redundant occuring?)
+
+    TikZ
+      Tidy up driver file to get "clean" gradient output of colours and stops
+      Maybe see if I can parse it to R (with extra package edits) to get it to work, even if it doesn't do the transformations that are required?
+      
+    Check exercise book in draw (last couple of written pages have notes on it about honours)
+    Research TeX Macros a little more?
+    Read Kane's report
+    
+    
+
+  Research TeX bounding boxes and baselines myself (how close can we get to getting the real info?)
+Change honours writing to have substance!   Make a macro for 'dvir' so can change format of it later?   
+
+
+
+FOR NEXT WEEK MEETING:
+-CONFIRM ANYTHING ABOUT MY UNDERSTANDING THAT'S UNSURE
+-READ MORE LIKE TILL TANTAU'S PGF DOC - ABOUT DVI SPECIALS AND SHIT
+Remember I still don't know a lot of how dvir works. Like all the font shit? Read documents Paul sent for the algorithms
+    
+Need to use Honour report template and get that going!
+In background of the project, and describing the package as it was, do I use past tense?
+
+
+Do I use \TeX and \LaTeX all the time? or just type the letters  normally?
+Run report from VM shell (so can actually use dvir package in report)
+Does my explanation of `dvir` need to identify changes for \TikZ?
+Make sure I push report to my GitHub! Do it regularly!
+How to find out all the conventions for things like referencing? Can I reference same report multiple times? surely!
+Need to look through all meeting notes (both from me and Paul) to ensure everything is noted down that we tried. Remember some of those things might make good discussion points as to effort that was put in!
+Add examples of the code I changed (like in font sweeps - do a before and after)
+Find out how font def number works in DVI, how does it stay the same across multiple DVI files?
+Go through all meeting notes (both Paul's and mine) and add to write up/actions as required
+
+I need to spend some time revising the basic info of `dvir` like the overall how it works. Spend time walking through function, expecially the font sweeps and kpsewhich stuff and all that. And just how it finds fonts and all that
+
+Does kpsewhich run first and it finds font file locations, then adds them somewhere? Paul's flow suggests it finds fonfiles after the name - how does this work exactly?
+
+Notes for Paul:
+  -Trying to find how can put $x - \mu$ in there
+  -Still some examples missing
+  -Take old report, ask what his scribbles mean?
+  -Generate report! Send off by 8 or 9 or so
+  -Read Paul's meeting notes from last time
+  -Refer to my meeting progress notes I sent him to flesh out  
+  -What would I need to change in terms of narration/writing if these bits were the final report? Like is it actually close, or nah?
+
+Formatting:
+  CHange image of mu squared over two to actuall rendering that in PDFLatex
+  Indent coding in a bit more
+  Start using thesis template
+  STart proper bibliography
+  Find way of having figure numbers under out put from code chunks (and number them all automatically so can reference them easily)
+  Add references - both in their spot in the text and at the end
+
+
+
+
+#### To do:
+
+-add examples of profiling, including averages of times, once checked on new Ubuntu 18.04 VM
+
+-Remember first `grid.latex()` run after loading `dvir` will spend more time writing XML font info to font config file, and later `grid.latex()` calls don't have to do this if they are using the same fonts
+
+-Differences in timings between Cairo and PDF
+
+
+
+
+After op_font_def changed to op_ignore, what was the other op a few lines below we also ened to change and why? SOmething to do with referring to the fonts variable we saved in our seperate environment?
+STart fleshing out what the font sweep does above 
+Work out what metric and grid sweep do
+
+
+
 --->
 
 
-## Executive summary
+# Executive summary
 
 ...goes here....
 
+<!---
 Is this the same as an abstract, or something different? Google says they are different (Executive summary = this report condensed to a paragraph, abstract = description of the things you'll find in the report, without explicitly mentioning the actual content)
-
-## Introduction
+--->
+# Introduction
 
 R has the ability to display mathematical symbols and equations in graphics using the "*plotmath*" feature, interpreting everything within a call to `expression()` as a mathematical equation.
 
@@ -100,24 +244,24 @@ By keeping things "in R" users only need to learn R (and basic \TeX) code to cre
 * expand the capability of creating TikZ drawings by adding support for linear gradient fills
 * adding the ability to align TeX text to a *baseline* - the natural line on which characters sit
 
+# Background to TeX and `dvir`
 
-## Background to TeX and `dvir`
+## TeX
 
-### TeX
+\TeX{} is a program to format and typeset text, and includes some basic macros to do this. \LaTeX{} is a higher-level implementation of \TeX{}, essentially consisting of a lot more macros, creating a much more user-friendly interface to \TeX{}. For example, \LaTeX{} allows one to create a document with numbered sections, title pages and bibliographies without having to write complicated \TeX{} macros themself. There are other programs that do similar things to \LaTeX{} too.
 
-\TeX{} is a program to format and typeset text, and includes some basic macros to do this. \LaTeX{} is a higher-level implementation of \TeX{}, essentially consisting of a lot more macros, creating a much more user-friendly interface to \TeX{}. For example, \LaTeX allows one to create a document with numbered sections, title pages and bibliographies without having to write complicated \TeX{} macros themself. There are other programs that do similar things to \LaTeX{} too.
-
-#### DVI
+### DVI
 
 A \TeX{} or \LaTeX{} file is just plain text, so there obviously needs to be a step from 
-
+<!---
 Explain DVI more here (and less in next section explaining dvir packages)
+--->
 
+## The (pre-existing) `dvir` package
 
-### The (pre-existing) `dvir` package
-
-#### (not sure how to make clear this is all stuff that was in 'dvir' before any of my work (and the fact I didn't change any of this high level stuff))  
-
+<!---
+(not sure how to make clear this is all stuff that was in 'dvir' before any of my work (and the fact I didn't change any of this high level stuff))  
+--->
 
 `dvir`, in a simplified form, works by undertaking the following steps:
 
@@ -149,15 +293,187 @@ grid.latex("$x - \\mu$")
 5. These *grobs* are then displayed in the R graphics device.
 
 
-## Code speed (part 1) - remove redundant `font` sweeps
+# Code speed (part 1) - remove redundant `font` sweeps
 
-Now that the package "works" there is opportunity to expand its scope and usefulness. In the introduction of this report the case for the `dvir` package was motivated with a simple example of a mathematical equation. `dvir` can be used in larger cases too.
+<!---    
+Profiling:
+      Use initFOnts = TRUE
+      Use prof mem or similar (see 769?) for multiple runs with just data output (no fucking around with html things) - gives data and graphs
+      Test for variability (this is important)
+      If profiling, remove any time used for the "wrapper" stuff - ideally only focus on time spent in 'dvir' functions
+      For some of the profiling, use example of text formatted in two columns (power of TeX) with equations. Maybe plot on one side and text on the other side with two grid viewports? To show it in action
+      Use Cairo device specifically? Should I mention that? maybe in my code "system conditions" info, like version of ubuntu etc.....
+      
+      
 
-\- [**Example:** Thomas Yee's example]
+NEED TO CHANGE EXAMPLE TO ENSURE HTML WIDGET IS CORRECT - MAYBE RERUN THEM WITH LATEST CODE FOR ALL DVIR VERSIONS?
 
-One of the first things investigated in the package was the speed of running the code. Anecdotally, generating any R graphic with non-trivial \TeX{}, like the example above, took a long time and as such improving the time efficiency of the package was very desirous.
+> library(profvis)
+> p <- profvis(plot(1:1000000))
+> htmlwidgets::saveWidget(p, "profile.html")
 
-To tackle this, and indeed find out whether  even was the case, the first task was to profile the existing code to see where the time was being spent whenever the code was run. We used our two examples: the simple $x - \mu$ and our larger example above.
+
+First parse change:
+  
+  dvir/R/grid.R:grid_op_243 <- op_font_def
+  dvir/R/metric.R:metric_info_243 <- op_font_def
+  
+    Set to op_ignore. And...
+  
+  [metric_info|grid_op]_247 to op_ignore (so that they do not
+  RESET (or overwrite) the global fonts list (that font_info_243 set up)
+  
+  # Op code 247 is for preamble (so would reach ti at start of every parse through (Was it just
+  # to clear anything cached?)
+  # Op code 243 to 246 are all for font_def. Did we change all of them? Or just 243?
+  # What happens if we find a 244?
+
+Second parse change: (see meeting notes at start of 2021)
+
+  + IF !initFonts THEN op_pre() should NOT reset "fonts" global
+  + call it "dvir.initFonts"
+  + use existing options() and getOption()
+  + add new arg
+    grid.latex(initFonts = getOption("dvir.initFonts"))
+    change actually happens in latexGrob()
+    change also happens in dviGrob()
+  + dvir::set("initFonts") within dviGrob()
+  + op_pre() only does set("fonts") IF get("initFonts")
+  + op_font_def() needs to ...
+    ALSO store font def 'op' object in fontdef
+    if (is.null(get("fonts")[[fontnum]]))
+       define font as normal
+    else 
+       if (identical(oldop, newop))
+           do nothing
+       else
+           define font as normal
+    
+    Also created new identical_font() function
+    Also had to change add ...
+      
+      if (get("initFonts") || is.null(get("fonts"))) set("fonts", vector("list", 255))
+    ... in op_pre,
+    
+    So now if 'fonts' list in 'dvir' environment doesn't exist already, it is initialised regardless of 'initFonts'
+    
+    
+dvir versions:
+0.2-1 - Before any of my changes
+0.2-2 - After first speed up 
+0.3-1 - Before second speed up (had TikZ and all that, and font support changes)
+0.3-2 - After second speed up
+
+
+
+- Look back to 6th of October? 
+                             That's when I think Paul did merge of first speed up
+I pushed change around 09 Feb (that didn't quite work)
+Second code speed ups were done in >0.3-1 (in 0.3-2 I think, unless that was already 
+                                           used by Paul for another change)
+Push change around 25 Feb had most of the work doen I think
+
+
+
+To record:
+      -Virtual box version
+      -Ubuntu version
+      -'dvir' package version
+      -R version
+      -That it was a Cairo device (probably use on-screen device?)
+      Use 'sessionInfo()' to get some of this info?
+--->
+In the introduction of this report the case for the `dvir` package was motivated with a simple example of a mathematical equation. `dvir` can be used on a larger scale too.
+
+```{r yeeExample, fig.cap="A more complicated example using `dvir`"}
+xpos <- c(0, 0.25,  0.7, 1)
+myplot <- function(abcd = "(a)", col = "black") {
+  plot(1:9, 1:9, type = "n", xlim = c(0, 1), ylim = c(0, 1), 
+       bty = "n", axes = F, xlab = "", ylab = "")
+  arrows(0.5, 1, xpos, 0, length = 0.12, lwd = .7,
+         col = col)  # All the arrows
+  text(0.05, y = 1.1, xpd = TRUE, labels = abcd, cex = 1.0,
+       font = 1, col = col)
+}  # myplot
+par(mfrow=c(2,2),
+    mar = c(2.6, 4, 1.5, 2) + 0.1,
+    font = 3,  # italic
+    las = 1)
+myplot()
+## Convert to grid
+library(gridGraphics)
+grid.echo()
+## Make arrows "nicer" ? 
+grid.edit("arrows", grep=TRUE,
+          arrow=arrow(angle=10, length=unit(.12, "in"), type="closed"),
+          gp=gpar(fill="black"))
+## Navigate to plot window
+downViewport("graphics-window-1-1")
+## Use 'dvir' to draw labels
+grid.latex("\\dots", x = 0.44, y = -0.1, default.units="native")
+grid.latex("$Y_* =$",
+           x = 0.5, y = 1.1, default.units="native")
+grid.latex("$a_1$", xpos[1], y = -0.1, default.units="native")
+grid.latex("$a_2$", xpos[2], y = -0.1, default.units="native")
+grid.latex("$a_{L_A}$", xpos[3], y = -0.1, default.units="native")
+grid.latex("$Y_{\\pi} | Y_{\\pi} \\notin \\cal{A}$",
+           x = xpos[4], y = -0.1, default.units="native")
+grid.latex("$\\omega_1$",
+           x = 0.18, y = 0.50, default.units="native")
+grid.latex("$\\omega_2$",
+           x = 0.32, y = 0.50, default.units="native")
+grid.latex("$\\dots$",
+           x = 0.44, y = 0.50, default.units="native")
+grid.latex("$\\omega_{L_A}$",
+           x = 0.54, y = 0.50, default.units="native")
+grid.latex("$1 - \\sum_{s=1}^{L_A}\\omega_s$",
+           x = 0.95, y = 0.50, default.units="native")
+```
+
+This example uses nine calls to `grid.latex()` and was created by a lecturer using the `dvir` package to help write an assignment.
+
+One of the first things investigated in the package was the speed of running the code. Anecdotally, generating any R graphic with non-trivial \TeX{}, like that in figure \@ref(fig:yeeExample), took a long time so it was desirable to see if we could speed it up.
+
+To tackle this, and indeed find out whether this even was the case, the first task was to profile the existing code to let us see where in the package time was being spent.
+
+A note on the profiling: the exact results obtained are specific to the computing environment used. Specific details are provided at the end of this section. The sampling nature of profiling (intermittent recording of the call stack) will give different results every time it is done.
+
+We visualised the profiling results using `profvis::profvis()`.
+
+<!---
+These are old examples of profvis() output. Need to refresh them!
+--->
+
+![Screenshot of `profvis::profvis()` output for the code `grid.latex("$x - \\mu$")` in `dvir` version 0.2-1.](Figures/profilingSimpleProfvis_0.2-1.PNG "profilingSimpleProfvis_0.2-1"){width=100%}
+
+We can see the function call stack in figure \@ref(fig:profilingSimpleProfvis_0.2-1). At the bottom is the call to `grid.latex()`, which immediately calls `grid.draw()` which in turn calls `latexGrob()`. This calls `readDVI()` for about the first 20ms, then `dviGrob()` for the remaining time to complete the original `grid.latex()` function call, and so on up the function call stack.
+
+![Screenshot of `profvis::profvis()` output for the code creating figure \@ref(fig:yeeExample) highlighting the time spent in `engine$fontDef`.](Figures/profilingYeeProfvis_0.2-1_highlight.PNG "profilingYeeProfvis_0.2-1_highlight"){width=100%}
+
+The `profvis::profvis()` output for our more complicated example, in figure \@ref(fig:profilingYeeProfvis_0.2-1_highlight) reveals most of the time to create the figure is in `grid.latex()`. Note that the code to draw the arrows and the "(a)" in this example is so quick it occupies the very skinny call stack on the very left of the graph. `grid.latex()` and the functions it calls, on the other hand, take up most of the time required to create the example.
+
+In figure \@ref(fig:profilingYeeProfvis_0.2-1_highlight) some blocks in the call stack have been highlighted - these are related to the `engine$fontDef` operation occuring. This is a part of the "font sweep", as was described in the introduction to `dvir` to run through the DVI file, identify all the fonts used, and find and record the font file locations on the system.
+
+In the top left corner of figure \@ref(fig:profilingYeeProfvis_0.2-1_highlight) we are told the aggregate time spent with `engine$fontDef` is 1890ms. Comparing to the total time of this run of about 2700ms, `dvir` is spending a *lot* of time dealing with these fonts.
+
+What was interesting though was that after the font sweep found all the fonts it needed, the following sweeps for the metric and grid information *also* called `engine$fontDef`. The point of the font sweep is that it finds all the fonts to be used later on. The following metric and grid sweeps should not need to "re-sweep" for the fonts.
+
+![Screenshot of `profvis::profvis()` output for the code `grid.latex("$x - \\mu$")` in `dvir` version 0.2-1, highlighting `engine$fontDef`.](Figures/profilingSimpleProfvis_0.2-1_highlight.PNG "profilingSimpleProfvis_0.2-1_highlight"){width=100%}
+
+The effect of this is most obvious in figure \@ref(fig:profilingSimpleProfvis_0.2-1_highlight) which is the same as figure \@ref(fig:profilingSimpleProfvis_0.2-1) but highlighting the time spent in `engine$fontDef`. The wrappers for the font, metric and grid sweeps are `dviFonts()`, `dviMetric()` and `dvigrid()` respectively (sixth call from the bottom). Here we can see nearly all of the time spent in the metric and grid sweeps are actually redoing the font sweep!
+
+The change to be made was simply stopping the metric and grid sweeps from doing the font sweep again.
+
+<!--- 
+Is this font sweep rewriting earlier`dvir` description? If not, should it go up there?
+--->
+
+The font sweep looks in the DVI file for op codes 243 to 246. These are the font definitions and define the name of a font and give it an identifier for referencing in the DVI file when it wants to use that font to display a character. If the font sweep comes across one of these op codes it does its searching 
+
+
+<!---
+Does engine$fontDef show up in Rprof results?
+--->
 
 \- [**Example:** `profvis()` screenshot of simple example, showing `definePDFFont()` (before change)]
 
@@ -181,9 +497,20 @@ This was therefore an easy and quick win - simply changing the subsequent sweeps
 
 \- [**Example:** `profmem()` of Thomas Yee's example, calculate average time taken (after change)]
 
-This resulted in fantastic savings. In 10 runs of the example after this change was made, the average total execution time was 3712ms. This is a reduction of 2557ms, or 41%. The average time spent in `definePDFFont()` was just 1292ms, 62% less than before. A saving of nearly two thirds in the function is consistent with removing two of the three font sweeps based on the code profiling results above. 
+This resulted in fantastic savings. In 10 runs of the example after this change was made, the average total execution time was 3712ms. This is a reduction of 2557ms, or 41%. The average time spent in `definePDFFont()` was just 1292ms, 62% less than before. A saving of nearly two thirds in the function is consistent with removing two of the three font sweeps based on the code profiling results above.
 
-## Code speed (part 2) - font caching
+### Profiling specifications
+
+The profiling results are very specific to the computer setup used and could change considerably depending on the exact computing environment in which the `dvir` package is used. 
+
+The profiling results in this report, in this and the next section, were calculated with the following setup:
+
+- A virtual machine via Oracle VM Virtualbox
+- Virtual machine running Ubuntu 18.04.5 LTS
+- R version 3.4.4
+- `dvir` package versions as described with the profiling results
+
+# Code speed (part 2) - font caching
 
 The earlier code speed up was done by stopping `dvir` doing something silly (completing a font sweep three times instead of only one). Our further profiling lead us to find where next our code spends its time and now it was a matter of making `dvir` "smarter".
 
@@ -247,7 +574,7 @@ As it is, the TikZ driver simply ignores any gradient or pattern fill informatio
 
 - [**Example:** Use `grid.tikzpicture()` for picture with gradient fill in text, but resulting R graphic does not have fill]
 
-### Implementing TikZ gradient and pattern fills in `dvir`
+# Implementing TikZ gradient and pattern fills in `dvir`
 
 The following steps are required to implement these TikZ fills in `dvir`:
 
@@ -344,10 +671,16 @@ Does SVG do it by actually drawing two rectangles? Or what?
 Do I need to explain SVG format at all?
 
 Do we even need to save linear gradient definition? Can it be used in different places, or is it always defined again if the exact same definition is used?
+
+Need to be careful about line length in example of DVI output
+
+maybe end by saying 'linear gradients are just a small step. For example patterns require creating grobs of the pattern definition' etc. etc.
 --->
 
 
-## Text baselines
+# Text baselines
+
+- Do all this without examples first maybe, as that will be some fiddly work?
 
 - Demonstrate problem (with example using grid.text), especially try multi line text maybe?
 
@@ -357,11 +690,19 @@ Do we even need to save linear gradient definition? Can it be used in different 
 
 - Show result of all this :) (in LaTeX)
 
-## Conclusion/summary/Next steps
+<!---
+Do I need to include my baseline algorithms function? as appendix?
+
+Should I take out the TikZ bit of the algorithms function? As it's not needed and I don't want to have to explain it.
+
+
+--->
+
+# Conclusion/summary/Next steps
 
 
 
-## Bibliography
+# Bibliography
 
 References to maybe include (if/where relevant):
 
