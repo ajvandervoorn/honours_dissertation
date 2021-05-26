@@ -101,6 +101,7 @@ Talk about specials in linear gradient section
     -Need to research style and format for research papers and how contents page, numbering, figure, bibliography etc. work
     -Use bookdown guide for anything I ened help with in terms of formatting/layout
     -Check full stops in bullet point lists and figure captions
+    -suppress any warnings in report output (console is fine), but leave to end in case there are any issues
     
     Questions for Paul:
     -How do you "fail" the report?
@@ -465,10 +466,103 @@ The effect of this is most obvious in figure \@ref(fig:profilingSimpleProfvis_0.
 The change to be made was simply stopping the metric and grid sweeps from doing the font sweep again.
 
 <!--- 
-Is this font sweep rewriting earlier`dvir` description? If not, should it go up there?
+Is this font sweep rewriting earlier`dvir` description? If not, should this go up there?
 --->
 
-The font sweep looks in the DVI file for op codes 243 to 246. These are the font definitions and define the name of a font and give it an identifier for referencing in the DVI file when it wants to use that font to display a character. If the font sweep comes across one of these op codes it does its searching 
+The font sweep looks in the DVI file for op codes 243 to 246. These are the font definitions and define the name of a font and give it an identifier for referencing in the DVI file when it wants to use that font to display a character. What was happening in `dvir` was that every time the metric or grid sweep came across one of these font definitions, it *also* searched for and recorded the font information.
+
+<!---
+Need figure captions here on these code examples
+
+I think in code I changed, it only refered to op code 243. Check if the other ones were also affected (244 to 246). Does font sweep do all four op codes? May need to update this bit depending on outcome
+--->
+
+```{r metricFont_0.2-1, fig.cap="Metric sweep searching and recording font information in package version 0.2-1, in package file dvir/R/metric.R", eval=FALSE}
+metric_info_243 <- op_font_def
+```
+
+```{r gridFont_0.2-1, fig.cap="Grid sweep searching and recording font information in package version 0.2-1, in package file dvir/R/grid.R", eval=FALSE}
+grid_op_243 <- op_font_def
+```
+
+Figures \@ref{fig:metricFont_0.2-1} and \@ref{fig:gridFont_0.2-1} show the code in the `dvir` package itself where the metric and grid sweeps also redid the font sweep. `op_font_def` is a function which takes the font definition in the DVI file related to that instance of the op code and searches for and records the font information. 
+
+```{r metricFont_0.2-2, fig.cap="Metric sweep now *not* searching and recording font information in package version 0.2-2, in package file dvir/R/metric.R", eval=FALSE}
+metric_info_243 <- op_ignore
+```
+
+```{r gridFont_0.2-2, fig.cap="Grid sweep now *not* searching and recording font information in package version 0.2-2, in package file dvir/R/grid.R", eval=FALSE}
+grid_op_243 <- op_ignore
+```
+
+Figures \@ref{fig:metricFont_0.2-2} and \@ref{fig:gridFont_0.2-2} show the what the code was changed to in `dvir` version 0.2-2. `op_ignore` is an empty function, so when the metric or grid sweeps comes across that op code, they do nothing.
+
+Unfortunately these changes by themself caused an error when running the functions in the package. This is because one task undertaken before the font sweep is to reset or overwrite the global fonts list (which the font sweep then writes to). The metric and grid sweeps were also doing this even though it was only intended for it to be done by the font sweep. This meant after the font sweep found all the font information it was overwritten by the metric and grid sweeps and so when `dvir` tried to draw the characters there was no font information to refer to.
+
+The resetting of the global fonts list was initiated when they passes op code 247 in the DVI file, which is the preamble at the start of every DVI file.
+
+```{r metricGlobalFont_0.2-2, fig.cap="Metric sweep now *not* resetting the global fonts list in package version 0.2-2, in package file dvir/R/metric.R", eval=FALSE}
+metric_info_247 <- op_ignore
+```
+
+```{r gridGlobalFont_0.2-2, fig.cap="Grid sweep now *not* resetting the global fonts list in package version 0.2-2, in package file dvir/R/grid.R", eval=FALSE}
+grid_op_247 <- op_ignore
+```
+
+Setting the metric and grid sweeps to do nothing, by way of `op_ignore` when they pass the preamble of the DVI file solved this problem as the global fonts list created by the font sweep is not overwritten.
+
+<!---
+Do we want another `profvis()` output here showing the change? Might be good for visual impact. Especially simple example.
+--->
+
+To quantify the impact this has on code speed we recorded the time to run our examples 20 times, after an initial run to compile the package after it was loaded.
+
+```{r include=FALSE}
+dvirLibs <- c("/media/sf_Honours_project/VM_18.04/dvir0.2-1",
+              "/media/sf_Honours_project/VM_18.04/dvir0.2-2",
+              "/media/sf_Honours_project/VM_18.04/dvir0.3-1",
+              "/media/sf_Honours_project/VM_18.04/dvir0.3-2")
+simpleProfResults <- gsub("/.+/.+/.+/", "Profiling/simple_", dvirLibs)
+yeeProfResults <- gsub("simple", "yee", simpleProfResults)
+
+measurements <- c("Total time",
+                  "Total time 'grid.latex()'",
+                  "Total time 'dviMetric()'",
+                  "Total time 'dvigrid()'",
+                  "Total time 'op_font_def()")
+
+results <- list()
+for (k in c(simpleProfResults, yeeProfResults)) {
+  x <- summaryRprof(k)
+  results[[k]][[measurements[1]]] <- 
+    x$sampling.time
+  results[[k]][[measurements[2]]] <- 
+    x$by.total['"grid.latex"',"total.time"]
+  results[[k]][[measurements[3]]] <- 
+    x$by.total['"dviMetric"',"total.time"]
+  results[[k]][[measurements[4]]] <- 
+    x$by.total['"dvigrid"',"total.time"]
+  # results[[k]][[measurements[5]]] <- x$by.total['"op_font_def"',"total.time"]
+}
+```
+
+```{r}
+resultTable <- data.frame(before_gridlatex = c(results[[1]][[2]],
+                                                results[[5]][[2]]),
+                          before_metric = c(results[[1]][[3]],
+                                            results[[5]][[3]]),
+                          before_grid = c(results[[1]][[4]],
+                                          results[[5]][[4]]),
+                          after_gridlatex = c(results[[2]][[2]],
+                                                results[[6]][[2]]),
+                          after_metric = c(results[[2]][[3]],
+                                            results[[6]][[3]]),
+                          after_grid = c(results[[2]][[4]],
+                                          results[[6]][[4]]))
+knitr::kable(resultTable)
+```
+
+
 
 
 <!---
