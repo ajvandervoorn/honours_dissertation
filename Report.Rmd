@@ -103,12 +103,17 @@ Talk about specials in linear gradient section
     -Need to research style and format for research papers and how contents page, numbering, figure, bibliography etc. work
     -Use bookdown guide for anything I ened help with in terms of formatting/layout
     -Check full stops in bullet point lists and figure captions
-    -suppress any warnings in report output (console is fine), but leave to end in case there are any issues
+    -suppress any warnings in report output (console warnings are fine), but leave to end in case there are any issues
     -Capital letts in all section headings?
     -In lists, do I have commas at the end, or full stops, or nothing?
     -Check for contractions (don't use words with apostrophes (oownership okay obviously))
     -Like profiling, add information about how this report was generated (R version, dvir version etc.?). In case maybe they want to replicate generation of report?
     -Ensure I've detailed versions of `dvir` package used at each stage
+    -For report output generated using dvir, fonts might not be correct! Need to embed them somehow maybe?
+    -Ensure R has latest dvir version when I knit report
+    -single or double quote use? And if I use them once for a term, do I need to every time?
+    -Check formatting of monospace and quotes in figure captions 
+    -Check sing and double quotes in general, in case I've accidentally typed a wrong one
     
     Questions for Paul:
     -How do you "fail" the report?
@@ -142,12 +147,9 @@ In background of the project, and describing the package as it was, do I use pas
 
 
 Do I use \TeX and \LaTeX all the time? or just type the letters  normally?
-Run report from VM shell (so can actually use dvir package in report)
 Does my explanation of `dvir` need to identify changes for \TikZ?
-Make sure I push report to my GitHub! Do it regularly!
 How to find out all the conventions for things like referencing? Can I reference same report multiple times? surely!
 Need to look through all meeting notes (both from me and Paul) to ensure everything is noted down that we tried. Remember some of those things might make good discussion points as to effort that was put in!
-Add examples of the code I changed (like in font sweeps - do a before and after)
 Find out how font def number works in DVI, how does it stay the same across multiple DVI files?
 Go through all meeting notes (both Paul's and mine) and add to write up/actions as required
 
@@ -197,7 +199,7 @@ Work out what metric and grid sweep do
 
 # Executive summary
 
-...goes here....
+... goes here...
 
 <!---
 Is this the same as an abstract, or something different? Google says they are different (Executive summary = this report condensed to a paragraph, abstract = description of the things you'll find in the report, without explicitly mentioning the actual content)
@@ -285,7 +287,10 @@ DVIR BACKGROUND INFO (CHECK IF IT IS COVERED BELOW):
 
 In a simplified form, `dvir` works by providing a high level function, `grid.latex()`, to call with the \TeX{} code of the expression or text to be displayed.
 
-```{r fig.cap="Using `dvir` to make out caption label from earlier"}
+<!---
+This isn't the label from earlier! Either don't relate this to the label or redo the caption or redo the text
+--->
+```{r fig.cap="Using `dvir` to make our caption label from earlier"}
 library(dvir)
 grid.latex("$x - \\mu$")
 ```
@@ -312,7 +317,7 @@ The following steps are taken when `grid.latex()` runs:
 
 5. These grobs are then displayed in the R graphics device as per the `grid` package.
 
-# Code speed (part 1) - remove redundant `font` sweeps
+# Code speed (part 1) - removing redundant font sweeps
 
 <!---    
 Profiling:
@@ -543,7 +548,7 @@ Do we want another `profvis()` output here showing the change? Might be good for
 \- [**Example:** `profvis()` screenshot of Thomas Yee's example, showing `definePDFFont()` (after change)]
 --->
 
-To quantify the impact this has on code speed we recorded the time to run our examples 20 times, after an initial run to compile the package after it was loaded. The first table details the total time spent, in seconds, in each of these functions in the 20 runs before and after these changes were made. The second table contains the change in time as a proportion of the "before" time.
+To quantify the impact this has on code speed we recorded the time to run our examples 20 times, after an initial run to compile the package after it was loaded. The first table details the total time spent, in seconds, in each of these functions in the 20 runs before and after these changes were made.
 
 ```{r include=FALSE}
 dvirLibs <- c("/media/sf_Honours_project/VM_18.04/dvir0.2-1",
@@ -574,6 +579,8 @@ for (k in c(simpleProfResults, yeeProfResults)) {
 }
 ```
 
+The second table contains the change in time as a proportion of the "before" time.
+
 ```{r echo = FALSE}
 resultTable <- data.frame(before_gridlatex = c(results[[1]][[2]],
                                                 results[[5]][[2]]),
@@ -587,30 +594,34 @@ resultTable <- data.frame(before_gridlatex = c(results[[1]][[2]],
                                             results[[6]][[3]]),
                           after_grid = c(results[[2]][[4]],
                                           results[[6]][[4]]))
+knitr::kable(resultTable[, 1:6])
+```
+
+```{r echo = FALSE}
 resultTable$gridlatex_change <- with(resultTable, 
                                      (after_gridlatex - before_gridlatex) / before_gridlatex)
 resultTable$metric_change <- with(resultTable, 
                                   (after_metric - before_metric) / before_metric)
 resultTable$grid_change <- with(resultTable, 
                                 (after_grid - before_grid) / before_grid)
-knitr::kable(resultTable[, 1:6])
 knitr::kable(resultTable[, 7:9])
 ```
 
 Section to be continued with:
 
-- Formatting above table better (round, units, convert to percentages, better headings etc.)
-- Text/paragraph description of results
+- Formatting above table better (rounding, units, convert to percentages, better headings, centre align etc.)
+- Text/paragraph description of these results
 
 <!---
 This section needs:
--Table above finished, with caption and nicely explaining everything, with nice formatting too
+-Table above finished, with caption and nicely explaining everything, with nice formatting too (nice explanatory headers etc.)
+-Make tables like figures (give caption I reckon, and numbers so I can refer to them in my summary)
 -Summary of results
 -Above code hidden
 --->
 
 <!---
-Need to actually check these results (that I summarised the right info)
+Need to actually check these results (that I summarised the right info with my R code)
 --->
 <!---
 Does engine$fontDef show up in Rprof results?
@@ -822,7 +833,7 @@ Should I take out the TikZ bit of the algorithms function? As it's not needed an
 
 # Conclusion/summary/next steps
 
-
+... goes here...
 
 # Bibliography
 
