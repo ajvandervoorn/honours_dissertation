@@ -1,9 +1,0 @@
-\newpage{}
-
-# Executive summary
-
-... goes here...
-
-<!---
-Is this the same as an abstract, or something different? Google says they are different (Executive summary = this report condensed to a paragraph, abstract = description of the things you'll find in the report, without explicitly mentioning the actual content)
---->
