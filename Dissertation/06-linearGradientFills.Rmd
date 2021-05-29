@@ -96,6 +96,8 @@ The following is an extract of the DVI file when the rectangle above is generate
 The output of the linear gradient info below was element 52 after reading in the DVI file into R using 'readDVI()', in case we want to automate this later
 
 CHECK THIS OUTPUT FOR THE 'matrix()' FUNCTION. WHERE DID IT COME FROM?
+
+Maybe remove some spaces if want it this code to go into left margin, or think of where else I could line breaks
 --->
 
 ```{r dviGradientOutput, eval=FALSE}

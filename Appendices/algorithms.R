@@ -3,7 +3,7 @@
 ####
 
 baselines <- function(tex = "$x - \\mu$", 
-                      fileName = "baselineAlgorithm", 
+                      fileName = "baselines", 
                       algorithm = "dviMoves",
                       dviMovesMethod = "index",
                       dviMovesSelection = 1,
@@ -70,7 +70,7 @@ baselines <- function(tex = "$x - \\mu$",
   #                 y0 = y + v, 
   #                 y1 = y + v, 
   #                 gp = gpar(col = "red", size = 0.25, alpha = 0.25))
-  }
+  #}
 }
 
 ####

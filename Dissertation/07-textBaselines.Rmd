@@ -1,7 +1,7 @@
 \newpage{}
 
 <!---
-
+Give examples throughout this section of function use (like what the output looks like for example, if return a unit value), so don't need to do it when talking about the specific algorithms
 
 Would it be possible to go into each character in the font and get the font metrics?
 
@@ -31,9 +31,6 @@ Explicitly mention name of algorithms.R function, and maybe the examples script 
 - Describe function I made to calculate all baselines using these methods
 
 - Show result of all this (in LaTeX)
-
-- Do I need to explain what the 'down' moves are? And that that's oretty much the cursor movement?
-
 
 ## The problem
 
@@ -68,6 +65,49 @@ Here is an example of the `baselineAlgorithms()` function in use...
 <!---
 Discussion - what does it work well or not well for?
 --->
+
+<!---
+Where I define testText below - should I either put it in a non-visible chunk to evaluate in abckground, or just call the examples I'm going to do for each example indicudally?
+--->
+
+<!---
+Here's the LaTeX stuff I need for examples!
+--->
+\newcommand{\boxreport}[2]{%
+  \sbox{\dvibox}{\parbox[b]{1in}{#1}}%
+  \usebox{\dvibox}%
+  \vspace{-#2}%
+  \hrule%
+  \vspace{#2}%
+}
+
+\boxreport{testing}{0cm}
+
+\boxreport{testing}{0.5mm}
+
+```{r, eval = TRUE}
+source("../Appendices/algorithms.R")
+testText <- c("test",       # Text with no danglies
+              "testing",    # Text with danglies
+              "var",        # Short text with no danglies
+              "varying",    # Short text with danglies
+              "$\\sum_{n=1}^{\\infty} 2^{-n} = 1$",             # Equation only (inline)
+              "$\\sum\\limits_{n=1}^{\\infty} 2^{-n} = 1$",     # Equation only (inline, but like 'displaymath')
+              "$\\sum\\limits_{n=1}^{} 2^{-n} = 1$",            # Equation only (inline, but like 'displaymath' and without upper summation limit)
+              "The equation is $x + \\frac{\\mu^2}{2}$",        # Text then equation
+              "The equation is $x + \\frac{\\mu}{2}$",          # Text then equation (with lower equation height)
+              "$\\frac{\\mu^2}{2} + x$ is the equation",        # Equation then text (with fraction first)
+              "$x + \\frac{\\mu}{2}$ is the equation",          # Equation then text (with lower equation height, and fraction first)
+              "\\begin{minipage}{1in}Paragraph, with some line wrapping!\\end{minipage}")  # Multiline text/paragraph
+
+alexAlgorithmBaseline <- baselines(tex = testText[5], 
+                                   algorithm = "alex")
+alexAlgorithmBaseline
+```
+
+
+
+
 
 ### `dviMoves` algorithm
 
@@ -149,15 +189,3 @@ Overall, the `dviMoves` algorithm has performed best out of all of these. While 
 - mention the "matching' algorithm of dviMoves (to compare with another algorithm)
 
 - mention the "just ask TeX for answer" method
-
-```{r}
-# source(algorithms.R)
-
-```
-
-<!---
-
- As it's not needed and I don't want to have to explain it.
-
-
---->

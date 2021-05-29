@@ -296,6 +296,10 @@ Section to be continued with:
 - Text/paragraph description of these results
 
 <!---
+For plot, maybe 2 by 3 facet wrap thing? rows are examples, columns are the part of the function that's sped up
+--->
+
+<!---
 This section needs:
 -Table above finished, with caption and nicely explaining everything, with nice formatting too (nice explanatory headers etc.)
 -Make tables like figures (give caption I reckon, and numbers so I can refer to them in my summary)

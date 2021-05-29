@@ -1,7 +1,7 @@
-/_bookdown_files/
+_bookdown_files/
 Archive/
 
 .Rhistory
-Report.log
+*.log
 
 comments.txt
