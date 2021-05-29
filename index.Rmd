@@ -1,0 +1,123 @@
+---
+title: "Improvements to the 'dvir' Package"
+author: "Alexander van der Voorn"
+site: bookdown::bookdown_site
+output: 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: FALSE
+    dev: cairo_pdf
+    extra_dependencies:
+      tikz: null
+header-includes:
+    #- \usepackage{setspace}\doublespacing
+    - \linespread{1.25}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%', eval = FALSE)
+library(dvir)
+```
+
+\newpage
+\tableofcontents
+
+<!---
+Rscript -e 'bookdown::render_book("index.Rmd")'
+
+Need to tidy this folder to be like "report" project folder, and have everything upload to GitHub. Like include profiling results in Profiling folder etc. Then this report reference everything relatively to main folder
+Move linespread package up to ectra dependencies?
+Need to suss name of saved PDF, and organisation of files
+Need to suss bibliography:
+  citation_package: biblatex | pandoc something something
+  bibliography: references.bib ?
+Split PDF by section (new page) - just do it manually with \newpage{} if bookdown options don't work
+  
+  
+  Questions for Paul:
+  -Do I need to add grid:: or dvir:: to the start of functions? Just the first instance? Or all of them? or none of them?
+  -Should I explicitly load packages, like hexView if I use them?
+  -Do I need to repeat library(dvir) before any of the examples? Have added in report in setup code chunk
+  -xColor package warnings when I knit my report? Are they an issue
+  -How to find out all the conventions for things like referencing? Can I reference same report multiple times?
+  -Do I worry about potential profiling differences between Cairo and non-Cairo? Probably not. Even though I profiled on screen, it's still Cairo
+
+To remember:
+  -Refer to bookdown documentation for help with caption figures and referencing them and all that
+  -Can use LaTeX code in report raw!
+  -TeX and LateX need {} at the end
+  -Check version of dvir and R when I make final report (might need dvir 0.3-2 and R 4.1.x?). if I do, install R 4.1.x in different folder (to keep R 3.4.4 as backup and to thoroughly check result)
+  -For code chunk inclusion etc.:
+https://bookdown.org/yihui/rmarkdown-cookbook/hide-one.html
+  -Reread all the tech notes, grid graphics info etc., TikZ, Till Tantau docs, DVI specials....
+  -Research TeX Macros a little more?
+  -Read Kane's report
+  -If unsure start with questions as "sub-headings", like:
+        What is dvir?
+        Why dvir?
+        What is TeX and LaTeX?
+        What problems are we trying to solve?
+        How have we tried to solve those problems so far?
+  -Keep record of any further questions I have to research ahead of my presentation!
+  -Remember I still don't know a lot of how dvir works. Like all the font shit? Read documents Paul sent for the algorithms
+  -Find out how font def number works in DVI, how does it stay the same across multiple DVI files?
+  -For honours talk, plan questions I could be asked, like "why not Windows?"
+
+To do:
+  -Make language more formal
+  -Change 'dvir' to macro, so I can edit easily
+  -Make TikZ macro (with italic i) - google how to do it
+  -Make report modular, like with separate files for each section and bibliography and stuff. Use LaTeX template though for ideas!
+  -Make title page and contents etc one page each
+  -Tidy up this Rmd and for my other files shared to my Github, as they will all be available on Github! (especially the comments in all of them)
+  -Remember gotta finish dvir driver output (format the stops and colours!)
+  -Check exercise book in draw (last couple of written pages have notes on it about honours)
+  -Tidy Thomas Yee's code. If not in the report, then at least on whatever appendix thing I put up on github.
+  -Probably need to decide on what will be in appendix, and label it as such on Github to make it clear what's what
+  -Tidy github (remove docker files for example)
+  -Go through *all* meeting notes (both mine and Paul's), including my "extra" notes
+  -Go through all of my report drafts and make sure I've actioned everything that's written on them. Some of things might make good discussion points either in the report or presentation!
+  -For presenation, spend time again walking through dvir package, like the functions it goes through, how it does the fonts, how it converts to grobs, (and converts rectangle as in SVG to grid), anything special for TikZ...
+  -Does kpsewhich run first and it finds font file locations, then adds them somewhere? Paul's flow suggests it finds fonfiles after the name - how does this work exactly?
+  -Update profiling screenshots (of profvis), at least check the runtime of them and see if it's approximately 1/20th of my profiling total runtimes
+  -Manually check my profiling results, to ensure that my automation of results is correct! Especially important if I need to redo profiling (so my code will still work)
+  
+  
+  
+
+Final formatting/proofreading things (to do on last parses through):
+  -check page breaks and how figures end up (leave to very end as this depends on exactly what other text and figures are in there)
+  -Ensure all writing has meaning and context (no fluffy sentences)
+  -tense of writing (past tense for exisiting), be consistent with what work was done. Focus on what I want the tense to be for each section
+  -we vs I (use 'we' for working through an example) - just gotta be consistent
+  -Check dvir package is written same style everywhere (monospace? with quotes? ...)
+  -replace `dvir` with a TeX macro
+  -Check references all proper
+  -Check spelling and punctuation and grammar - for this, do one section at a time to check it all!
+  -Just read over it to make sure it reads well! - One section at a time
+  -Fancy formatting of LaTeX and TikZ?
+  -For spell check, maybe copy and paste to Word?
+  -Oxford commas?
+  -Figure labelling/captions/numbering (like 1.1, 1.2, 2.1....)
+  -Check if `dvir` is used at start of sentence. Replace with "The dvir package"?
+  -Ensure language is formal, remove any slang/casualness
+  - remember alpha/infinity sign got mixed up? Check output on report....
+  -Ensure writing has substance (no pointless sentences)
+  -Need to research style and format for research papers and how contents page, numbering, figure, bibliography etc. work
+  -Use bookdown guide for anything I ened help with in terms of formatting/layout
+  -Check full stops in bullet point lists and figure captions
+  -suppress any warnings in report output (console warnings are fine), but leave to end in case there are any issues
+  -Capital letts in all section headings?
+  -In lists, do I have commas at the end, or full stops, or nothing?
+  -Check for contractions (don't use words with apostrophes (oownership okay obviously))
+  -Like profiling, add information about how this report was generated (R version, dvir version etc.?). In case maybe they want to replicate generation of report?
+  -Ensure I've detailed versions of `dvir` package used at each stage
+  -For report output generated using dvir, fonts might not be correct! Need to embed them somehow maybe?
+  -Ensure R has latest dvir version when I knit report
+  -single or double quote use? And if I use them once for a term, do I need to every time?
+  -Check formatting of monospace and quotes in figure captions 
+  -Check sing and double quotes in general, in case I've accidentally typed a wrong one
+  -Add references everywhere I can
+  -Where I have quotes around for terms, like "grob", make sure throughout I use either single or double quotes and don't interchange
+  -For code chunk settings, ensure they all use the same format (like single or double quotes for strings, spaces after commas, spaces either side of an '=' etc...)
+--->

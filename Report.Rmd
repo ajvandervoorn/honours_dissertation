@@ -1,9 +1,11 @@
 ---
 title: "Improvements to the 'dvir' Package"
 author: "Alexander van der Voorn"
-date: ""
+site: bookdown::bookdown_site
 output: 
   bookdown::pdf_document2:
+    keep_tex: yes
+    toc: FALSE
     dev: cairo_pdf
     extra_dependencies:
       tikz: null
@@ -13,14 +15,26 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%')
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%', eval = FALSE)
 library(dvir)
 ```
 
-<!---
-Rscript -e 'library(rmarkdown); render("Report.Rmd")'
+\newpage
+\tableofcontents
 
-Questions for Paul:
+<!---
+Rscript -e 'bookdown::render_book("index.Rmd")'
+
+Need to tidy this folder to be like "report" project folder, and have everything upload to GitHub. Like include profiling results in Profiling folder etc. Then this report reference everything relatively to main folder
+Move linespread package up to ectra dependencies?
+Need to suss name of saved PDF, and organisation of files
+Need to suss bibliography:
+  citation_package: biblatex | pandoc something something
+  bibliography: references.bib ?
+Split PDF by section (new page) - just do it manually with \newpage{} if bookdown options don't work
+  
+  
+  Questions for Paul:
   -Do I need to add grid:: or dvir:: to the start of functions? Just the first instance? Or all of them? or none of them?
   -Should I explicitly load packages, like hexView if I use them?
   -Do I need to repeat library(dvir) before any of the examples? Have added in report in setup code chunk
@@ -104,9 +118,13 @@ Final formatting/proofreading things (to do on last parses through):
   -Check formatting of monospace and quotes in figure captions 
   -Check sing and double quotes in general, in case I've accidentally typed a wrong one
   -Add references everywhere I can
-
+  -Where I have quotes around for terms, like "grob", make sure throughout I use either single or double quotes and don't interchange
+  -For code chunk settings, ensure they all use the same format (like single or double quotes for strings, spaces after commas, spaces either side of an '=' etc...)
 --->
 
+<!--chapter:end:index.Rmd-->
+
+\newpage{}
 
 # Executive summary
 
@@ -115,6 +133,10 @@ Final formatting/proofreading things (to do on last parses through):
 <!---
 Is this the same as an abstract, or something different? Google says they are different (Executive summary = this report condensed to a paragraph, abstract = description of the things you'll find in the report, without explicitly mentioning the actual content)
 --->
+
+<!--chapter:end:01-execSummary.Rmd-->
+
+\newpage{}
 
 # Introduction
 
@@ -167,6 +189,10 @@ By keeping things "in R" users only need to learn R (and basic \TeX) code to cre
 * the speed of the package - anecdotally it took a while to generate graphics, especially if there were many `grid.latex()` calls
 * expand `dvir`'s capability of creating TikZ drawings by adding support for linear gradient fills
 * adding the ability to align text from `grid.latex()` to a baseline - the natural line on which characters sit
+
+<!--chapter:end:02-introduction.Rmd-->
+
+\newpage{}
 
 # Background
 
@@ -228,6 +254,10 @@ The following steps are taken when `grid.latex()` runs:
   + Grid sweep: Convert all text and symbols into *grobs* (grid graphical objects) 
 
 5. These grobs are then displayed in the R graphics device as per the `grid` package.
+
+<!--chapter:end:03-background.Rmd-->
+
+\newpage{}
 
 # Code speed (part 1) - removing redundant font sweeps
 
@@ -552,6 +582,10 @@ The profiling results in this report, in this and the next section, were calcula
 - R version 3.4.4
 - `dvir` package versions as described with the profiling results
 
+<!--chapter:end:04-codeSpeed1.Rmd-->
+
+\newpage{}
+
 # Code speed (part 2) - font caching
 
 The earlier code speed up was done by stopping `dvir` doing something "silly". Our further profiling lead us to find where next our code spends its time and now it was a matter of making `dvir` "smarter".
@@ -587,6 +621,10 @@ The earlier code speed up was done by stopping `dvir` doing something "silly". O
 But why to each of these steps? Need to flesh out more why they achieve what we want it to achieve (and any considerations we had in our thought process)
 
 - [**Example:** Profiling results (`profvis()` and `profmem()` showing speed improvement)]
+
+<!--chapter:end:05-codeSpeed2.Rmd-->
+
+\newpage{}
 
 # Linear gradient fills
 
@@ -722,6 +760,9 @@ Need to be careful about line length in example of DVI output
 maybe end by saying 'linear gradients are just a small step. For example patterns require creating grobs of the pattern definition' etc. etc.
 --->
 
+<!--chapter:end:06-linearGradientFills.Rmd-->
+
+\newpage{}
 
 # Text baselines
 
@@ -743,34 +784,13 @@ Should I take out the TikZ bit of the algorithms function? As it's not needed an
 
 --->
 
+<!--chapter:end:07-textBaselines.Rmd-->
+
+\newpage{}
+
 # Conclusion/summary/next steps
 
 ... goes here...
 
-# Bibliography
-
-References to maybe include (if/where relevant):
-
-- All 'dvir' tech reports
-
-- Donald Knuth for TeX
-
-- PGF/TikZ
-
-- R intro
-
-- R base graphics?
-
-- R grid graphics
-
-<!---
-@techreport{murrell-echogrob,
-  title="Revisiting Mathematical Equations in R: the 'dvir' package",
-  author = {Paul Murrell},
-  year={2018},
-  note={version 2},
-  institution={Department of Statistics, The University of Auckland},
-  number={2018-08}
-}
---->
+<!--chapter:end:08-summary.Rmd-->
 

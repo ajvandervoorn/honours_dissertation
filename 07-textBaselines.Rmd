@@ -1,0 +1,21 @@
+\newpage{}
+
+# Text baselines
+
+- Do all this without examples first maybe, as that will be some fiddly work?
+
+- Demonstrate problem (with example using grid.text), especially try multi line text maybe?
+
+- Describe algorithms for determining baselines one by one. In dviMoves, describe then the issues with choosing which one, and the potential algorithms for that
+
+- Describe function I made to calculate all baselines using these methods
+
+- Show result of all this (in LaTeX)
+
+<!---
+Do I need to include my baseline algorithms function? as appendix?
+
+Should I take out the TikZ bit of the algorithms function? As it's not needed and I don't want to have to explain it.
+
+
+--->
