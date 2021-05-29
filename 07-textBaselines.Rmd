@@ -1,5 +1,12 @@
 \newpage{}
 
+<!---
+Do I need to remove the "plotting" nature of my function? Like should it just return the v's?
+Remove TikZ?
+
+Would it be possible to go into each character in the font and get the font metrics?
+--->
+
 # Text baselines
 
 - Do all this without examples first maybe, as that will be some fiddly work?
@@ -11,6 +18,33 @@
 - Describe function I made to calculate all baselines using these methods
 
 - Show result of all this (in LaTeX)
+
+## The problem
+
+Text characters have a baseline, that is, a horizontal line on which the characters naturally sit so all the letters appear to be in line with each other. Some letters, like a lower case p or j, have a "descender". A descender is the part of a character that sits *below* the baseline. `grid.text()` accounts for this baseline so when you bottom align text at a certain y value, the descenders will actually fall below the y value we defined, despite the bottom justification. This makes sense because nearly every piece of written text is like this. Unfortunately, `grid.latex()` doesn't account for text baselines. It will simply do any alignment in relation to bounding box of the text.
+
+To fix this, `dvir` needs to obtain or calculate a value for the baseline for any given piece of text to offset the bounding box when it is drawing text. All of `dvir`'s information comes from the DVI file we either need to get a baseline value from the DVI file itself, or calculate it *from* information in the DVI file. Unfortunately DVI files do not state a baseline value so we will have to explore some possible methods to determine a baseline value.
+
+## Implementation
+
+To explore the practicality of the algorithms detailed below and evaluate their usefulness an R function has been created as part of this project. This function takes several arguments, including the desired baseline selection algorithm, any other information needed for that particular algorithm, and the \TeX{} code as you would use with `grid.latex()`. The output of this function is the distance, or in some case distances, from the bottom of the bounding box of the text to the possible baseline value. If when displaying the text we do not use the specified y value, but rather move the bounding box down by the amount of the baseline height, it will be the baseline of the text that is equal to the y-value.
+
+This function has been written to easily allow integration of other algorithms and most of the function should be able to be directly implemented in the `dvir` package, should this feature be implemented formally.
+
+
+
+## Our potential solutions
+
+We explored several different algorithms to calculate the baseline for several different types of text that could be used with `grid.latex()`. These algorithms are detailed below. An R function
+
+### f
+
+
+
+```{r}
+source(algorithms.R)
+
+```
 
 <!---
 Do I need to include my baseline algorithms function? as appendix?
