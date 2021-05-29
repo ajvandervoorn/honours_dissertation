@@ -9,6 +9,7 @@ output:
     dev: cairo_pdf
     extra_dependencies:
       tikz: null
+      linespread: 
 header-includes:
     - \linespread{1.25}
 ---
@@ -18,10 +19,14 @@ knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%')
 library(dvir)
 ```
 
-% macros setup
-\newcommand*\tikz{\textup{Ti\textit kZ}}
+<!---
+move linespread package
+ensure _bookdown isn't being githubbed, check all things in .gitignore if they are relatuve references or absolute
 
-\tikz
+Start baseline stuff (read in source)
+--->
+% macros setup
+\newcommand*\Tikz{\textup{Ti\textit kZ}}
 
 \newpage
 \tableofcontents

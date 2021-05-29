@@ -17,7 +17,7 @@ par(opar)
 
 This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX{}, but it is limited in its fonts. Compare the y-axis label above with how it looks when created by \LaTeX{} in figure \@ref(fig:muOver2).
 
-![The $y$-axis label from above, if it were created in \LaTeX](Figures/muSquaredOverTwo.PNG "muOver2"){width=5%}
+![The $y$-axis label from above, if it were created in \LaTeX](../Figures/muSquaredOverTwo.PNG "muOver2"){width=5%}
 
 <!---
 Use this code for above example, just need to find a way to caption and reference it. Also delete image from figures folder when done

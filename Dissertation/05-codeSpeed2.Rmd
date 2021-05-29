@@ -1,5 +1,9 @@
 \newpage{}
 
+<!---
+Check if initFonts = TRUE in my profiling? I don't think so given default option (but check my function call arguments) - Remember best case is we want it to be FALSE, so it caches them as much as possible!
+--->
+
 # Code speed (part 2) - font caching
 
 The earlier code speed up was done by stopping `dvir` doing something "silly". Our further profiling lead us to find where next our code spends its time and now it was a matter of making `dvir` "smarter".
