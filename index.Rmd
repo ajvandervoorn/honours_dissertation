@@ -15,9 +15,12 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%', eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%')
 library(dvir)
 ```
+
+% macros setup
+\newcommand*\TikZ{\textup{Ti\textit kZ}}
 
 \newpage
 \tableofcontents
@@ -35,12 +38,33 @@ Split PDF by section (new page) - just do it manually with \newpage{} if bookdow
   
   
   Questions for Paul:
-  -Do I need to add grid:: or dvir:: to the start of functions? Just the first instance? Or all of them? or none of them?
-  -Should I explicitly load packages, like hexView if I use them?
-  -Do I need to repeat library(dvir) before any of the examples? Have added in report in setup code chunk
-  -xColor package warnings when I knit my report? Are they an issue
-  -How to find out all the conventions for things like referencing? Can I reference same report multiple times?
-  -Do I worry about potential profiling differences between Cairo and non-Cairo? Probably not. Even though I profiled on screen, it's still Cairo
+  
+    General:
+      -Do I need to add grid:: or dvir:: to the start of functions? Just the first instance? Or all of them? or none of them?
+      -Should I explicitly load packages, like hexView if I use them?
+      -Do I need to repeat library(dvir) before any of the examples? Have added in report in setup code chunk
+      -xColor package warnings when I knit my report? Are they an issue
+      -How to find out all the conventions for things like referencing? Can I reference same report multiple times?
+      -Some sections have a few subheadings, but others don't. Does this matter? Should I add some to the ones that have no subsections for consistency and/or readability?
+    
+    Code speed:
+      -Do I worry about potential profiling differences between Cairo and non-Cairo? Probably not. Even though I profiled on screen, it's still Cairo
+    
+    Text baselines:
+      -Should I take out the TikZ bit of the algorithms function?
+      -Do I need to remove the "plotting" nature of my function? Like should it just return the v's?
+      -Do I need to explain logic of the algorithms in terms of the DVI file? As in...
+        -Explain what op codes are up and down moves
+        -How we loop through the DVI file
+        -Difference between downs and v's and w's?
+        -How we need to store the values at each push and restore them at a pop
+        -How DVI coordinates start from top left of bounding box (so need to invert vertical amounts)
+      -Same with previous question, but for the function itself:
+        -Any default values used
+        -How to go from relative cursor positions to absolute (but absolute relative to bottom of bounding box)
+        -High level view of how function works (create TeX file, call latex on TeX file, then in algorithms read in DVI etc.....)
+        -DO I need to explain in detail the inputs to functions?
+
 
 To remember:
   -Refer to bookdown documentation for help with caption figures and referencing them and all that
@@ -81,6 +105,7 @@ To do:
   -Does kpsewhich run first and it finds font file locations, then adds them somewhere? Paul's flow suggests it finds fonfiles after the name - how does this work exactly?
   -Update profiling screenshots (of profvis), at least check the runtime of them and see if it's approximately 1/20th of my profiling total runtimes
   -Manually check my profiling results, to ensure that my automation of results is correct! Especially important if I need to redo profiling (so my code will still work)
+  -Run report through "grammarly"?
   
   
   
