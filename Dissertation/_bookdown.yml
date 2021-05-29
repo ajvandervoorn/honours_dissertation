@@ -4,5 +4,5 @@ delete_merged_file: TRUE
 # after_chapter_script: "script3.R"
 # view: https://github.com/rstudio/bookdown-demo/blob/master/%s
 # edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
-output_dir: "."
+output_dir: ".."
 # clean: ["my-book.bbl", "R-packages.bib"]

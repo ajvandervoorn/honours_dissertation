@@ -1,0 +1,27 @@
+---
+title: "Improvements to the 'dvir' Package"
+author: "Alexander van der Voorn"
+site: bookdown::bookdown_site
+output: 
+  bookdown::pdf_document2:
+    keep_tex: no
+    toc: FALSE
+    dev: cairo_pdf
+    extra_dependencies:
+      tikz: null
+header-includes:
+    - \linespread{1.25}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%')
+library(dvir)
+```
+
+% macros setup
+\newcommand*\tikz{\textup{Ti\textit kZ}}
+
+\tikz
+
+\newpage
+\tableofcontents
