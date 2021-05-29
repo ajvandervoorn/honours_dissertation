@@ -1,0 +1,8 @@
+book_filename: "Alexander-van-der-Voorn_dissertation.Rmd"
+delete_merged_file: TRUE
+# before_chapter_script: ["script1.R", "script2.R"]
+# after_chapter_script: "script3.R"
+# view: https://github.com/rstudio/bookdown-demo/blob/master/%s
+# edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
+output_dir: ".."
+# clean: ["my-book.bbl", "R-packages.bib"]

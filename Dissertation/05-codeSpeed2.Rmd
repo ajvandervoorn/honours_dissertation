@@ -1,0 +1,37 @@
+\newpage{}
+
+# Code speed (part 2) - font caching
+
+The earlier code speed up was done by stopping `dvir` doing something "silly". Our further profiling lead us to find where next our code spends its time and now it was a matter of making `dvir` "smarter".
+
+\- [**Example:** `profvis()` result showing `fontEnc()` (I think) taking long time]
+
+- Looks like if we could save/cache a font we could reduce the amount of time to run `grid.latex()`
+
+- `fonts` R list is re-initialised after every call to `grid.latex()`
+
+- Is a font definition in DVI the same over different calls to `grid.latex()`? Yes! even the font def number (a number seemingly determined by TeX)
+
+\- [**Example:** font definitions from DVI file (over multiple `grid.latex()` calls) showing same fonts have same def]
+
+- first of all we want the `fonts` R list to persist over multiple `grid.latex()` calls in an R session. We did this by storing fonts list in the `dvir` environment (using `dvir::set()` and `dvir::get()`)
+
+- When come across a font definition (during a font sweep), we check if that font exists - the position in `fonts` list is determined by the font def number, and so as the same fonts (theoretically) have the same font def number, we can compare the new font we've come across with what is existing in that position in the `fonts` list. If nothing exists in that position in the list, then we save it as normal. If a font does exist, then we need to check if it's the same (just in case the font def number is not unique for different fonts across different `grid.latex()` calls)
+
+  + To do this easiest way was to expand the stored information about fonts in `fonts` to include the hex code chunk (from DVI) of the font definition
+
+  + Then we check if all parts of the new hex code chunk are the same as the existing
+  
+  + [**Example:** code for new function for checking if two font definitions are the same]
+  
+  + If the definitions are the same, do nothing. If they are different, overwrite the existing font info with the new font info. This actually removes any concern about using only the font def number (which we're pretty sure stays the same for the same font, but maybe it doesn't) 
+
+  + Only requirement is that the font def number is unique within a single call to grid.latex() (or rather the resulting DVI output)
+
+- Now only need to change the initialisation (reset) of fonts list to happen on package load, rather than during `grid.latex()` call (because doing it every `grid.latex()` call defeats the purpose of storing fonts). Occasionally one might still want to reset the font cache, so added an option `options(dvir.initFonts = FALSE)` and added `initFonts = getOption("dvir.initFonts")` to `dviGrob.character()` and `dviGrob.DVI()`
+
+  + [**Example:** show function calls with the above, and anything else that helps explain them]
+
+But why to each of these steps? Need to flesh out more why they achieve what we want it to achieve (and any considerations we had in our thought process)
+
+- [**Example:** Profiling results (`profvis()` and `profmem()` showing speed improvement)]
