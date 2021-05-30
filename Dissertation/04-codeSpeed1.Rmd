@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 \newpage{}
 
 # Code speed (part 1) - removing redundant font sweeps
@@ -233,7 +238,7 @@ Do we want another `profvis()` output here showing the change? Might be good for
 
 To quantify the impact this has on code speed we recorded the time to run our examples 20 times, after an initial run to compile the package after it was loaded. The first table details the total time spent, in seconds, in each of these functions in the 20 runs before and after these changes were made.
 
-```{r include=FALSE}
+```{r include=FALSE, eval = TRUE}
 dvirLibs <- c("/media/sf_Honours_project/VM_18.04/dvir0.2-1",
               "/media/sf_Honours_project/VM_18.04/dvir0.2-2",
               "/media/sf_Honours_project/VM_18.04/dvir0.3-1",
@@ -264,7 +269,7 @@ for (k in c(simpleProfResults, yeeProfResults)) {
 
 The second table contains the change in time as a proportion of the "before" time.
 
-```{r echo = FALSE}
+```{r, echo = FALSE, eval = TRUE}
 resultTable <- data.frame(before_gridlatex = c(results[[1]][[2]],
                                                 results[[5]][[2]]),
                           before_metric = c(results[[1]][[3]],
@@ -278,9 +283,27 @@ resultTable <- data.frame(before_gridlatex = c(results[[1]][[2]],
                           after_grid = c(results[[2]][[4]],
                                           results[[6]][[4]]))
 knitr::kable(resultTable[, 1:6])
+
+resultDF <- data.frame(time = c(results[[1]][[2]],
+                                results[[5]][[2]],
+                                results[[1]][[3]],
+                                results[[5]][[3]],
+                                results[[1]][[4]],
+                                results[[5]][[4]],
+                                results[[2]][[2]],
+                                results[[6]][[2]],
+                                results[[2]][[3]],
+                                results[[6]][[3]],
+                                results[[2]][[4]],
+                                results[[6]][[4]]),
+                       version = rep(c("Before", "After"), 
+                                     each = 6),
+                       func = rep(c("gridlatex", "metric", "grid"),
+                                  each = 2),
+                       example = c("simple", "yee"))
 ```
 
-```{r echo = FALSE}
+```{r, echo = FALSE}
 resultTable$gridlatex_change <- with(resultTable, 
                                      (after_gridlatex - before_gridlatex) / before_gridlatex)
 resultTable$metric_change <- with(resultTable, 
@@ -290,6 +313,47 @@ resultTable$grid_change <- with(resultTable,
 knitr::kable(resultTable[, 7:9])
 ```
 
+```{r, eval = TRUE, echo = FALSE}
+library(ggplot2)
+
+plotProfiling1 <- function(ex, versionLabels) {
+  p <- ggplot(resultDF[resultDF$example == ex, ]) + 
+    geom_col(aes(x = version, 
+                 y = time,
+                 col = version,
+                 fill = version)) +
+    facet_grid(cols = vars(factor(func, levels = c("gridlatex", "metric", "grid")))) +
+    scale_x_discrete(limits = c("Before", "After"),
+                     expand = rep(0, 2)) +
+    scale_fill_discrete(name = "dvir Version",
+                        limits = c("Before", "After"),
+                        labels = versionLabels) +
+    scale_color_discrete(name = "dvir Version",
+                         limits = c("Before", "After"),
+                         labels = versionLabels) +
+    labs(x = NULL, y = "Total time\n(ms)") +
+    theme(axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          # axis.title.y = element_text(),
+          panel.spacing.x = unit(1, "lines"))
+  p
+}
+versionLabels <- c(Before = "0.2-1 (before changes)", 
+                   After = "0.2-2 (after changes)")
+```
+
+```{r speedUp1Simple, fig.cap = "The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our simple example.", echo = FALSE, fig.width = 7, fig.height = 4}
+plotProfiling1("simple", versionLabels)
+```
+
+Discussion of 'simple' example results!
+
+```{r speedUp1Yee, fig.cap = "The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our complicated example.", echo = FALSE, fig.width = 7, fig.height = 4}
+plotProfiling1("yee", versionLabels)
+```
+
+Discussion of 'complicated' example results!
+
 Section to be continued with:
 
 - Formatting above table better (rounding, units, convert to percentages, better headings, centre align etc.)
@@ -297,10 +361,19 @@ Section to be continued with:
 
 <!---
 For plot, maybe 2 by 3 facet wrap thing? rows are examples, columns are the part of the function that's sped up
+
+Need to adjust on plot:
+-Y axis gorizontal
+-Width of plot
+-Titles on each column
+-Maybe move x axis label to be legend title to keep it in one place
+-make dvir monospace
+-move legend title to right
 --->
 
 <!---
 This section needs:
+-Use https://bookdown.org/yihui/rmarkdown-cookbook/kableextra.html for formatting the table!
 -Table above finished, with caption and nicely explaining everything, with nice formatting too (nice explanatory headers etc.)
 -Make tables like figures (give caption I reckon, and numbers so I can refer to them in my summary)
 -Summary of results

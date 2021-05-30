@@ -9,20 +9,42 @@ output:
     dev: cairo_pdf
     extra_dependencies:
       tikz: null
+      graphicx: null
 header-includes:
     - \linespread{1.25}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%', eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%', eval = TRUE)
 library(dvir)
 ```
 
 % macros setup
 \newcommand*\Tikz{\textup{Ti\textit kZ}}
 
+\begin{center}
 
-  \newsavebox{\dvibox}
+\date
+\vspace{6cm}
+\includegraphics[scale=2]{../Figures/logo.jpg}\\
+\vspace{1cm}
+Bachelor of Science (Honours)\\
+Department of Statistics\\
+The University of Auckland\\
+New Zealand
+
+\end{center}
 
 \newpage
 \tableofcontents
+
+<!---
+references:
+References to maybe include (if/where relevant):
+• All ‘dvir’ tech reports
+• Donald Knuth for TeX
+• PGF/TikZ
+• R intro
+• R base graphics?
+• R grid graphics
+--->

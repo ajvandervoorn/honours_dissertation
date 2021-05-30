@@ -72,7 +72,19 @@ Where I define testText below - should I either put it in a non-visible chunk to
 
 <!---
 Here's the LaTeX stuff I need for examples!
+
+https://www.techwalla.com/articles/horizontal-line-options-in-latex
+
+remove eval=TRUE from these code chunks
 --->
+```{r, eval = TRUE}
+x <- grid::unit(5, "cm")
+y <- "hello"
+
+```
+
+\newsavebox{\dvibox}
+
 \newcommand{\boxreport}[2]{%
   \sbox{\dvibox}{\parbox[b]{1in}{#1}}%
   \usebox{\dvibox}%
@@ -84,6 +96,15 @@ Here's the LaTeX stuff I need for examples!
 \boxreport{testing}{0cm}
 
 \boxreport{testing}{0.5mm}
+
+\newcommand\rText{`r paste0(x)`}
+
+\rText
+
+\newcommand\sText{`r y`}
+
+\sText
+
 
 ```{r, eval = TRUE}
 source("../Appendices/algorithms.R")
