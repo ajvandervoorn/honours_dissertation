@@ -16,6 +16,12 @@ paste(hexView::blockValue(dviLinGradNew[[43]]$blocks$op.opparams.string), collap
 What are those 6 "transform" things in SVG DVI output? I think they are mentioned in dvir package code?
 
 Try making sphere with linear gradient with TikZ, see if fill is still rectangle with clipping?
+
+Try making vertical gradient? is it same output in SVG?
+
+Try making rectangle rotated slightly?
+
+Try rectangle with fill with say, dotted outline (to see if gradioent dill is actuall separate rectangle)
 --->
 
 # Linear gradient fills
@@ -46,7 +52,7 @@ As it is, the \Tikz{} driver simply ignores any gradient or pattern fill informa
 
 - [**Example:** Use `grid.tikzpicture()` for picture with gradient fill in text, but resulting R graphic does not have fill]
 
-## Implementing \Tikz{} linear gradient fills in `dvir`
+## Implementing \Tikz{} linear gradient fills in `dvir`\label{tikzWorkflow}
 
 The following steps are required to implement these \Tikz{} fills in `dvir`:
 
@@ -135,6 +141,7 @@ xxx1         k=97
 ```
 
 We can see from this that the linear gradient definition with stops and colours is defined within a `<linearGradient>` element and given an `id` attribute. In the `<rect>` element a CSS style definition sets the fill of the rectangle by referring to the `id` of the previously defined definition. In the linear gradient definition there are colours defined as RGB values and their respective stops so now we need to get the `dvir` driver file to extract the same information in a "R-friendly" form. There are several \TeX{} macros that were defined to do this. These are based on the `pgfsys-common-svg.def` and `pgfsys-dvisgm.def` SVG drivers that come with most \TeX{} distributions.
+
 <!---
 - Go to `dvir` driver file and see what I've added (and try work out what bit does what to explain it! Like it gets defined in one place, then passed to another function to do something else)
 - See my meeting progress notes on the matter
@@ -145,13 +152,13 @@ Test I've got all the bits by copying over to a fresh copy of dvir driver. If it
 Say main difference between SVG and R for stops is that we want to gather stops all together, and their colours all together for R. SVG wants one stops and it's colour togther!
 --->
 
-A counter is defined, in order to give each gradient definition unqiue identifier:
+A counter is defined, in order to give each gradient definition unique identifier:
 
 ```
 \newcount\pgf@sys@dvir@objectcount
 ```
 
-A "wrapper" macro of what to do when a gradient fill is requested. Within this, the definition of the fill is created and outpu to the DVI file, followed by 
+A "wrapper" macro of what to do when a gradient fill is requested. Within this, the definition of the fill is created and sent to the DVI file, followed by a rectangle with a fill specified by that definition. For clarity, a line stating when the gradient fill is defined and then again when it is used has been added to the DVI file, but these can be removed.
 
 ```
 \def\pgfsys@shadinginsidepgfpicture#1{%
@@ -166,6 +173,8 @@ A "wrapper" macro of what to do when a gradient fill is requested. Within this, 
   \pgf@sys@dvir@sh%
 }
 ```
+
+In basic cases, a horizontal linear gradient is defined as a vertical gradient with a 90 degree rotation which is why this is called "vert" shading. The definition and use of the gradient specified above are collated here. The stop positions (proportion along the length of the gradient for which a colour specified) and their respective colours are collated as well ad the literal text to build the gradient definition and rectangle using that definition. The biggest difference from the SVG driver was that R needs a vector of stops and a separate vector of colours as arguments to `linearGradient()`. SVG specifies the position and colour of each stop together.
 
 ```
 \def\pgfsys@vertshading#1#2#3{%
@@ -187,6 +196,8 @@ A "wrapper" macro of what to do when a gradient fill is requested. Within this, 
 }
 ```
 
+This macro allows us to consecutively add stop positions or colours to the ones we have already gathered.
+
 ```
 \let\pgf@sys@dvir@thestops=\pgfutil@empty
 \def\pgf@sys@dvir@addtostops#1{%
@@ -196,6 +207,8 @@ A "wrapper" macro of what to do when a gradient fill is requested. Within this, 
   \expandafter\expandafter\expandafter{\expandafter\pgf@sys@dvir@thestops\expandafter\space\pgf@temp}%
 }
 ```
+
+The following macros process all the stop locations, collating them into an R friendly vector suitable to parse to `linearGradient()`
 
 ```
 \def\pgf@sys@dvir@shading@stops{%
@@ -232,6 +245,8 @@ A "wrapper" macro of what to do when a gradient fill is requested. Within this, 
 }
 ```
 
+Similar to the above, these collate all the colours of the stops into an R friendly vector.
+
 ```
 \def\pgf@sys@dvir@shading@stopcolours{%
   % Step 1: Compute 1/\pgf@sys@shading@end@pos
@@ -264,6 +279,8 @@ A "wrapper" macro of what to do when a gradient fill is requested. Within this, 
 }
 ```
 
+This is a helper function to return formatted RGB values.
+
 ```
 \def\pgf@sys@dvir@shading@dorgb#1#2#3{%
   \pgf@sys@dvir@color@rgb#1,#2,#3\relax%
@@ -271,15 +288,36 @@ A "wrapper" macro of what to do when a gradient fill is requested. Within this, 
 }
 ```
 
+The result of these changes mean that the linear gradient definition is specified in the DVI file in a form usable by R, sans some commas:
 
+```
+xxx1         k=118
+             x=dvir::  stops=( 0.0 0.25 0.5 0.75 1.0 ) , 
+                       colours=( rgb(0,1,0) rgb(0,1,0) rgb(0.5,0.75,0) rgb(1,0.5,0) rgb(1,0.5,0) )
+```
 
+Compare this with the linear gradient definition from earlier:
 
+```
+xxx4         k=425
+             x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)">{?nl} 
+                            <stop offset=" 0.0" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 0.25" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 0.5" stop-color=" rgb(50.0%,75.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 0.75" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
+                            </linearGradient>{?nl} 
+```
 
+Unfortunately this was the extent this project could explore implementing \Tikz{} gradient fills in `dvir`. You may notice in both the SVG and `dvir` DVI output that the colour at stops 0 and 0.25 are the same, as is the colour at stops 0.75 and 1. This related to a larger issue of \Tikz{} using a number of transformations on the "simple" linear gradient definition above which is then clipped to the shape the fill is for. These transformations would require some very detailed work to translate them into a set of instructions to perform the same transformations in R before they are used in `linearGradient()`. 
 
+An additional complication is that \Tikz{} will create shapes with these fills by first drawing the shape with a transparent fill and then making another shape with the gradient fill clipped to the size of the first shape. R however requires the the fill information as an argument when drawing the shape so any transformations of the  gradient, as \Tikz{} does will need to be done *before* it is parsed to the drawing function.
 
+Radial gradient fills have similar issues and the work done so far on linear gradients could be fairly easily replicated.
 
+This work is still within step 1 of the \ref{tikzWorkflow} list. To continue with the implementation, aside from the above obstacles, `dvir` would need to do another sweep of the DVI file, like the font sweep. This might be possible as part of the other sweeps. Then after any transformations or manipulations are made, the gradient defintion can be called by a unique identifier to parse the stored fill definitions to the drawing function.
 
-
+<!---
 
 
 Section to be continued with:
@@ -293,8 +331,8 @@ Section to be continued with:
 - Next steps (to complete steps 1, 2 and 3 as detailed earlier), including discussing how this applies to radial gradient fills and pattern fills
 
 
+Mention how there's the transformastions and clipping, and we somehow need to translate that into a fill for thre shape in R
 
-<!---
 Remember to talk about the future steps, we need to do a parse of the gradient deifnitions and store them somewhere, then next parse for actual drawing we have to match up the id values
 
 Does SVG do it by actually drawing two rectangles? Or what?
@@ -306,4 +344,10 @@ Do we even need to save linear gradient definition? Can it be used in different 
 Need to be careful about line length in example of DVI output
 
 maybe end by saying 'linear gradients are just a small step. For example patterns require creating grobs of the pattern definition' etc. etc.
+
+Is this complicated nature of manipulating/transfroming the gradient rectangle also for other formats? or just SVG? I may be asked this in my talk
+
+Currently ignoring pattern fills
+
+
 --->

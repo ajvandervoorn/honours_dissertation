@@ -108,6 +108,7 @@
 \makeatother
 
 \linespread{1.25}
+\setcounter{tocdepth}{2}
 \usepackage{tikz}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -297,7 +298,7 @@ expression or text to be displayed.
 
 }
 
-\caption{Using `dvir` to make our caption label from earlier}\label{fig:unnamed-chunk-1}
+\caption{Using the `dvir` function `grid.latex()`}\label{fig:unnamed-chunk-1}
 \end{figure}
 
 The following steps are taken when \texttt{grid.latex()} runs:
@@ -529,11 +530,6 @@ font to display a character.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{metric_info_}\DecValTok{243}\NormalTok{ <-}\StringTok{ }\NormalTok{op_font_def}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{grid_op_}\DecValTok{243}\NormalTok{ <-}\StringTok{ }\NormalTok{op_font_def}
 \end{Highlighting}
 \end{Shaded}
@@ -595,9 +591,6 @@ not overwritten.
 To quantify the impact this has on code speed we recorded the time to
 run our examples 20 times, after an initial run to compile the package
 after it was loaded.
-
-The second table contains the change in time as a proportion of the
-``before'' time.
 
 \begin{figure}
 
@@ -810,7 +803,7 @@ information when creating the DVI file for \texttt{dvir}.
 
 \subsection{\texorpdfstring{Implementing \Tikz{} linear gradient fills
 in
-\texttt{dvir}}{Implementing  linear gradient fills in dvir}}\label{implementing-linear-gradient-fills-in-dvir}
+\texttt{dvir}\label{tikzWorkflow}}{Implementing  linear gradient fills in dvir}}\label{implementing-linear-gradient-fills-in-dvir}
 
 The following steps are required to implement these \Tikz{} fills in
 \texttt{dvir}:
@@ -905,7 +898,7 @@ based on the \texttt{pgfsys-common-svg.def} and
 \texttt{pgfsys-dvisgm.def} SVG drivers that come with most \TeX{}
 distributions.
 
-A counter is defined, in order to give each gradient definition unqiue
+A counter is defined, in order to give each gradient definition unique
 identifier:
 
 \begin{verbatim}
@@ -913,8 +906,11 @@ identifier:
 \end{verbatim}
 
 A ``wrapper'' macro of what to do when a gradient fill is requested.
-Within this, the definition of the fill is created and outpu to the DVI
-file, followed by
+Within this, the definition of the fill is created and sent to the DVI
+file, followed by a rectangle with a fill specified by that definition.
+For clarity, a line stating when the gradient fill is defined and then
+again when it is used has been added to the DVI file, but these can be
+removed.
 
 \begin{verbatim}
 \def\pgfsys@shadinginsidepgfpicture#1{%
@@ -929,6 +925,17 @@ file, followed by
   \pgf@sys@dvir@sh%
 }
 \end{verbatim}
+
+In basic cases, a horizontal linear gradient is defined as a vertical
+gradient with a 90 degree rotation which is why this is called ``vert''
+shading. The definition and use of the gradient specified above are
+collated here. The stop positions (proportion along the length of the
+gradient for which a colour specified) and their respective colours are
+collated as well ad the literal text to build the gradient definition
+and rectangle using that definition. The biggest difference from the SVG
+driver was that R needs a vector of stops and a separate vector of
+colours as arguments to \texttt{linearGradient()}. SVG specifies the
+position and colour of each stop together.
 
 \begin{verbatim}
 \def\pgfsys@vertshading#1#2#3{%
@@ -950,6 +957,9 @@ file, followed by
 }
 \end{verbatim}
 
+This macro allows us to consecutively add stop positions or colours to
+the ones we have already gathered.
+
 \begin{verbatim}
 \let\pgf@sys@dvir@thestops=\pgfutil@empty
 \def\pgf@sys@dvir@addtostops#1{%
@@ -959,6 +969,9 @@ file, followed by
   \expandafter\expandafter\expandafter{\expandafter\pgf@sys@dvir@thestops\expandafter\space\pgf@temp}%
 }
 \end{verbatim}
+
+The following macros process all the stop locations, collating them into
+an R friendly vector suitable to parse to \texttt{linearGradient()}
 
 \begin{verbatim}
 \def\pgf@sys@dvir@shading@stops{%
@@ -995,6 +1008,9 @@ file, followed by
 }
 \end{verbatim}
 
+Similar to the above, these collate all the colours of the stops into an
+R friendly vector.
+
 \begin{verbatim}
 \def\pgf@sys@dvir@shading@stopcolours{%
   % Step 1: Compute 1/\pgf@sys@shading@end@pos
@@ -1027,6 +1043,8 @@ file, followed by
 }
 \end{verbatim}
 
+This is a helper function to return formatted RGB values.
+
 \begin{verbatim}
 \def\pgf@sys@dvir@shading@dorgb#1#2#3{%
   \pgf@sys@dvir@color@rgb#1,#2,#3\relax%
@@ -1034,27 +1052,63 @@ file, followed by
 }
 \end{verbatim}
 
-Section to be continued with:
+The result of these changes mean that the linear gradient definition is
+specified in the DVI file in a form usable by R, sans some commas:
 
-\begin{itemize}
-\item
-  What have we had to change in driver file (and why?) - like specific
-  bits of driver file.
-\item
-  Before and after of DVI file (using new driver) for linear gradient
-  fill (see new information display). Do the ``after'' for both simple
-  rectangle and maybe a more complicated example?
-\item
-  Why couldn't we go further? Mention the transformations?
-\item
-  Next steps (to complete steps 1, 2 and 3 as detailed earlier),
-  including discussing how this applies to radial gradient fills and
-  pattern fills
-\end{itemize}
+\begin{verbatim}
+xxx1         k=118
+             x=dvir::  stops=( 0.0 0.25 0.5 0.75 1.0 ) , 
+                       colours=( rgb(0,1,0) rgb(0,1,0) rgb(0.5,0.75,0) rgb(1,0.5,0) rgb(1,0.5,0) )
+\end{verbatim}
+
+Compare this with the linear gradient definition from earlier:
+
+\begin{verbatim}
+xxx4         k=425
+             x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)">{?nl} 
+                            <stop offset=" 0.0" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 0.25" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 0.5" stop-color=" rgb(50.0%,75.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 0.75" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
+                            <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
+                            </linearGradient>{?nl} 
+\end{verbatim}
+
+Unfortunately this was the extent this project could explore
+implementing \Tikz{} gradient fills in \texttt{dvir}. You may notice in
+both the SVG and \texttt{dvir} DVI output that the colour at stops 0 and
+0.25 are the same, as is the colour at stops 0.75 and 1. This related to
+a larger issue of \Tikz{} using a number of transformations on the
+``simple'' linear gradient definition above which is then clipped to the
+shape the fill is for. These transformations would require some very
+detailed work to translate them into a set of instructions to perform
+the same transformations in R before they are used in
+\texttt{linearGradient()}.
+
+An additional complication is that \Tikz{} will create shapes with these
+fills by first drawing the shape with a transparent fill and then making
+another shape with the gradient fill clipped to the size of the first
+shape. R however requires the the fill information as an argument when
+drawing the shape so any transformations of the gradient, as \Tikz{}
+does will need to be done \emph{before} it is parsed to the drawing
+function.
+
+Radial gradient fills have similar issues and the work done so far on
+linear gradients could be fairly easily replicated.
+
+This work is still within step 1 of the \ref{tikzWorkflow} list. To
+continue with the implementation, aside from the above obstacles,
+\texttt{dvir} would need to do another sweep of the DVI file, like the
+font sweep. This might be possible as part of the other sweeps. Then
+after any transformations or manipulations are made, the gradient
+defintion can be called by a unique identifier to parse the stored fill
+definitions to the drawing function.
 
 \newpage{}
 
 \section{Text baselines}\label{text-baselines}
+
+Section outline:
 
 \begin{itemize}
 \item
@@ -1149,63 +1203,47 @@ case a value of 0 is returned as the baseline.
 Here is an example of the \texttt{baselineAlgorithms()} function in
 use\ldots{}
 
-\ldots{} and here are some examples showing the text and the calculated
-baseline from the function\ldots{}
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x <-}\StringTok{ }\NormalTok{grid}\OperatorTok{::}\KeywordTok{unit}\NormalTok{(}\DecValTok{5}\NormalTok{, }\StringTok{"cm"}\NormalTok{)}
-\NormalTok{y <-}\StringTok{ "hello"}
+\KeywordTok{source}\NormalTok{(}\StringTok{"../Appendices/algorithms.R"}\NormalTok{)}
+\NormalTok{baselineValue <-}\StringTok{ }\KeywordTok{baselines}\NormalTok{(}\DataTypeTok{tex =} \StringTok{"$x - }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu$"}\NormalTok{, }
+                           \DataTypeTok{algorithm =} \StringTok{"alex"}\NormalTok{)}
+\NormalTok{baselineValue}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## [1] 127431scaledpts
+\end{verbatim}
+
+\ldots{} and here are some examples showing the text and the calculated
+baseline from the function\ldots{}
 
 \newsavebox{\dvibox}
 
 \newcommand{\boxreport}[2]{%
-  \sbox{\dvibox}{\parbox[b]{1in}{#1}}%
+  \sbox{\dvibox}{\parbox[b]{4in}{#1}}% Change width to be '1in' if going back to better way of doing it. Better yet, get variable that takes width of text itself (like TeX examples from Paul) 
   \usebox{\dvibox}%
   \vspace{-#2}%
   \hrule%
   \vspace{#2}%
 }
 
-\boxreport{testing}{0cm}
-
-\boxreport{testing}{0.5mm}
-
-\newcommand\rText{5cm}
-
-\rText
-
-\newcommand\sText{hello}
-
-\sText
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{source}\NormalTok{(}\StringTok{"../Appendices/algorithms.R"}\NormalTok{)}
-\NormalTok{testText <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"test"}\NormalTok{,       }\CommentTok{# Text with no danglies}
-              \StringTok{"testing"}\NormalTok{,    }\CommentTok{# Text with danglies}
-              \StringTok{"var"}\NormalTok{,        }\CommentTok{# Short text with no danglies}
-              \StringTok{"varying"}\NormalTok{,    }\CommentTok{# Short text with danglies}
-              \StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{sum_\{n=1\}^\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{infty\} 2^\{-n\} = 1$"}\NormalTok{,             }\CommentTok{# Equation only (inline)}
-              \StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{sum}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{limits_\{n=1\}^\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{infty\} 2^\{-n\} = 1$"}\NormalTok{,     }\CommentTok{# Equation only (inline, but like 'displaymath')}
-              \StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{sum}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{limits_\{n=1\}^\{\} 2^\{-n\} = 1$"}\NormalTok{,            }\CommentTok{# Equation only (inline, but like 'displaymath' and without upper summation limit)}
-              \StringTok{"The equation is $x + }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{frac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$"}\NormalTok{,        }\CommentTok{# Text then equation}
-              \StringTok{"The equation is $x + }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{frac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu\}\{2\}$"}\NormalTok{,          }\CommentTok{# Text then equation (with lower equation height)}
-              \StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{frac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\} + x$ is the equation"}\NormalTok{,        }\CommentTok{# Equation then text (with fraction first)}
-              \StringTok{"$x + }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{frac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu\}\{2\}$ is the equation"}\NormalTok{,          }\CommentTok{# Equation then text (with lower equation height, and fraction first)}
-              \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{begin\{minipage\}\{1in\}Paragraph, with some line wrapping!}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{end\{minipage\}"}\NormalTok{)  }\CommentTok{# Multiline text/paragraph}
-
-\NormalTok{alexAlgorithmBaseline <-}\StringTok{ }\KeywordTok{baselines}\NormalTok{(}\DataTypeTok{tex =}\NormalTok{ testText[}\DecValTok{5}\NormalTok{], }
-                                   \DataTypeTok{algorithm =} \StringTok{"alex"}\NormalTok{)}
-\NormalTok{alexAlgorithmBaseline}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 688135scaledpts
-\end{verbatim}
+\boxreport{test}{0sp} \vspace{0.4cm} \boxreport{testing}{127431sp}
+\vspace{0.4cm} \boxreport{var}{0sp} \vspace{0.4cm}
+\boxreport{varying}{127431sp} \vspace{0.4cm}
+\boxreport{$\sum_{n=1}^{\infty} 2^{-n} = 1$}{688135sp} \vspace{0.4cm}
+\boxreport{$\sum\limits_{n=1}^{\infty} 2^{-n} = 1$}{1256841sp}
+\vspace{0.4cm} \boxreport{$\sum\limits_{n=1}^{} 2^{-n} = 1$}{634246sp}
+\vspace{0.4cm}
+\boxreport{The equation is $x + \frac{\mu^2}{2}$}{225995sp}
+\vspace{0.4cm} \boxreport{The equation is $x + \frac{\mu}{2}$}{225995sp}
+\vspace{0.4cm}
+\boxreport{$\frac{\mu^2}{2} + x$ is the equation}{518356sp}
+\vspace{0.4cm} \boxreport{$x + \frac{\mu}{2}$ is the equation}{225995sp}
+\vspace{0.4cm}
+\boxreport{\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}{1700295sp}
+\vspace{0.4cm}
 
 \subsubsection{\texorpdfstring{\texttt{dviMoves}
 algorithm}{dviMoves algorithm}}\label{dvimoves-algorithm}

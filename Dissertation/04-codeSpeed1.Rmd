@@ -171,9 +171,6 @@ For my own learning - learn how these op codes thing work (like how the function
 
 ```{r metricFont_0.2-1, fig.cap="Metric sweep searching and recording font information in package version 0.2-1, in package file dvir/R/metric.R", eval=FALSE}
 metric_info_243 <- op_font_def
-```
-
-```{r gridFont_0.2-1, fig.cap="Grid sweep searching and recording font information in package version 0.2-1, in package file dvir/R/grid.R", eval=FALSE}
 grid_op_243 <- op_font_def
 ```
 
@@ -243,8 +240,6 @@ for (k in c(simpleProfResults, yeeProfResults)) {
   # results[[k]][[measurements[5]]] <- x$by.total['"op_font_def"',"total.time"]
 }
 ```
-
-The second table contains the change in time as a proportion of the "before" time.
 
 ```{r, echo = FALSE, eval = TRUE}
 # resultTable <- data.frame(before_gridlatex = c(results[[1]][[2]],

@@ -12,6 +12,7 @@ output:
       graphicx: null
 header-includes:
     - \linespread{1.25}
+    - \setcounter{tocdepth}{2}
 ---
 
 ```{r setup, include=FALSE}
@@ -42,6 +43,8 @@ New Zealand
 \tableofcontents
 
 <!---
+Sections:
+
 references:
 References to maybe include (if/where relevant):
 • All ‘dvir’ tech reports
@@ -50,6 +53,8 @@ References to maybe include (if/where relevant):
 • R intro
 • R base graphics?
 • R grid graphics
+
+Appendices
 
 
 Date?

@@ -62,6 +62,13 @@ After this statement there appears to consistently be a downward move the height
 
 Here is an example of the `baselineAlgorithms()` function in use...
 
+```{r}
+source("../Appendices/algorithms.R")
+baselineValue <- baselines(tex = "$x - \\mu$", 
+                           algorithm = "alex")
+baselineValue
+```
+
 ... and here are some examples showing the text and the calculated baseline from the function...
 
 <!---
@@ -78,37 +85,10 @@ Here's the LaTeX stuff I need for examples!
 https://www.techwalla.com/articles/horizontal-line-options-in-latex
 
 remove eval=TRUE from these code chunks
+
+Try some examples with \newline command instead of mini page
 --->
-```{r, eval = TRUE}
-x <- grid::unit(5, "cm")
-y <- "hello"
-
-```
-
-\newsavebox{\dvibox}
-
-\newcommand{\boxreport}[2]{%
-  \sbox{\dvibox}{\parbox[b]{1in}{#1}}%
-  \usebox{\dvibox}%
-  \vspace{-#2}%
-  \hrule%
-  \vspace{#2}%
-}
-
-\boxreport{testing}{0cm}
-
-\boxreport{testing}{0.5mm}
-
-\newcommand\rText{`r paste0(x)`}
-
-\rText
-
-\newcommand\sText{`r y`}
-
-\sText
-
-
-```{r, eval = TRUE}
+```{r, eval = TRUE, echo = FALSE}
 source("../Appendices/algorithms.R")
 testText <- c("test",       # Text with no danglies
               "testing",    # Text with danglies
@@ -123,12 +103,58 @@ testText <- c("test",       # Text with no danglies
               "$x + \\frac{\\mu}{2}$ is the equation",          # Equation then text (with lower equation height, and fraction first)
               "\\begin{minipage}{1in}Paragraph, with some line wrapping!\\end{minipage}")  # Multiline text/paragraph
 
-alexAlgorithmBaseline <- baselines(tex = testText[5], 
-                                   algorithm = "alex")
-alexAlgorithmBaseline
+
+
+for (i in seq_along(testText)) {
+  if (i == 1)
+    algorithmBaselines <- baselines(tex = testText[i], 
+                                         algorithm = "alex")
+  else
+    algorithmBaselines <- unit.c(algorithmBaselines, 
+                                 baselines(tex = testText[i], 
+                                           algorithm = "alex"))
+}
+
+# Function to convert 'grid' units to LaTeX units (changing the characters at the end basically)
+unitConvert <- function(x) {
+  paste0(as.numeric(x), switch(attr(x, "unit"),
+                               scaledpts = "sp",
+                               attr(x, "unit")))
+}
+
+latexCode <- character(0)
+for (i in seq_along(algorithmBaselines)) {
+  latexCode <- c(latexCode, 
+                 paste("\\boxreport{", 
+                       testText[i], 
+                       "}{", 
+                       unitConvert(algorithmBaselines[i]), 
+                       "}\n\\vspace{0.4cm}\n", 
+                       sep = ""))
+}
 ```
 
+\newsavebox{\dvibox}
 
+\newcommand{\boxreport}[2]{%
+  \sbox{\dvibox}{\parbox[b]{4in}{#1}}% Change width to be '1in' if going back to better way of doing it. Better yet, get variable that takes width of text itself (like TeX examples from Paul) 
+  \usebox{\dvibox}%
+  \vspace{-#2}%
+  \hrule%
+  \vspace{#2}%
+}
+
+```{r, echo = FALSE, results = "asis"}
+cat(latexCode)
+```
+
+<!---
+TO suss with pictures of baselines
+-Which exampels to show
+-Centre align?
+-Make colour light red
+-Change width of rule to match text width (either using vriable \dviwidth like before or just choosing arbitrary value)
+--->
 
 
 
