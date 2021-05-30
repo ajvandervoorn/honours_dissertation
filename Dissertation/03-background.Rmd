@@ -2,7 +2,7 @@
 
 # Background
 
-## TeX
+## \TeX{}
 
 \TeX{} is a program to format and typeset text, and includes some basic macros to do this. \LaTeX{} is a higher-level implementation of \TeX{}, basically consisting of a lot more macros, creating a much more user-friendly interface to \TeX{}. For example, \LaTeX{} allows one to create a document with numbered sections, title pages and bibliographies without having to write complicated \TeX{} macros themself. There are other extensions to \TeX{} that do similar things to \LaTeX{} too.
 
@@ -34,7 +34,7 @@ In a simplified form, `dvir` works by providing a high level function, `grid.lat
 <!---
 This isn't the label from earlier! Either don't relate this to the label or redo the caption or redo the text
 --->
-```{r fig.cap="Using `dvir` to make our caption label from earlier"}
+```{r, fig.width = 2, fig.height = 2, fig.cap="Using `dvir` to make our caption label from earlier"}
 library(dvir)
 grid.latex("$x - \\mu$")
 ```

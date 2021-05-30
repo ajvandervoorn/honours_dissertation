@@ -1,5 +1,12 @@
 \newpage{}
 
+<!---
+For complicated example, maybe work out how many times same font is defined in different grid.latex() calls?
+
+Check if same font is used in SAME grid.latex call, does it need to work harder?
+
+--->
+
 # Code speed (part 2) - font caching
 
 The earlier code speed up was done by stopping `dvir` doing something "silly". Our further profiling lead us to find where next our code spends its time and now it was a matter of making `dvir` "smarter".
@@ -35,3 +42,16 @@ The earlier code speed up was done by stopping `dvir` doing something "silly". O
 But why to each of these steps? Need to flesh out more why they achieve what we want it to achieve (and any considerations we had in our thought process)
 
 - [**Example:** Profiling results (`profvis()` and `profmem()` showing speed improvement)]
+
+## Profiling environment specifications
+
+The exact results obtained in this and the previous section are specific to the computing environment used. Specific details are provided below. The sampling nature of profiling (intermittent recording of the call stack) will give different results every time it is done.
+
+The profiling results are very specific to the computer setup used and could change considerably depending on the exact computing environment in which the `dvir` package is used. 
+
+The profiling results in this report, in this and the next section, were calculated with the following setup:
+
+- A virtual machine via Oracle VM Virtualbox
+- Virtual machine running Ubuntu 18.04.5 LTS
+- R version 3.4.4
+- `dvir` package versions as described with the profiling results

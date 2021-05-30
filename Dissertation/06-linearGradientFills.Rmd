@@ -13,48 +13,50 @@ Say added "linear gradient defined" and "linear gradient used" for clarification
 paste(hexView::blockValue(dviLinGradNew[[43]]$blocks$op.opparams.string), collapse = "")
 
 
+What are those 6 "transform" things in SVG DVI output? I think they are mentioned in dvir package code?
 
+Try making sphere with linear gradient with TikZ, see if fill is still rectangle with clipping?
 --->
 
 # Linear gradient fills
 
-## TikZ and `dvir`
+## \Tikz{} and `dvir`
 
-TikZ is a \TeX{} package that allows drawing of pictures and diagrams in \TeX{} documents [reference TikZ report/description]:
+\Tikz{} is a \TeX{} package that allows drawing of pictures and diagrams in \TeX{} documents [reference \Tikz{} report/description]:
 
-- [**Example:** simple TikZ drawing (circles with labels, and an arrow maybe)]
+- [**Example:** simple \Tikz{} drawing (circles with labels, and an arrow maybe)]
 
-- [**Example:** more complicated TikZ drawing, maybe with colouring and stuff]
+- [**Example:** more complicated \Tikz{} drawing, maybe with colouring and stuff]
 
 The original DVI specification only needed to account for text and typesetting (and can do the most basic of rectangles too!), and so was not designed with drawing and graphics in mind. The type of instruction in the DVI file are labelled with an "op code". Each op code described a type of instruction like defining fonts, setting characters to display and vertical and horizontal cursor movements. There were four op codes however, called *DVI specials*, that can contain almost any form of instruction or values needed, such as text colour, to create a document based on the DVI file, such as Postscript or PDF.
 
-The TikZ package uses these DVI specials to describe shapes, drawings and colours in PGF (portable graphics format) which can be translated to instructions for other viewing formats, like Postscript, PDF or SVG. How the instructions are translated is controlled by a TikZ driver. The `dvir` package includes its own TikZ driver to translate the drawing instructions into a form useful to draw the things with R grid graphics [reference Paul dvir TikZ report].
+The \Tikz{} package uses these DVI specials to describe shapes, drawings and colours in PGF (portable graphics format) which can be translated to instructions for other viewing formats, like Postscript, PDF or SVG. How the instructions are translated is controlled by a \Tikz{} driver. The `dvir` package includes its own \Tikz{} driver to translate the drawing instructions into a form useful to draw the things with R grid graphics [reference Paul dvir \Tikz{} report].
 
-Some TikZ features were not implemented though, notably the ability to have fill colours of shapes as linear or radial gradients or patterns. The primary reason for this is that R did not support these types of fills but the latest R release in May 2021, version 4.1.0, provides support for these fills in the `grid` package, on which `dvir` is built.
+Some \Tikz{} features were not implemented though, notably the ability to have fill colours of shapes as linear or radial gradients or patterns. The primary reason for this is that R did not support these types of fills but the latest R release in May 2021, version 4.1.0, provides support for these fills in the `grid` package, on which `dvir` is built.
 
 - [**Example:** replicate one of the above examples in R]
 
-- [**Example:** TikZ radial gradient fill example]
+- [**Example:** \Tikz{} radial gradient fill example]
 
-- [**Example:** Make same TikZ example as above in R with dvir (obviously fill will be blank)]
+- [**Example:** Make same \Tikz{} example as above in R with dvir (obviously fill will be blank)]
 
 - [**Example:** Use R 4.1.0 to make a linear gradient in a shape]
 
-As it is, the TikZ driver simply ignores any gradient or pattern fill information when creating the DVI file for `dvir`.
+As it is, the \Tikz{} driver simply ignores any gradient or pattern fill information when creating the DVI file for `dvir`.
 
 - [**Example:** Use `grid.tikzpicture()` for picture with gradient fill in text, but resulting R graphic does not have fill]
 
-## Implementing TikZ linear gradient fills in `dvir`
+## Implementing \Tikz{} linear gradient fills in `dvir`
 
-The following steps are required to implement these TikZ fills in `dvir`:
+The following steps are required to implement these \Tikz{} fills in `dvir`:
 
-1. Add the fill information (like gradient start and end colours, gradient radius etc.) to the DVI file created by `dvir`
+1. Add the fill information (like the gradient colours and their locations) to the DVI file created by `dvir`
 
 2. Store this fill information during a parse by `dvir` to read the DVI file
 
 3. Add the fill information when drawing the shape in R
 
-To tackle step 1, we need to update the `dvir` TikZ driver file to include information about the gradient and pattern fills. As the `dvir` TikZ driver file is based on the SVG TikZ driver file, the SVG support for TikZ fills was used as a base to edit to make it specific to `dvir`.
+To tackle step 1, we need to update the `dvir` \Tikz{} driver file to include information about the gradient and pattern fills. As the `dvir` \Tikz{} driver file is based on the SVG \Tikz{} driver file, the SVG support for \Tikz{} fills was used as a base to edit to make it specific to `dvir`.
 
 <!---
 Assuming from here on that we only care about linear gradients
@@ -62,11 +64,14 @@ Assuming from here on that we only care about linear gradients
 Can I just talk about linear gradient fills here? The work could easily be extended (but wasn't) to radial gradients as well
 --->
 
-The information we require for the gradient fills from TikZ via the DVI file is as per the arguments for the `grid::linearGradient(...)`, which is used as an argument to `grid::gpar(fill = linearGradient(...))`, which itself is an argument to a `grid` drawing function, for example `grid::grid.rect(..., gp = gpar(fill = linearGradient(...)))`. The most important parts of defining a linear gradient fill is the colours and stops of the gradient fill. The stops of a gradient fill are the locations along the length of a gradient fill where the specified colours are. In between the stops, the gradient between stop colours either side occurs.
+The information we require for the gradient fills from \Tikz{} via the DVI file is as per the arguments for the `grid::linearGradient(...)`, which is used as an argument to `grid::gpar(fill = linearGradient(...))`, which itself is an argument to a `grid` drawing function, for example `grid::grid.rect(..., gp = gpar(fill = linearGradient(...)))`. The most important parts of defining a linear gradient fill is the colours and stops of the gradient fill. The stops of a gradient fill are the locations along the length of a gradient fill where the specified colours are. In between the stops, the gradient between stop colours either side occurs.
 
-The `colours` and `stops` arguments of `linearGradient()` are simply vectors of colours (a character vector of colour names of hexadecimal RGB values) and locations of those colours as a proportion of the distance between the start and end points of the gradient respectively. This obviously guides us as to what information we need to get from TikZ in the DVI file so we can pass it to `dvir`.
+The `colours` and `stops` arguments of `linearGradient()` are simply vectors of colours (a character vector of colour names of hexadecimal RGB values) and locations of those colours as a proportion of the distance between the start and end points of the gradient respectively. This obviously guides us as to what information we need to get from \Tikz{} in the DVI file so we can pass it to `dvir`.
 
 Let us consider a simple example, a rectangle with an orange to green linear gradient fill:
+<!---
+
+OLD CODE FOR SOME REASON:
 
 ```{eval=FALSE}
 # Code from TeX should we want to know how to do this in TeX itself or reduce/simplify to print above the picture below. Could edit to be programatic (hide code chunk to define tikz picture code, then add that in here with results='asis' or generation of picture below)
@@ -90,12 +95,19 @@ latexRect <- c("\\begin{center}",
 # cat(y)
 cat(latexRect)
 ```
+--->
 
-The following is an extract of the DVI file when the rectangle above is generated using the SVG DVI driver included with the common \TeX{} distributions, `pgfsys-dvisvgm.def`. It has been edited slightly for readability.
+\begin{figure}
+\begin{tikzpicture}
+\filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);
+\end{tikzpicture}
+\end{figure}
+
+The following is an extract of the DVI file when the rectangle above is generated using the SVG DVI driver included with the common \TeX{} distributions, `pgfsys-dvisvgm.def`. It has been edited slightly for readability by adding line breaks.
 <!---
 The output of the linear gradient info below was element 52 after reading in the DVI file into R using 'readDVI()', in case we want to automate this later
 
-CHECK THIS OUTPUT FOR THE 'matrix()' FUNCTION. WHERE DID IT COME FROM?
+CHECK THIS OUTPUT FOR THE 'matrix()' FUNCTION. WHERE DID IT COME FROM? - I think it's okay (check DVI output....)
 
 Maybe remove some spaces if want it this code to go into left margin, or think of where else I could line breaks
 --->
@@ -118,19 +130,161 @@ xxx4         k=425
 xxx1         k=57
              x=dvisvgm:raw <g transform="translate(-50.1875,-50.1875)"> 
 xxx1         k=97
-             x=dvisvgm:raw <rect width="100.375" height="100.375" style="fill:url(#pgfsh2); 
-                            stroke:none"/>{?nl} 
+             x=dvisvgm:raw <rect width="100.375" height="100.375" 
+                            style="fill:url(#pgfsh2); stroke:none"/>{?nl} 
 ```
 
-We can see from this that the linear gradient definition with stops and colours is defined within a `<linearGradient>` element and given an `id` attribute. In the `<rect>` element a CSS style definition sets the fill of the rectangle by referring to the `id` of the previously defined definition. We can see in the linear gradient definition there are colours defined as RGB values and their respective stops so now we need to get the `dvir` driver file to extract the same information in a "R-friendly" form.
-
-Section to be continued with:
+We can see from this that the linear gradient definition with stops and colours is defined within a `<linearGradient>` element and given an `id` attribute. In the `<rect>` element a CSS style definition sets the fill of the rectangle by referring to the `id` of the previously defined definition. In the linear gradient definition there are colours defined as RGB values and their respective stops so now we need to get the `dvir` driver file to extract the same information in a "R-friendly" form. There are several \TeX{} macros that were defined to do this. These are based on the `pgfsys-common-svg.def` and `pgfsys-dvisgm.def` SVG drivers that come with most \TeX{} distributions.
 <!---
 - Go to `dvir` driver file and see what I've added (and try work out what bit does what to explain it! Like it gets defined in one place, then passed to another function to do something else)
 - See my meeting progress notes on the matter
+
+
+Test I've got all the bits by copying over to a fresh copy of dvir driver. If it still works, then I've got everything!
+
+Say main difference between SVG and R for stops is that we want to gather stops all together, and their colours all together for R. SVG wants one stops and it's colour togther!
 --->
 
-- What have we had to change in driver file (and why?) - like specific bits of driver file
+A counter is defined, in order to give each gradient definition unqiue identifier:
+
+```
+\newcount\pgf@sys@dvir@objectcount
+```
+
+A "wrapper" macro of what to do when a gradient fill is requested. Within this, the definition of the fill is created and outpu to the DVI file, followed by 
+
+```
+\def\pgfsys@shadinginsidepgfpicture#1{%
+  #1%
+  \pgfsysprotocol@literal{SHADING BEING DEFINED: ShadDefID = \the\pgf@sys@dvir@objectcount}%
+  \pgf@sys@dvir@sh@defs% 
+  \pgf@process{\pgf@sys@dvir@pos}%
+  \pgf@xa=-.5\pgf@x%
+  \pgf@ya=-.5\pgf@y%
+  \pgfsysprotocol@literal{<g transform="translate(\pgf@sys@tonumber{\pgf@xa},\pgf@sys@tonumber{\pgf@ya})">}%
+  \pgfsysprotocol@literal{SHADING BEING USED: ShadDefID = \the\pgf@sys@dvir@objectcount}
+  \pgf@sys@dvir@sh%
+}
+```
+
+```
+\def\pgfsys@vertshading#1#2#3{%
+  {%
+    \pgf@parsefunc{#3}%
+    \global\advance\pgf@sys@dvir@objectcount by1\relax%
+    \pgf@sys@dvir@shading@stops%
+    \pgf@sys@dvir@shading@stopcolours%
+    \expandafter\xdef\csname @pgfshading#1!\endcsname{%
+      \def\noexpand\pgf@sys@dvir@sh@defs{\noexpand\pgfsysprotocol@literal{\pgf@sys@dvir@thestops}}%
+      \def\noexpand\pgf@sys@dvir@sh{\noexpand\pgfsysprotocol@literal{<rect
+        width="\pgf@sys@tonumber{\pgf@y}"
+        height="\pgf@sys@tonumber{\pgf@x}"
+        style="fill:url(\noexpand\#pgfsh\the\pgf@sys@dvir@objectcount);
+          stroke:none"/>\noexpand\pgfsys@dvir@newline}}%
+      \def\noexpand\pgf@sys@dvir@pos{\noexpand\pgfpoint{\the\pgf@y}{\the\pgf@x}}%
+    }%
+  }%
+}
+```
+
+```
+\let\pgf@sys@dvir@thestops=\pgfutil@empty
+\def\pgf@sys@dvir@addtostops#1{%
+  \edef\pgf@temp{#1}%
+  \expandafter\expandafter\expandafter\def
+  \expandafter\expandafter\expandafter\pgf@sys@dvir@thestops
+  \expandafter\expandafter\expandafter{\expandafter\pgf@sys@dvir@thestops\expandafter\space\pgf@temp}%
+}
+```
+
+```
+\def\pgf@sys@dvir@shading@stops{%
+  % Step 1: Compute 1/\pgf@sys@shading@end@pos
+  \pgf@x=\pgf@sys@shading@end@pos\relax%
+  \c@pgf@counta=\pgf@x\relax%
+  \divide\c@pgf@counta by4096\relax%
+  % Step 2: Insert stops locations 
+  \pgf@sys@dvir@addtostops{stops=(}%
+  \expandafter\pgf@sys@dvir@shading@dostoplocations\pgf@sys@shading@ranges%
+  % dummy for end:
+  {{\pgf@sys@shading@end@pos}{\pgf@sys@shading@end@pos}}%
+  \pgf@sys@dvir@addtostops{)}%
+}
+
+\def\pgf@sys@dvir@shading@dostoplocations#1{%
+  \edef\pgf@test{#1}%
+  \ifx\pgf@test\pgfutil@empty%
+  \else%
+    \expandafter\pgf@sys@dvir@shading@dostoplocation\pgf@test%
+    \expandafter\pgf@sys@dvir@shading@dostoplocations
+  \fi%
+}
+
+\def\pgf@sys@dvir@shading@dostoplocation#1#2#3#4{%
+  % #1 start pos
+  % #2 end pos
+  % #3 start rgb
+  % #4 end rgb
+  \pgf@x=#1%
+  \pgf@x=16\pgf@x%
+  \divide\pgf@x by \c@pgf@counta\relax%
+  \expandafter\pgf@sys@dvir@addtostops{\pgf@sys@tonumber\pgf@x}%
+}
+```
+
+```
+\def\pgf@sys@dvir@shading@stopcolours{%
+  % Step 1: Compute 1/\pgf@sys@shading@end@pos
+  \pgf@x=\pgf@sys@shading@end@pos\relax%
+  \c@pgf@counta=\pgf@x\relax%
+  \divide\c@pgf@counta by4096\relax%
+  % Step 2: Insert stops RGB colours
+  \pgf@sys@dvir@addtostops{, colours=(}%
+  \expandafter\pgf@sys@dvir@shading@dostopcolours\pgf@sys@shading@ranges%
+  % dummy for end:
+  {{\pgf@sys@shading@end@rgb}{\pgf@sys@shading@end@rgb}{\pgf@sys@shading@end@rgb}}%
+  \pgf@sys@dvir@addtostops{)}%
+}
+
+\def\pgf@sys@dvir@shading@dostopcolours#1{%
+  \edef\pgf@test{#1}%
+  \ifx\pgf@test\pgfutil@empty%
+  \else%
+    \expandafter\pgf@sys@dvir@shading@dostopcolour\pgf@test%
+    \expandafter\pgf@sys@dvir@shading@dostopcolours%
+  \fi%
+}
+
+\def\pgf@sys@dvir@shading@dostopcolour#1#2#3#4{%
+  % #1 start pos
+  % #2 end pos
+  % #3 start rgb
+  % #4 end rgb
+  \expandafter\pgf@sys@dvir@shading@dorgb#3%
+}
+```
+
+```
+\def\pgf@sys@dvir@shading@dorgb#1#2#3{%
+  \pgf@sys@dvir@color@rgb#1,#2,#3\relax%
+  \pgf@sys@dvir@addtostops{\pgf@sys@dvir@prepared}%
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+Section to be continued with:
+
+- What have we had to change in driver file (and why?) - like specific bits of driver file. 
 
 - Before and after of DVI file (using new driver) for linear gradient fill (see new information display). Do the "after" for both simple rectangle and maybe a more complicated example?
 

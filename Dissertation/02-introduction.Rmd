@@ -12,19 +12,21 @@ opar <- par(mar = par()$mar + c(0, 1, 0, 0))
 plot(mu, mu ^ 2 / 2, xlab = expression(mu), ylab = "", yaxt = "n")
 axis(2, las = 1)
 mtext(expression(frac(mu ^ 2, 2)), side = 2, line = 3, las = 1)
-par(opar)
 ```
 
-This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX{}, but it is limited in its fonts. Compare the y-axis label above with how it looks when created by \LaTeX{} in figure \@ref(fig:muOver2).
+This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX{}, but it is limited in its fonts. Compare the y-axis label above with how it looks when created by \LaTeX{} in figure \ref{muOver2}.
 
-![The $y$-axis label from above, if it were created in \LaTeX](../Figures/muSquaredOverTwo.PNG "muOver2"){width=5%}
+\begin{figure}\label{muOver2}
+\begin{equation*}
+\dfrac{\mu^2}{2}
+\end{equation*}
+\caption{The \(y\)-axis label from above, when created in \LaTeX}
+\end{figure}
 
 <!---
 Use this code for above example, just need to find a way to caption and reference it. Also delete image from figures folder when done
 
-\begin{equation*}
-\dfrac{\mu^2}{2}
-\end{equation*}
+
 
 could use \[\dfrac{\mu^2}{2}\] if that was easier too?
 --->
@@ -46,7 +48,7 @@ What we want is a middle ground - being able to harness the power of \TeX{} and 
 
 The `dvir` package already worked really well in a lot of cases. There were however plenty more desirable features of \TeX{} and its extensions though that had not yet been implemented by `dvir`. The power of this package is from ensuring it is comprehensive enough to meet a user's entire \TeX{} needs in R graphics without having to leave R to do annotations in \LaTeX{} itself (or Photoshop/Illustrator!). 
 
-By keeping things "in R" users only need to learn R (and basic \TeX) code to create their graphics and their work is in one place and easily reproducible. Obviously it may not be realistic to *completely* replicate \TeX{} in R, however there were several aspects of the package identified as having a lot of potential to greatly increase its usefulness. The aspects identified were:
+By keeping things "in R" users only need to learn R (and basic \TeX) code to create their graphics and their work is in one place and easily reproducible. It may not be realistic to *completely* replicate \TeX{} in R, however there were several aspects of the package identified as having a lot of potential to greatly increase its usefulness. The aspects identified were:
 
 * the speed of the package - anecdotally it took a while to generate graphics, especially if there were many `grid.latex()` calls
 * expand `dvir`'s capability of creating TikZ drawings by adding support for linear gradient fills

@@ -1,8 +1,3 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
 \newpage{}
 
 # Code speed (part 1) - removing redundant font sweeps
@@ -75,29 +70,10 @@ dvir versions:
 0.2-2 - After first speed up 
 0.3-1 - Before second speed up (had TikZ and all that, and font support changes)
 0.3-2 - After second speed up
-
-
-
-- Look back to 6th of October? 
-                             That's when I think Paul did merge of first speed up
-I pushed change around 09 Feb (that didn't quite work)
-Second code speed ups were done in >0.3-1 (in 0.3-2 I think, unless that was already 
-                                           used by Paul for another change)
-Push change around 25 Feb had most of the work doen I think
-
-
-
-To record:
-      -Virtual box version
-      -Ubuntu version
-      -'dvir' package version
-      -R version
-      -That it was a Cairo device (probably use on-screen device?)
-      Use 'sessionInfo()' to get some of this info?
 --->
 In the introduction of this report the case for the `dvir` package was motivated with a simple example of a mathematical equation. `dvir` can be used on a larger scale too.
 
-```{r yeeExample, fig.cap="A more complicated example using `dvir`"}
+```{r yeeExample, fig.cap="A more complicated example using `dvir`", fig.wdith = 5, fig.height = 5}
 xpos <- c(0, 0.25,  0.7, 1)
 myplot <- function(abcd = "(a)", col = "black") {
   plot(1:9, 1:9, type = "n", xlim = c(0, 1), ylim = c(0, 1), 
@@ -107,7 +83,7 @@ myplot <- function(abcd = "(a)", col = "black") {
   text(0.05, y = 1.1, xpd = TRUE, labels = abcd, cex = 1.0,
        font = 1, col = col)
 }  # myplot
-par(mfrow=c(2,2),
+par(mfrow=c(2, 2),
     mar = c(2.6, 4, 1.5, 2) + 0.1,
     font = 3,  # italic
     las = 1)
@@ -236,9 +212,10 @@ Do we want another `profvis()` output here showing the change? Might be good for
 \- [**Example:** `profvis()` screenshot of Thomas Yee's example, showing `definePDFFont()` (after change)]
 --->
 
-To quantify the impact this has on code speed we recorded the time to run our examples 20 times, after an initial run to compile the package after it was loaded. The first table details the total time spent, in seconds, in each of these functions in the 20 runs before and after these changes were made.
+To quantify the impact this has on code speed we recorded the time to run our examples 20 times, after an initial run to compile the package after it was loaded.
 
-```{r include=FALSE, eval = TRUE}
+```{r echo = FALSE, eval = TRUE}
+library(kableExtra)
 dvirLibs <- c("/media/sf_Honours_project/VM_18.04/dvir0.2-1",
               "/media/sf_Honours_project/VM_18.04/dvir0.2-2",
               "/media/sf_Honours_project/VM_18.04/dvir0.3-1",
@@ -270,19 +247,25 @@ for (k in c(simpleProfResults, yeeProfResults)) {
 The second table contains the change in time as a proportion of the "before" time.
 
 ```{r, echo = FALSE, eval = TRUE}
-resultTable <- data.frame(before_gridlatex = c(results[[1]][[2]],
-                                                results[[5]][[2]]),
-                          before_metric = c(results[[1]][[3]],
-                                            results[[5]][[3]]),
-                          before_grid = c(results[[1]][[4]],
-                                          results[[5]][[4]]),
-                          after_gridlatex = c(results[[2]][[2]],
-                                                results[[6]][[2]]),
-                          after_metric = c(results[[2]][[3]],
-                                            results[[6]][[3]]),
-                          after_grid = c(results[[2]][[4]],
-                                          results[[6]][[4]]))
-knitr::kable(resultTable[, 1:6])
+# resultTable <- data.frame(before_gridlatex = c(results[[1]][[2]],
+#                                                results[[5]][[2]]),
+#                           before_metric = c(results[[1]][[3]],
+#                                             results[[5]][[3]]),
+#                           before_grid = c(results[[1]][[4]],
+#                                           results[[5]][[4]]),
+#                           after_gridlatex = c(results[[2]][[2]],
+#                                               results[[6]][[2]]),
+#                           after_metric = c(results[[2]][[3]],
+#                                            results[[6]][[3]]),
+#                           after_grid = c(results[[2]][[4]],
+#                                          results[[6]][[4]]))
+# resultTable$gridlatex_change <- with(resultTable,
+#                                      (after_gridlatex - before_gridlatex) / before_gridlatex)
+# resultTable$metric_change <- with(resultTable,
+#                                   (after_metric - before_metric) / before_metric)
+# resultTable$grid_change <- with(resultTable,
+#                                 (after_grid - before_grid) / before_grid)
+# knitr::kable(resultTable[, 1:6])
 
 resultDF <- data.frame(time = c(results[[1]][[2]],
                                 results[[5]][[2]],
@@ -303,18 +286,18 @@ resultDF <- data.frame(time = c(results[[1]][[2]],
                        example = c("simple", "yee"))
 ```
 
-```{r, echo = FALSE}
-resultTable$gridlatex_change <- with(resultTable, 
-                                     (after_gridlatex - before_gridlatex) / before_gridlatex)
-resultTable$metric_change <- with(resultTable, 
-                                  (after_metric - before_metric) / before_metric)
-resultTable$grid_change <- with(resultTable, 
-                                (after_grid - before_grid) / before_grid)
-knitr::kable(resultTable[, 7:9])
+```{r rSpeedUp1Change, eval = FALSE, echo = FALSE}
+
+kable(resultTable[, 7:9],
+      col.names = c("`grid.latex()`", "Metric sweep", "Grid sweep"),
+      digits = 2,
+      caption = "Change in time spent in parts of `dvir` before and after the changes were made",
+      label = "speedUp1Change")
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
-library(ggplot2)
+versionLabels <- c(Before = "0.2-1 (before changes)", 
+                   After = "0.2-2 (after changes)")
 
 plotProfiling1 <- function(ex, versionLabels) {
   p <- ggplot(resultDF[resultDF$example == ex, ]) + 
@@ -335,29 +318,22 @@ plotProfiling1 <- function(ex, versionLabels) {
     theme(axis.ticks.x = element_blank(),
           axis.text.x = element_blank(),
           # axis.title.y = element_text(),
-          panel.spacing.x = unit(1, "lines"))
+          panel.spacing.x = unit(1.5, "lines"))
   p
 }
-versionLabels <- c(Before = "0.2-1 (before changes)", 
-                   After = "0.2-2 (after changes)")
 ```
 
 ```{r speedUp1Simple, fig.cap = "The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our simple example.", echo = FALSE, fig.width = 7, fig.height = 4}
 plotProfiling1("simple", versionLabels)
 ```
 
-Discussion of 'simple' example results!
+For the simple example the time spent in the metric and grid sweeps have decreased by 76% and 83% respectively. The only speed that matters for users is the overall speed of the call to `grid.latex()`, which in this case has decreased by 30%.
 
 ```{r speedUp1Yee, fig.cap = "The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our complicated example.", echo = FALSE, fig.width = 7, fig.height = 4}
 plotProfiling1("yee", versionLabels)
 ```
 
-Discussion of 'complicated' example results!
-
-Section to be continued with:
-
-- Formatting above table better (rounding, units, convert to percentages, better headings, centre align etc.)
-- Text/paragraph description of these results
+Similarly for the more complicated example in figure \@ref{fig:yeeExample} the metric and grid sweeps have decreased by 83% and 89% respectively, with `grid.latex()` overall taking 47% less time. 
 
 <!---
 For plot, maybe 2 by 3 facet wrap thing? rows are examples, columns are the part of the function that's sped up
@@ -382,20 +358,6 @@ This section needs:
 
 <!---
 Need to actually check these results (that I summarised the right info with my R code)
---->
-<!---
+
 Does engine$fontDef show up in Rprof results?
 --->
-
-## Profiling environment specifications
-
-The exact results obtained are specific to the computing environment used. Specific details are provided below. The sampling nature of profiling (intermittent recording of the call stack) will give different results every time it is done.
-
-The profiling results are very specific to the computer setup used and could change considerably depending on the exact computing environment in which the `dvir` package is used. 
-
-The profiling results in this report, in this and the next section, were calculated with the following setup:
-
-- A virtual machine via Oracle VM Virtualbox
-- Virtual machine running Ubuntu 18.04.5 LTS
-- R version 3.4.4
-- `dvir` package versions as described with the profiling results

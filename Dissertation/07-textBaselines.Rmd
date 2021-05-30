@@ -22,6 +22,8 @@ Explicitly mention name of algorithms.R function, and maybe the examples script 
 
 # Text baselines
 
+Section outline:
+
 - Do all this without examples first maybe, as that will be some fiddly work?
 
 - Demonstrate problem (with example using grid.text), especially try multi line text maybe?

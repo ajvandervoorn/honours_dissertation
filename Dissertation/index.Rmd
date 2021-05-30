@@ -4,7 +4,7 @@ author: "Alexander van der Voorn"
 site: bookdown::bookdown_site
 output: 
   bookdown::pdf_document2:
-    keep_tex: no
+    keep_tex: yes
     toc: FALSE
     dev: cairo_pdf
     extra_dependencies:
@@ -15,8 +15,12 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width='70%', eval = TRUE)
+knitr::opts_chunk$set(echo = TRUE, 
+                      fig.align="center", 
+                      out.width='70%', 
+                      eval = TRUE)
 library(dvir)
+library(ggplot2)
 ```
 
 % macros setup
@@ -24,9 +28,8 @@ library(dvir)
 
 \begin{center}
 
-\date
-\vspace{6cm}
-\includegraphics[scale=2]{../Figures/logo.jpg}\\
+\vspace{8cm}
+\includegraphics[width=0.2\textwidth]{../Figures/logo.jpg}\\
 \vspace{1cm}
 Bachelor of Science (Honours)\\
 Department of Statistics\\
@@ -47,4 +50,9 @@ References to maybe include (if/where relevant):
 • R intro
 • R base graphics?
 • R grid graphics
+
+
+Date?
+
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 --->
