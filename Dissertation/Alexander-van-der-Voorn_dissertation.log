@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.10.26)  31 MAY 2021 02:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.10.26)  31 MAY 2021 09:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1449,37 +1449,37 @@ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.357   M
-         etric sweep: To determine the overall bounding box (size) of the <./Al
-exander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1.pdf>] [
-7]
+l.320     \item M
+                 etric sweep: To determine the overall bounding box (size) o...
+ <./Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1.p
+df>] [7]
 
-Package xcolor Warning: Incompatible color definition on input line 384.
+Package xcolor Warning: Incompatible color definition on input line 335.
 
-LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 409
+LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 360
 .
 (/usr/share/texmf/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 
-Package xcolor Warning: Incompatible color definition on input line 429.
+Package xcolor Warning: Incompatible color definition on input line 380.
 
 
-Package xcolor Warning: Incompatible color definition on input line 429.
+Package xcolor Warning: Incompatible color definition on input line 380.
 
 
-Overfull \vbox (0.43936pt too high) detected at line 429
+Overfull \vbox (0.43936pt too high) detected at line 380
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 429.
+Package xcolor Warning: Incompatible color definition on input line 380.
 
 [8]
 
-Package xcolor Warning: Incompatible color definition on input line 429.
+Package xcolor Warning: Incompatible color definition on input line 380.
 
 
-Package xcolor Warning: Incompatible color definition on input line 429.
+Package xcolor Warning: Incompatible color definition on input line 380.
 
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf, id=2
 04, 469.755pt x 361.35pt>
@@ -1487,14 +1487,17 @@ File: Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf
 Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/yeeExample-1.pdf  used on input line 433.
+x/yeeExample-1.pdf  used on input line 384.
 (pdftex.def)             Requested size: 328.82626pt x 252.94327pt.
+
+LaTeX Warning: Reference `yeeExample' on page 9 undefined on input line 391.
+
 <../Figures/profilingSimpleProfvis_0.2-1.PNG, id=206, 695.59875pt x 203.25937pt
 >
 File: ../Figures/profilingSimpleProfvis_0.2-1.PNG Graphic file (type png)
 <use ../Figures/profilingSimpleProfvis_0.2-1.PNG>
 Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1.PNG  used on i
-nput line 457.
+nput line 408.
 (pdftex.def)             Requested size: 469.75302pt x 137.26547pt.
 <../Figures/profilingYeeProfvis_0.2-1_highlight.PNG, id=208, 700.11563pt x 411.
 03563pt>
@@ -1502,27 +1505,27 @@ File: ../Figures/profilingYeeProfvis_0.2-1_highlight.PNG Graphic file (type png
 )
 <use ../Figures/profilingYeeProfvis_0.2-1_highlight.PNG>
 Package pdftex.def Info: ../Figures/profilingYeeProfvis_0.2-1_highlight.PNG  us
-ed on input line 473.
+ed on input line 424.
 (pdftex.def)             Requested size: 469.75874pt x 275.79384pt.
 [9pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.492 
+l.443 
        <./Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.
 pdf>] [10pdfTeX warning (ext4): destination with the same identifier (name{figu
 re.5}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.492 
+l.443 
       pdfTeX warning (ext4): destination with the same identifier (name{figure.
 6}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.492 
+l.443 
        <../Figures/profilingSimpleProfvis_0.2-1.PNG> <../Figures/profilingYeePr
 ofvis_0.2-1_highlight.PNG>]
 <../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG, id=287, 750.55406pt x 2
@@ -1531,59 +1534,41 @@ File: ../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG Graphic file (type
 png)
 <use ../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG>
 Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG 
- used on input line 507.
+ used on input line 458.
 (pdftex.def)             Requested size: 469.75938pt x 176.68982pt.
 
-Package xcolor Warning: Incompatible color definition on input line 530.
-
-
-Package xcolor Warning: Incompatible color definition on input line 535.
-
-
-Package xcolor Warning: Incompatible color definition on input line 535.
-
-
-Package xcolor Warning: Incompatible color definition on input line 544.
+Package xcolor Warning: Incompatible color definition on input line 487.
 
 [11pdfTeX warning (ext4): destination with the same identifier (name{figure.7})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.544 \begin{Shaded}
-                     <../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG>]
+l.492 \end{Shaded}
+                   <../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG>]
 
-Package xcolor Warning: Incompatible color definition on input line 548.
-
-
-Package xcolor Warning: Incompatible color definition on input line 548.
+Package xcolor Warning: Incompatible color definition on input line 492.
 
 
-Package xcolor Warning: Incompatible color definition on input line 550.
+Package xcolor Warning: Incompatible color definition on input line 492.
 
 
-Package xcolor Warning: Incompatible color definition on input line 554.
+Package xcolor Warning: Incompatible color definition on input line 498.
 
 
-Package xcolor Warning: Incompatible color definition on input line 554.
+Package xcolor Warning: Incompatible color definition on input line 503.
 
 
-Package xcolor Warning: Incompatible color definition on input line 574.
+Package xcolor Warning: Incompatible color definition on input line 503.
 
 
-Package xcolor Warning: Incompatible color definition on input line 578.
+Package xcolor Warning: Incompatible color definition on input line 521.
 
 
-Package xcolor Warning: Incompatible color definition on input line 578.
+Package xcolor Warning: Incompatible color definition on input line 526.
 
 
-Package xcolor Warning: Incompatible color definition on input line 580.
-
-
-Package xcolor Warning: Incompatible color definition on input line 584.
-
-
-Package xcolor Warning: Incompatible color definition on input line 584.
+Package xcolor Warning: Incompatible color definition on input line 526.
 
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1.pdf, 
 id=294, 505.89pt x 289.08pt>
@@ -1592,7 +1577,7 @@ pdf Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1.p
 df>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/speedUp1Simple-1.pdf  used on input line 597.
+x/speedUp1Simple-1.pdf  used on input line 534.
 (pdftex.def)             Requested size: 328.8323pt x 187.90417pt.
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf, id=
 295, 505.89pt x 289.08pt>
@@ -1601,152 +1586,156 @@ File: Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf>
 
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/speedUp1Yee-1.pdf  used on input line 611.
+x/speedUp1Yee-1.pdf  used on input line 547.
 (pdftex.def)             Requested size: 328.8323pt x 187.90417pt.
 [12pdfTeX warning (ext4): destination with the same identifier (name{figure.8})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.616 \end{figure}
-                   <./Alexander-van-der-Voorn_dissertation_files/figure-latex/s
-peedUp1Simple-1.pdf>] [13pdfTeX warning (ext4): destination with the same ident
-ifier (name{figure.9}) has been already used, duplicate ignored
+l.559 \newpage
+              {} <./Alexander-van-der-Voorn_dissertation_files/figure-latex/spe
+edUp1Simple-1.pdf>] [13pdfTeX warning (ext4): destination with the same identif
+ier (name{figure.9}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.623 \newpage
-              {} <./Alexander-van-der-Voorn_dissertation_files/figure-latex/spe
-edUp1Yee-1.pdf>] [14] [15] [16]
-Underfull \hbox (badness 1264) in paragraph at lines 829--840
+l.615   I
+         f the definitions are the same, do nothing. If they are different, <./
+Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf>] [14
+] [15]
+Underfull \hbox (badness 1264) in paragraph at lines 765--776
 \T1/lmr/m/n/10 (+20) ments for the \T1/lmtt/m/n/10 grid::linearGradient(...)\T1
 /lmr/m/n/10 (+20) , which is used as an ar-gu-ment to \T1/lmtt/m/n/10 grid::gpa
 r(fill
  []
 
 
-Underfull \hbox (badness 1043) in paragraph at lines 829--840
+Underfull \hbox (badness 1043) in paragraph at lines 765--776
 \T1/lmtt/m/n/10 = linearGradient(...))\T1/lmr/m/n/10 (+20) , which it-self is a
 n ar-gu-ment to a \T1/lmtt/m/n/10 grid \T1/lmr/m/n/10 (+20) draw-ing func-tion,
  for ex-am-ple
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 863.
+Package xcolor Warning: Incompatible color definition on input line 800.
 
 
-Package xcolor Warning: Incompatible color definition on input line 885.
+Package xcolor Warning: Incompatible color definition on input line 822.
 
 
-Package xcolor Warning: Incompatible color definition on input line 885.
+Package xcolor Warning: Incompatible color definition on input line 822.
 
 
-Package xcolor Warning: Incompatible color definition on input line 885.
+Package xcolor Warning: Incompatible color definition on input line 822.
 
-[17]
+[16]
 
-Package xcolor Warning: Incompatible color definition on input line 885.
-
-
-Package xcolor Warning: Incompatible color definition on input line 885.
+Package xcolor Warning: Incompatible color definition on input line 822.
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 927--927
+Package xcolor Warning: Incompatible color definition on input line 822.
+
+
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 857--857
 []  \T1/lmtt/m/n/10 \pgfsysprotocol@literal{SHADING BEING DEFINED: ShadDefID = 
 \the\pgf@sys@dvir@objectcount}%[] 
  []
 
 
-Overfull \hbox (97.24333pt too wide) in paragraph at lines 927--927
+Overfull \hbox (97.24333pt too wide) in paragraph at lines 857--857
 []  \T1/lmtt/m/n/10 \pgfsysprotocol@literal{<g transform="translate(\pgf@sys@to
 number{\pgf@xa},\pgf@sys@tonumber{\pgf@ya})">}%[] 
  []
 
 
-Overfull \hbox (49.99347pt too wide) in paragraph at lines 958--958
+Overfull \hbox (49.99347pt too wide) in paragraph at lines 889--889
 []      \T1/lmtt/m/n/10 \def\noexpand\pgf@sys@dvir@sh@defs{\noexpand\pgfsysprot
 ocol@literal{\pgf@sys@dvir@thestops}}%[] 
  []
 
-[18]
-Overfull \hbox (65.74342pt too wide) in paragraph at lines 971--971
+[17]
+Overfull \hbox (65.74342pt too wide) in paragraph at lines 902--902
 []  \T1/lmtt/m/n/10 \expandafter\expandafter\expandafter{\expandafter\pgf@sys@d
 vir@thestops\expandafter\space\pgf@temp}%[] 
  []
 
-[19] [20]
-Overfull \hbox (44.74348pt too wide) in paragraph at lines 1062--1062
+[18] [19]
+Overfull \hbox (44.74348pt too wide) in paragraph at lines 1000--1000
 []                       \T1/lmtt/m/n/10 colours=( rgb(0,1,0) rgb(0,1,0) rgb(0.
 5,0.75,0) rgb(1,0.5,0) rgb(1,0.5,0) )[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1075--1075
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1013--1013
 []             \T1/lmtt/m/n/10 x=dvisvgm:raw  <linearGradient id="pgfsh2" gradi
 entTransform="rotate(90)">{?nl}[] 
  []
 
 
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1075--1075
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1013--1013
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.0" stop-color=" 
 rgb(0.0%,100.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1075--1075
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1013--1013
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.25" stop-color="
  rgb(0.0%,100.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1075--1075
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1013--1013
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.5" stop-color=" 
 rgb(50.0%,75.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (18.49356pt too wide) in paragraph at lines 1075--1075
+Overfull \hbox (18.49356pt too wide) in paragraph at lines 1013--1013
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.75" stop-color="
  rgb(100.0%,50.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1075--1075
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1013--1013
 []                            \T1/lmtt/m/n/10 <stop offset=" 1.0" stop-color=" 
 rgb(100.0%,50.0%,0.0%) "/>{?nl}[] 
  []
 
-[21] [22]
+[20] [21]
 
-Package xcolor Warning: Incompatible color definition on input line 1206.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1213.
+Package xcolor Warning: Incompatible color definition on input line 1142.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1213.
+Package xcolor Warning: Incompatible color definition on input line 1149.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1149.
 
 \dvibox=\box59
-[23] [24] [25] [26]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1345.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1345.
+[22] [23] [24] [25]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1280.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1280.
 (./Alexander-van-der-Voorn_dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1345.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1345.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1280.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1280.
 
 Package rerunfilecheck Info: File `Alexander-van-der-Voorn_dissertation.out' ha
 s not changed.
 (rerunfilecheck)             Checksum: F2A96130A9DD884748B55F17B6D3B852;3432.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1345.
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1280.
  ) 
 Here is how much of TeX's memory you used:
  24380 strings out of 494923
- 422483 string characters out of 6180741
- 500760 words of memory out of 5000000
- 27046 multiletter control sequences out of 15000+600000
- 68449 words of font info for 119 fonts, out of 8000000 for 9000
+ 422492 string characters out of 6180741
+ 500761 words of memory out of 5000000
+ 27047 multiletter control sequences out of 15000+600000
+ 68496 words of font info for 119 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 55i,7n,54p,466b,578s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,7n,54p,466b,582s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/s
 hare/texmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/l
@@ -1769,11 +1758,11 @@ mf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lms
 y7.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></usr/share/texmf/fon
 ts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtti10.p
 fb></usr/share/texmf/fonts/type1/public/tex-gyre/qhvr.pfb>
-Output written on Alexander-van-der-Voorn_dissertation.pdf (26 pages, 767440 by
+Output written on Alexander-van-der-Voorn_dissertation.pdf (25 pages, 766987 by
 tes).
 PDF statistics:
- 487 PDF objects out of 1000 (max. 8388607)
- 395 compressed objects within 4 object streams
- 75 named destinations out of 1000 (max. 500000)
+ 483 PDF objects out of 1000 (max. 8388607)
+ 392 compressed objects within 4 object streams
+ 74 named destinations out of 1000 (max. 500000)
  12512 words of extra memory for PDF output out of 14400 (max. 10000000)
 

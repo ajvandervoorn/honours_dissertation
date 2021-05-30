@@ -41,22 +41,22 @@ grid.latex("$x - \\mu$")
 
 The following steps are taken when `grid.latex()` runs:
 
-1. A \TeX{} document is created with the expression and a changeable default preamble and postamble.
+\begin{enumerate}
+  \item A \TeX{} document is created with the expression and a changeable default preamble and postamble.
 
   - [**Example:** TeX document with pre- and post-amble]
   
-2. This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
+  \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
   
-3. The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the `dvir` function `readDVI()` translates the DVI file into readable text.
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the `dvir` function `readDVI()` translates the DVI file into readable text.
 
   - [**Example:** Extract of DVI file using `readDVI()` (not the whole thing, just the bit relevant to our example ($x - \mu$))]
   
-4. Three "sweeps" of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
-  
-  + Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a `fontconfig` file.
-  
-  + Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a `grid` viewport which can encompass the entire \TeX{} passed to `grid.latex()` expression using the native DVI coordinates.
-  
-  + Grid sweep: Convert all text and symbols into *grobs* (grid graphical objects) 
-
-5. These grobs are then displayed in the R graphics device as per the `grid` package.
+  \item Three "sweeps" of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
+  \begin{itemize}
+    \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a `fontconfig` file.
+    \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a `grid` viewport which can encompass the entire \TeX{} passed to `grid.latex()` expression using the native DVI coordinates.
+    \item Grid sweep: Convert all text and symbols into *grobs* (grid graphical objects) 
+  \end{itemize}
+  \item These grobs are then displayed in the R graphics device as per the `grid` package.
+\end{enumerate}

@@ -304,72 +304,23 @@ expression or text to be displayed.
 The following steps are taken when \texttt{grid.latex()} runs:
 
 \begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  A \TeX{} document is created with the expression and a changeable
-  default preamble and postamble.
-\end{enumerate}
+  \item A \TeX{} document is created with the expression and a changeable default preamble and postamble.
 
-\begin{itemize}
-\tightlist
-\item
-  {[}\textbf{Example:} TeX document with pre- and post-amble{]}
-\end{itemize}
+  - [**Example:** TeX document with pre- and post-amble]
+  
+  \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
+  
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the `dvir` function `readDVI()` translates the DVI file into readable text.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\item
-  This TeX document is then processed using the local \TeX{}
-  installation to create a DVI (DeVice Independent) file.
-\item
-  The DVI file is read into R. As DVI files are binary they are not
-  easily readable by humans but the \texttt{dvir} function
-  \texttt{readDVI()} translates the DVI file into readable text.
-\end{enumerate}
-
-\begin{itemize}
-\tightlist
-\item
-  {[}\textbf{Example:} Extract of DVI file using \texttt{readDVI()} (not
-  the whole thing, just the bit relevant to our example
-  (\(x - \mu\))){]}
-\end{itemize}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
-\tightlist
-\item
-  Three ``sweeps'' of the DVI file are completed to extract necessary
-  information about what to display in R (and where and how to display
-  it):
-\end{enumerate}
-
-\begin{itemize}
-\item
-  Font sweep: Gather the names of all fonts used in the DVI file and
-  locate the relevant font files on the local machine. The font
-  information is stored in a R list as well as a \texttt{fontconfig}
-  file.
-\item
-  Metric sweep: To determine the overall bounding box (size) of the
-  expression to display. This bounding box is used to create a
-  \texttt{grid} viewport which can encompass the entire \TeX{} passed to
-  \texttt{grid.latex()} expression using the native DVI coordinates.
-\item
-  Grid sweep: Convert all text and symbols into \emph{grobs} (grid
-  graphical objects)
-\end{itemize}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{4}
-\tightlist
-\item
-  These grobs are then displayed in the R graphics device as per the
-  \texttt{grid} package.
+  - [**Example:** Extract of DVI file using `readDVI()` (not the whole thing, just the bit relevant to our example ($x - \mu$))]
+  
+  \item Three "sweeps" of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
+  \begin{itemize}
+    \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a `fontconfig` file.
+    \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a `grid` viewport which can encompass the entire \TeX{} passed to `grid.latex()` expression using the native DVI coordinates.
+    \item Grid sweep: Convert all text and symbols into *grobs* (grid graphical objects) 
+  \end{itemize}
+  \item These grobs are then displayed in the R graphics device as per the `grid` package.
 \end{enumerate}
 
 \newpage{}
@@ -437,7 +388,7 @@ package was motivated with a simple example of a mathematical equation.
 \caption{A more complicated example using `dvir`}\label{fig:yeeExample}
 \end{figure}
 
-The example in figure @ref\{fig:yeeExample\} uses nine calls to
+The example in figure \ref{yeeExample} uses nine calls to
 \texttt{grid.latex()} and was created by a University of Auckland
 lecturer using the \texttt{dvir} package to help write an assignment.
 
@@ -527,6 +478,12 @@ the op codes for font definitions and define the name of a font and give
 it an identifier to reference in the DVI file when it wants to use that
 font to display a character.
 
+The following code is taken from the the \texttt{dvir} package, showing
+where the metric and grid sweeps also redid the font sweep.
+\texttt{op\_font\_def} is a function which takes the font definition in
+the DVI file related to that instance of the op code and searches for
+and records the font information.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{metric_info_}\DecValTok{243}\NormalTok{ <-}\StringTok{ }\NormalTok{op_font_def}
@@ -534,29 +491,16 @@ font to display a character.
 \end{Highlighting}
 \end{Shaded}
 
-Figures @ref\{fig:metricFont\_0.2-1\} and @ref\{fig:gridFont\_0.2-1\}
-show the code in the \texttt{dvir} package itself where the metric and
-grid sweeps also redid the font sweep. \texttt{op\_font\_def} is a
-function which takes the font definition in the DVI file related to that
-instance of the op code and searches for and records the font
-information.
+The following code shows what the code was changed to in \texttt{dvir}
+version 0.2-2. \texttt{op\_ignore} is an empty function, so when the
+metric or grid sweeps comes across that op code, they now do nothing.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{metric_info_}\DecValTok{243}\NormalTok{ <-}\StringTok{ }\NormalTok{op_ignore}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{grid_op_}\DecValTok{243}\NormalTok{ <-}\StringTok{ }\NormalTok{op_ignore}
 \end{Highlighting}
 \end{Shaded}
-
-Figures @ref\{fig:metricFont\_0.2-2\} and @ref\{fig:gridFont\_0.2-2\}
-show the what the code was changed to in \texttt{dvir} version 0.2-2.
-\texttt{op\_ignore} is an empty function, so when the metric or grid
-sweeps comes across that op code, they now do nothing.
 
 Unfortunately these changes by themself caused an error when running
 \texttt{grid.latex()}. This is because one task undertaken before the
@@ -569,24 +513,17 @@ the characters there was no font information to refer to.
 
 The resetting of the global fonts list was initiated when the sweeps
 passed op code 247 in the DVI file, which is the preamble at the start
-of every DVI file.
+of every DVI file. Setting the metric and grid sweeps to do nothing when
+they pass the preamble of the DVI file, again by way of
+\texttt{op\_ignore}, solved this problem as the global fonts list
+created by the font sweep is now not overwritten.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{metric_info_}\DecValTok{247}\NormalTok{ <-}\StringTok{ }\NormalTok{op_ignore}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{grid_op_}\DecValTok{247}\NormalTok{ <-}\StringTok{ }\NormalTok{op_ignore}
 \end{Highlighting}
 \end{Shaded}
-
-Setting the metric and grid sweeps to do nothing when they pass the
-preamble of the DVI file, again by way of \texttt{op\_ignore}, solved
-this problem as the global fonts list created by the font sweep is now
-not overwritten.
 
 To quantify the impact this has on code speed we recorded the time to
 run our examples 20 times, after an initial run to compile the package
@@ -602,9 +539,8 @@ after it was loaded.
 \end{figure}
 
 For the simple example the time spent in the metric and grid sweeps have
-decreased by 76\% and 83\% respectively. The only speed that matters for
-users is the overall speed of the call to \texttt{grid.latex()}, which
-in this case has decreased by 30\%.
+decreased by 76\% and 83\% respectively. The speed of the overall
+\texttt{grid.latex()} call has decreased by 30\%.
 
 \begin{figure}
 
@@ -616,9 +552,9 @@ in this case has decreased by 30\%.
 \end{figure}
 
 Similarly for the more complicated example in figure
-@ref\{fig:yeeExample\} the metric and grid sweeps have decreased by 83\%
-and 89\% respectively, with \texttt{grid.latex()} overall taking 47\%
-less time.
+@ref\{fig:speedUp1Yee\} the metric and grid sweeps have decreased by
+83\% and 89\% respectively, with \texttt{grid.latex()} overall taking
+47\% less time.
 
 \newpage{}
 
@@ -715,12 +651,12 @@ to the computing environment used. Specific details are provided below.
 The sampling nature of profiling (intermittent recording of the call
 stack) will give different results every time it is done.
 
-The profiling results are very specific to the computer setup used and
-could change considerably depending on the exact computing environment
-in which the \texttt{dvir} package is used.
+The profiling results are dependent on the computer setup used and could
+change depending on the exact computing environment in which the
+\texttt{dvir} package is used.
 
-The profiling results in this report, in this and the next section, were
-calculated with the following setup:
+The profiling results in this report, in this and the previous section,
+were calculated with the following setup:
 
 \begin{itemize}
 \tightlist
@@ -754,11 +690,11 @@ in \TeX{} documents {[}reference \Tikz{} report/description{]}:
 \end{itemize}
 
 The original DVI specification only needed to account for text and
-typesetting (and can do the most basic of rectangles too!), and so was
-not designed with drawing and graphics in mind. The type of instruction
-in the DVI file are labelled with an ``op code''. Each op code described
-a type of instruction like defining fonts, setting characters to display
-and vertical and horizontal cursor movements. There were four op codes
+typesetting (and the most basic of rectangles) and so was not designed
+with drawing and graphics in mind. The type of instruction in the DVI
+file are labelled with an ``op code''. Each op code described a type of
+instruction like defining fonts, setting characters to display and
+vertical and horizontal cursor movements. There were four op codes
 however, called \emph{DVI specials}, that can contain almost any form of
 instruction or values needed, such as text colour, to create a document
 based on the DVI file, such as Postscript or PDF.
@@ -850,6 +786,7 @@ Let us consider a simple example, a rectangle with an orange to green
 linear gradient fill:
 
 \begin{figure}
+\centering
 \begin{tikzpicture}
 \filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);
 \end{tikzpicture}
@@ -898,18 +835,11 @@ based on the \texttt{pgfsys-common-svg.def} and
 \texttt{pgfsys-dvisgm.def} SVG drivers that come with most \TeX{}
 distributions.
 
-A counter is defined, in order to give each gradient definition unique
-identifier:
-
-\begin{verbatim}
-\newcount\pgf@sys@dvir@objectcount
-\end{verbatim}
-
 A ``wrapper'' macro of what to do when a gradient fill is requested.
 Within this, the definition of the fill is created and sent to the DVI
 file, followed by a rectangle with a fill specified by that definition.
 For clarity, a line stating when the gradient fill is defined and then
-again when it is used has been added to the DVI file, but these can be
+again when it is used has been added to the DVI file but these can be
 removed.
 
 \begin{verbatim}
@@ -928,14 +858,15 @@ removed.
 
 In basic cases, a horizontal linear gradient is defined as a vertical
 gradient with a 90 degree rotation which is why this is called ``vert''
-shading. The definition and use of the gradient specified above are
-collated here. The stop positions (proportion along the length of the
-gradient for which a colour specified) and their respective colours are
-collated as well ad the literal text to build the gradient definition
-and rectangle using that definition. The biggest difference from the SVG
-driver was that R needs a vector of stops and a separate vector of
-colours as arguments to \texttt{linearGradient()}. SVG specifies the
-position and colour of each stop together.
+shading, as it is in the SCG driver file. The definition and use of the
+gradient specified above are collated here. The stop positions
+(proportion along the length of the gradient for which a colour
+specified) and their respective colours are collated and the literal
+text to build the gradient definition and rectangle using that
+definition. The biggest difference from the SVG driver was that R needs
+a vector of stops and a separate vector of colours as arguments to
+\texttt{linearGradient()}. SVG specifies the position and colour of each
+stop together.
 
 \begin{verbatim}
 \def\pgfsys@vertshading#1#2#3{%
@@ -957,8 +888,8 @@ position and colour of each stop together.
 }
 \end{verbatim}
 
-This macro allows us to consecutively add stop positions or colours to
-the ones we have already gathered.
+This macro allows us to iteratively add stop positions or colours to the
+ones we have already gathered.
 
 \begin{verbatim}
 \let\pgf@sys@dvir@thestops=\pgfutil@empty
@@ -1052,6 +983,13 @@ This is a helper function to return formatted RGB values.
 }
 \end{verbatim}
 
+A counter is defined in order to give each gradient definition unique
+identifier.
+
+\begin{verbatim}
+\newcount\pgf@sys@dvir@objectcount
+\end{verbatim}
+
 The result of these changes mean that the linear gradient definition is
 specified in the DVI file in a form usable by R, sans some commas:
 
@@ -1077,56 +1015,36 @@ xxx4         k=425
 Unfortunately this was the extent this project could explore
 implementing \Tikz{} gradient fills in \texttt{dvir}. You may notice in
 both the SVG and \texttt{dvir} DVI output that the colour at stops 0 and
-0.25 are the same, as is the colour at stops 0.75 and 1. This related to
-a larger issue of \Tikz{} using a number of transformations on the
+0.25 are the same, as is the colour at stops 0.75 and 1. This is related
+to a larger issue of \Tikz{} using a number of transformations on the
 ``simple'' linear gradient definition above which is then clipped to the
 shape the fill is for. These transformations would require some very
 detailed work to translate them into a set of instructions to perform
-the same transformations in R before they are used in
-\texttt{linearGradient()}.
+the same in R before they are used in \texttt{linearGradient()}.
 
 An additional complication is that \Tikz{} will create shapes with these
-fills by first drawing the shape with a transparent fill and then making
-another shape with the gradient fill clipped to the size of the first
-shape. R however requires the the fill information as an argument when
-drawing the shape so any transformations of the gradient, as \Tikz{}
-does will need to be done \emph{before} it is parsed to the drawing
-function.
+fills by first drawing the shape with a transparent fill and then
+drawing another shape with the gradient fill clipped to the size of the
+first shape. R however requires the the fill information as an argument
+when drawing the shape. In R, any transformations of the gradient, as
+\Tikz{} does, will need to be done \emph{before} it is parsed to the
+drawing function.
 
-Radial gradient fills have similar issues and the work done so far on
-linear gradients could be fairly easily replicated.
+Radial gradient fills have similar problems with how they are
+manipulated by \Tikz{}, however the work done so far on linear gradients
+could be easily replicated for them.
 
-This work is still within step 1 of the \ref{tikzWorkflow} list. To
-continue with the implementation, aside from the above obstacles,
-\texttt{dvir} would need to do another sweep of the DVI file, like the
-font sweep. This might be possible as part of the other sweeps. Then
-after any transformations or manipulations are made, the gradient
-defintion can be called by a unique identifier to parse the stored fill
-definitions to the drawing function.
+This work is still within step 1 of the workflow in section
+\ref{tikzWorkflow}. To continue with the implementation, aside from the
+above obstacles, \texttt{dvir} would need to do another sweep of the DVI
+file, like the font sweep, to achieve step 2. After any transformations
+or manipulations are made, the gradient definition can be called by a
+unique identifier to parse the stored fill definitions to the drawing
+function used as in step 3.
 
 \newpage{}
 
 \section{Text baselines}\label{text-baselines}
-
-Section outline:
-
-\begin{itemize}
-\item
-  Do all this without examples first maybe, as that will be some fiddly
-  work?
-\item
-  Demonstrate problem (with example using grid.text), especially try
-  multi line text maybe?
-\item
-  Describe algorithms for determining baselines one by one. In dviMoves,
-  describe then the issues with choosing which one, and the potential
-  algorithms for that
-\item
-  Describe function I made to calculate all baselines using these
-  methods
-\item
-  Show result of all this (in LaTeX)
-\end{itemize}
 
 \subsection{The problem}\label{the-problem}
 
@@ -1134,44 +1052,61 @@ Text characters have a baseline, that is, a horizontal line on which the
 characters naturally sit so all the letters appear to be in line with
 each other. Some letters, like a lower case p or j, have a
 ``descender''. A descender is the part of a character that sits
-\emph{below} the baseline. \texttt{grid.text()} accounts for this
-baseline so when you bottom align text at a certain y value, the
-descenders will actually fall below the y value we defined, despite the
-bottom justification. This makes sense because nearly every piece of
-written text is like this. Unfortunately, \texttt{grid.latex()} doesn't
-account for text baselines. It will simply do any alignment in relation
-to bounding box of the text.
+\emph{below} the baseline.
+
+\begin{itemize}
+\tightlist
+\item
+  {[}Example - showing a letter, with the baseline marked and also
+  showing what part is the ``descender'' part{]}
+\end{itemize}
+
+\texttt{grid.text()} accounts for this baseline so when you bottom align
+text at a certain y value, the descenders will actually fall below the y
+value we defined, despite the bottom justification. Unfortunately,
+\texttt{dvir} does not account for text baselines and will do any
+alignment with the bounding box of the text.
+
+\begin{itemize}
+\item
+  {[}Example - combining \texttt{grid.text()} and \texttt{grid.latex()}
+  on same y-value to show the difference between them{]}
+\item
+  {[}Example - more complicated example, say with several pieces of
+  multi-line text (only if I can demonstrate later that my function
+  works for aligning them!){]}
+\end{itemize}
 
 To fix this, \texttt{dvir} needs to obtain or calculate a value for the
 baseline for any given piece of text to offset the bounding box when it
 is drawing text. All of \texttt{dvir}'s information comes from the DVI
-file we either need to get a baseline value from the DVI file itself, or
-calculate it \emph{from} information in the DVI file. Unfortunately DVI
-files do not state a baseline value so we will have to explore some
-possible methods to determine a baseline value. These methods are
+file we either need to extract a baseline value from the DVI file
+itself, or calculate it \emph{from} information in the DVI file.
+Unfortunately DVI files do not state a baseline value so we will explore
+some possible methods to obtain a baseline value. These methods are
 referred to as algorithms from here on due to their heuristic nature.
 
 \subsection{Implementation}\label{implementation}
 
-To explore the practicality of the algorithms detailed below and
-evaluate their usefulness an R function, \texttt{baselines()} has been
-created as part of this project. This function takes several arguments,
-including the desired baseline selection algorithm, any other
-information needed for that particular algorithm, and the \TeX{} code as
-you would use with \texttt{grid.latex()}. The output of this function is
-the distance, or in some case distances, from the bottom of the bounding
-box of the text to the possible baseline value. These distances are
-return as \texttt{grid} units.
+To explore the algorithms detailed below and evaluate their usefulness
+an R function, \texttt{baselines()} has been created. This function
+takes several arguments, including the baseline selection algorithm as
+detailed below, any additional information needed for that particular
+algorithm, and the \TeX{} code as you would use with
+\texttt{grid.latex()}. The output of this function is the distance, or
+in some case distances, from the bottom of the bounding box of the text
+to the possible baseline value. These distances are returned as
+\texttt{grid} units.
 
-Now that the potential baselines have been calculated, if when
-displaying the text we do not use the specified y value, but rather move
-the bounding box down by the amount of the baseline height, it will be
-the baseline of the text that is equal to the y-value.
+Once the baselines have been calculated the bounding box of the text can
+be bottom aligned with the y-value specified but then moved down by the
+value of the baseline. This means the baseline of the text will be at
+the specified y-value.
 
 This function has been written to easily allow integration of other
-algorithms and most of the function should be able to be directly
-implemented in the \texttt{dvir} package, should this baseline algorithm
-feature be implemented into \texttt{dvir} formally.
+algorithms and most of the function could be directly implemented in the
+\texttt{dvir} package, should this baseline algorithm feature be
+implemented into \texttt{dvir} formally.
 
 \subsection{Our potential solutions}\label{our-potential-solutions}
 
@@ -1193,12 +1128,13 @@ of the bounding box of the text.
 \end{itemize}
 
 After this statement there appears to consistently be a downward move
-the height of the bounding box of text, and then a move upward before
-the first character is drawn. This algorithms take the cursor location
-after that upward move to be the baseline. In instances where the entire
-text has no descenders i.e.~the baseline is the bottom of the bounding
-box, there will be no upward move before the first character. In this
-case a value of 0 is returned as the baseline.
+equal to the height of the bounding box of text (from the top left of
+the bounding box to the bottom left), and then a move upward before the
+first character is drawn. This algorithms take the cursor location after
+that upward move to be the baseline. In instances where the entire text
+has no descenders (i.e.~the baseline is the bottom of the bounding box)
+there will be no upward move before the first character and a value of 0
+is returned as the baseline.
 
 Here is an example of the \texttt{baselineAlgorithms()} function in
 use\ldots{}
@@ -1320,20 +1256,19 @@ of these. While most of these algorithms perform well for most of the
 examples, the \texttt{dviMoves} algorithm performs well for \emph{all}
 the examples, notably for giving the option to align the baseline of
 \emph{any} line of multi-line text. Utilising the fact it returns all
-baseline values for all displayed characters, it is possible to align,
-for example, with any character in a mathematical equation, whether it
-be of a different size or a superscript or subscript.
+baseline values for all characters, it is possible to align, for
+example, with any character in a mathematical equation, whether it be of
+a different size or a superscript or subscript.
+
+\begin{itemize}
+\tightlist
+\item
+  {[}Example: Show examples from start of this section with baselines
+  being used to make them aligned!{]}
+\end{itemize}
 
 \subsection{\texorpdfstring{Next steps to integrate with \texttt{dvir}
 package}{Next steps to integrate with dvir package}}\label{next-steps-to-integrate-with-dvir-package}
-
-\begin{itemize}
-\item
-  mention the ``matching' algorithm of dviMoves (to compare with another
-  algorithm)
-\item
-  mention the ``just ask TeX for answer'' method
-\end{itemize}
 
 \newpage{}
 

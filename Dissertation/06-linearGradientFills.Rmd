@@ -34,7 +34,7 @@ Try rectangle with fill with say, dotted outline (to see if gradioent dill is ac
 
 - [**Example:** more complicated \Tikz{} drawing, maybe with colouring and stuff]
 
-The original DVI specification only needed to account for text and typesetting (and can do the most basic of rectangles too!), and so was not designed with drawing and graphics in mind. The type of instruction in the DVI file are labelled with an "op code". Each op code described a type of instruction like defining fonts, setting characters to display and vertical and horizontal cursor movements. There were four op codes however, called *DVI specials*, that can contain almost any form of instruction or values needed, such as text colour, to create a document based on the DVI file, such as Postscript or PDF.
+The original DVI specification only needed to account for text and typesetting (and the most basic of rectangles) and so was not designed with drawing and graphics in mind. The type of instruction in the DVI file are labelled with an "op code". Each op code described a type of instruction like defining fonts, setting characters to display and vertical and horizontal cursor movements. There were four op codes however, called *DVI specials*, that can contain almost any form of instruction or values needed, such as text colour, to create a document based on the DVI file, such as Postscript or PDF.
 
 The \Tikz{} package uses these DVI specials to describe shapes, drawings and colours in PGF (portable graphics format) which can be translated to instructions for other viewing formats, like Postscript, PDF or SVG. How the instructions are translated is controlled by a \Tikz{} driver. The `dvir` package includes its own \Tikz{} driver to translate the drawing instructions into a form useful to draw the things with R grid graphics [reference Paul dvir \Tikz{} report].
 
@@ -104,6 +104,7 @@ cat(latexRect)
 --->
 
 \begin{figure}
+\centering
 \begin{tikzpicture}
 \filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);
 \end{tikzpicture}
@@ -152,13 +153,7 @@ Test I've got all the bits by copying over to a fresh copy of dvir driver. If it
 Say main difference between SVG and R for stops is that we want to gather stops all together, and their colours all together for R. SVG wants one stops and it's colour togther!
 --->
 
-A counter is defined, in order to give each gradient definition unique identifier:
-
-```
-\newcount\pgf@sys@dvir@objectcount
-```
-
-A "wrapper" macro of what to do when a gradient fill is requested. Within this, the definition of the fill is created and sent to the DVI file, followed by a rectangle with a fill specified by that definition. For clarity, a line stating when the gradient fill is defined and then again when it is used has been added to the DVI file, but these can be removed.
+A "wrapper" macro of what to do when a gradient fill is requested. Within this, the definition of the fill is created and sent to the DVI file, followed by a rectangle with a fill specified by that definition. For clarity, a line stating when the gradient fill is defined and then again when it is used has been added to the DVI file but these can be removed.
 
 ```
 \def\pgfsys@shadinginsidepgfpicture#1{%
@@ -174,7 +169,7 @@ A "wrapper" macro of what to do when a gradient fill is requested. Within this, 
 }
 ```
 
-In basic cases, a horizontal linear gradient is defined as a vertical gradient with a 90 degree rotation which is why this is called "vert" shading. The definition and use of the gradient specified above are collated here. The stop positions (proportion along the length of the gradient for which a colour specified) and their respective colours are collated as well ad the literal text to build the gradient definition and rectangle using that definition. The biggest difference from the SVG driver was that R needs a vector of stops and a separate vector of colours as arguments to `linearGradient()`. SVG specifies the position and colour of each stop together.
+In basic cases, a horizontal linear gradient is defined as a vertical gradient with a 90 degree rotation which is why this is called "vert" shading, as it is in the SCG driver file. The definition and use of the gradient specified above are collated here. The stop positions (proportion along the length of the gradient for which a colour specified) and their respective colours are collated and the literal text to build the gradient definition and rectangle using that definition. The biggest difference from the SVG driver was that R needs a vector of stops and a separate vector of colours as arguments to `linearGradient()`. SVG specifies the position and colour of each stop together.
 
 ```
 \def\pgfsys@vertshading#1#2#3{%
@@ -196,7 +191,7 @@ In basic cases, a horizontal linear gradient is defined as a vertical gradient w
 }
 ```
 
-This macro allows us to consecutively add stop positions or colours to the ones we have already gathered.
+This macro allows us to iteratively add stop positions or colours to the ones we have already gathered.
 
 ```
 \let\pgf@sys@dvir@thestops=\pgfutil@empty
@@ -288,6 +283,12 @@ This is a helper function to return formatted RGB values.
 }
 ```
 
+A counter is defined in order to give each gradient definition unique identifier.
+
+```
+\newcount\pgf@sys@dvir@objectcount
+```
+
 The result of these changes mean that the linear gradient definition is specified in the DVI file in a form usable by R, sans some commas:
 
 ```
@@ -309,13 +310,13 @@ xxx4         k=425
                             </linearGradient>{?nl} 
 ```
 
-Unfortunately this was the extent this project could explore implementing \Tikz{} gradient fills in `dvir`. You may notice in both the SVG and `dvir` DVI output that the colour at stops 0 and 0.25 are the same, as is the colour at stops 0.75 and 1. This related to a larger issue of \Tikz{} using a number of transformations on the "simple" linear gradient definition above which is then clipped to the shape the fill is for. These transformations would require some very detailed work to translate them into a set of instructions to perform the same transformations in R before they are used in `linearGradient()`. 
+Unfortunately this was the extent this project could explore implementing \Tikz{} gradient fills in `dvir`. You may notice in both the SVG and `dvir` DVI output that the colour at stops 0 and 0.25 are the same, as is the colour at stops 0.75 and 1. This is related to a larger issue of \Tikz{} using a number of transformations on the "simple" linear gradient definition above which is then clipped to the shape the fill is for. These transformations would require some very detailed work to translate them into a set of instructions to perform the same in R before they are used in `linearGradient()`. 
 
-An additional complication is that \Tikz{} will create shapes with these fills by first drawing the shape with a transparent fill and then making another shape with the gradient fill clipped to the size of the first shape. R however requires the the fill information as an argument when drawing the shape so any transformations of the  gradient, as \Tikz{} does will need to be done *before* it is parsed to the drawing function.
+An additional complication is that \Tikz{} will create shapes with these fills by first drawing the shape with a transparent fill and then drawing another shape with the gradient fill clipped to the size of the first shape. R however requires the the fill information as an argument when drawing the shape. In R, any transformations of the gradient, as \Tikz{} does, will need to be done *before* it is parsed to the drawing function.
 
-Radial gradient fills have similar issues and the work done so far on linear gradients could be fairly easily replicated.
+Radial gradient fills have similar problems with how they are manipulated by \Tikz{}, however the work done so far on linear gradients could be easily replicated for them.
 
-This work is still within step 1 of the \ref{tikzWorkflow} list. To continue with the implementation, aside from the above obstacles, `dvir` would need to do another sweep of the DVI file, like the font sweep. This might be possible as part of the other sweeps. Then after any transformations or manipulations are made, the gradient defintion can be called by a unique identifier to parse the stored fill definitions to the drawing function.
+This work is still within step 1 of the workflow in section \ref{tikzWorkflow}. To continue with the implementation, aside from the above obstacles, `dvir` would need to do another sweep of the DVI file, like the font sweep, to achieve step 2. After any transformations or manipulations are made, the gradient definition can be called by a unique identifier to parse the stored fill definitions to the drawing function used as in step 3.
 
 <!---
 
