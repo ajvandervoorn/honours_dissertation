@@ -10,6 +10,7 @@ output:
     extra_dependencies:
       tikz: null
       graphicx: null
+      changepage: null
 header-includes:
     - \linespread{1.25}
     - \setcounter{tocdepth}{2}

@@ -111,6 +111,7 @@
 \setcounter{tocdepth}{2}
 \usepackage{tikz}
 \usepackage{graphicx}
+\usepackage{changepage}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -566,13 +567,11 @@ something ``silly''. Our further profiling lead us to find where next
 our code spends its time and now it was a matter of making \texttt{dvir}
 ``smarter''.
 
-- {[}\textbf{Example:} \texttt{profvis()} result showing
-\texttt{fontEnc()} (I think) taking long time{]}
+The font sweeps take a long time compared to the rest of the
+\texttt{grid.latex()} function. We saw that in the previous section with
+massive code speed ups
 
 \begin{itemize}
-\item
-  Looks like if we could save/cache a font we could reduce the amount of
-  time to run \texttt{grid.latex()}
 \item
   \texttt{fonts} R list is re-initialised after every call to
   \texttt{grid.latex()}
@@ -1082,9 +1081,10 @@ baseline for any given piece of text to offset the bounding box when it
 is drawing text. All of \texttt{dvir}'s information comes from the DVI
 file we either need to extract a baseline value from the DVI file
 itself, or calculate it \emph{from} information in the DVI file.
-Unfortunately DVI files do not state a baseline value so we will explore
-some possible methods to obtain a baseline value. These methods are
-referred to as algorithms from here on due to their heuristic nature.
+Unfortunately plain DVI files do not state a baseline value, rather they
+only detail specific placement of each charcter, so we will explore some
+possible methods to obtain a baseline value. These methods are referred
+to as algorithms from here on due to their heuristic nature.
 
 \subsection{Implementation}\label{implementation}
 
@@ -1124,7 +1124,7 @@ of the bounding box of the text.
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Example} of of the HiResBoundingBox statement here
+  {[}\textbf{Example} of of the HiResBoundingBox statement here{]}
 \end{itemize}
 
 After this statement there appears to consistently be a downward move
@@ -1155,31 +1155,56 @@ use\ldots{}
 \ldots{} and here are some examples showing the text and the calculated
 baseline from the function\ldots{}
 
-\newsavebox{\dvibox}
+\newsavebox{\dvibox} \newlength{\dviwidth}
 
 \newcommand{\boxreport}[2]{%
-  \sbox{\dvibox}{\parbox[b]{4in}{#1}}% Change width to be '1in' if going back to better way of doing it. Better yet, get variable that takes width of text itself (like TeX examples from Paul) 
+  \sbox{\dvibox}{\parbox[b]{1.5in}{#1}}% Change width to be '1in' if going back to better way of doing it. Better yet, get variable that takes width of text itself (like TeX examples from Paul) 
+  \settowidth {\dviwidth} {\usebox{\dvibox}}%
   \usebox{\dvibox}%
   \vspace{-#2}%
-  \hrule%
+  \hrule width \dviwidth \relax
   \vspace{#2}%
 }
 
-\boxreport{test}{0sp} \vspace{0.4cm} \boxreport{testing}{127431sp}
-\vspace{0.4cm} \boxreport{var}{0sp} \vspace{0.4cm}
-\boxreport{varying}{127431sp} \vspace{0.4cm}
-\boxreport{$\sum_{n=1}^{\infty} 2^{-n} = 1$}{688135sp} \vspace{0.4cm}
-\boxreport{$\sum\limits_{n=1}^{\infty} 2^{-n} = 1$}{1256841sp}
-\vspace{0.4cm} \boxreport{$\sum\limits_{n=1}^{} 2^{-n} = 1$}{634246sp}
-\vspace{0.4cm}
-\boxreport{The equation is $x + \frac{\mu^2}{2}$}{225995sp}
-\vspace{0.4cm} \boxreport{The equation is $x + \frac{\mu}{2}$}{225995sp}
-\vspace{0.4cm}
-\boxreport{$\frac{\mu^2}{2} + x$ is the equation}{518356sp}
-\vspace{0.4cm} \boxreport{$x + \frac{\mu}{2}$ is the equation}{225995sp}
-\vspace{0.4cm}
-\boxreport{\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}{1700295sp}
-\vspace{0.4cm}
+\begin{verbatim}
+\begin{figure}
+\begin{adjustwidth}{0.5in}{0in}
+\end{adjustwidth}
+\caption{Caption...}
+\end{figure}
+\end{verbatim}
+
+\begin{figure}
+\begin{adjustwidth}{0.5in}{0in}
+ \boxreport{test}{0sp}
+\vspace{0.3cm}
+ \boxreport{testing}{127431sp}
+\vspace{0.3cm}
+ \boxreport{var}{0sp}
+\vspace{0.3cm}
+ \boxreport{varying}{127431sp}
+\vspace{0.3cm}
+ \boxreport{$\sum_{n=1}^{\infty} 2^{-n} = 1$}{688135sp}
+\vspace{0.3cm}
+ \boxreport{$\sum\limits_{n=1}^{\infty} 2^{-n} = 1$}{1256841sp}
+\vspace{0.3cm}
+ \boxreport{$\sum\limits_{n=1}^{} 2^{-n} = 1$}{634246sp}
+\vspace{0.3cm}
+ \boxreport{The equation is $x + \frac{\mu^2}{2}$}{225995sp}
+\vspace{0.3cm}
+ \boxreport{The equation is $x + \frac{\mu}{2}$}{225995sp}
+\vspace{0.3cm}
+ \boxreport{$\frac{\mu^2}{2} + x$ is the equation}{518356sp}
+\vspace{0.3cm}
+ \boxreport{$x + \frac{\mu}{2}$ is the equation}{225995sp}
+\vspace{0.3cm}
+ \boxreport{\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}{1700295sp}
+\vspace{0.3cm}
+ \end{adjustwidth}
+\caption{caption here...}
+\end{figure}
+
+) caption here\ldots{}
 
 \subsubsection{\texorpdfstring{\texttt{dviMoves}
 algorithm}{dviMoves algorithm}}\label{dvimoves-algorithm}
@@ -1218,24 +1243,60 @@ algorithm. These methods are:
 \paragraph{\texorpdfstring{\texttt{dviMoves} selection method
 \texttt{all}}{dviMoves selection method all}}\label{dvimoves-selection-method-all}
 
+This selection method will return all the baseline values as determined
+by the algorithm. This is useful for drawing the text with all the
+baseline values calculated from this method.
+
 \paragraph{\texorpdfstring{\texttt{dviMoves} selection method
 \texttt{index}}{dviMoves selection method index}}\label{dvimoves-selection-method-index}
+
+When this selection method is chosen, another argument to the function,
+\texttt{dviMovesSelection}, is used to specify a numeric index. The
+baseline value corresponding to that index is returned.
 
 \paragraph{\texorpdfstring{\texttt{dviMoves} selection method
 \texttt{bottomUp}}{dviMoves selection method bottomUp}}\label{dvimoves-selection-method-bottomup}
 
+This is similar to the \texttt{index} method but the baseline values are
+first ordered from smallest to largest, before using the
+\texttt{dviMovesSelection} argument to select the index of the baseline
+value to return.
+
 \paragraph{\texorpdfstring{\texttt{dviMoves} selection method
 \texttt{nextChars}}{dviMoves selection method nextChars}}\label{dvimoves-selection-method-nextchars}
 
-\paragraph{\texorpdfstring{Other potential \texttt{dviMoves} selection
-methods (not
-implemented)}{Other potential dviMoves selection methods (not implemented)}}\label{other-potential-dvimoves-selection-methods-not-implemented}
+This method will return the first baseline value just after a specified
+character in the argument \texttt{dviMovesSelection}. Characters are
+specified by a number, entered as a character string. This method is
+limited for several reasons:
+
+\begin{itemize}
+\tightlist
+\item
+  It cannot return a baseline value for any instance of a character
+  after the first instance
+\item
+  If multiple cursor moves are made before a character is drawn, the
+  earlier moves are still recorded but with a empty character label
+\item
+  Some characters are hard to type on a ``normal'' keyboard, for example
+  \(\mu\)
+\item
+  The DVI file does not actually contain the character, but rather the
+  numeric index of it in the particular font. This is why a number has
+  to be used to select which character it is.
+\end{itemize}
+
+\paragraph{Future options}\label{future-options}
+
+Some other selection methods could be:
 
 \begin{itemize}
 \item
-  best guess
+  Taking the baseline value closest to the baseline value determined by
+  one of these other algorithms
 \item
-  prev char
+  prevChar
 \item
   extend dviMoves to only record position just before a character is
   typeset?
@@ -1244,10 +1305,50 @@ implemented)}{Other potential dviMoves selection methods (not implemented)}}\lab
 \subsubsection{\texorpdfstring{\texttt{preview}
 algorithm}{preview algorithm}}\label{preview-algorithm}
 
+This algorithm uses the \texttt{preview} package in \LaTeX{}.
+{[}Reference TuG report here{]} When this algorithm is selected, the
+following code is added to the header of the DVI file:
+
+\begin{verbatim}
+\usepackage[active,showbox,tightpage]{preview}
+\def\\showbox#1%%
+{\immediate\\write16{MatplotlibBox:(\\the\\ht#1+\\the\\dp#1)x\\the\\wd#1}}
+\end{verbatim}
+
+This results in the following line being printed in the log file.
+
+\begin{verbatim}
+MatplotlibBox:(8.04175pt+3.00005pt)x62.81718pt
+\end{verbatim}
+
+The baseline value in this case is the value just after the \texttt{+}
+and can be obtained by searching the log file for this line starting
+with \texttt{MatplotlibBox:} and returning the value just after the
+\texttt{+}.
+
 \subsubsection{\texorpdfstring{\texttt{dvipng}
 algorithm}{dvipng algorithm}}\label{dvipng-algorithm}
 
-\subsubsection{any other algorithm?}\label{any-other-algorithm}
+The \texttt{dvipng} program is used to turn DVI files into PNG images.
+An option of \texttt{dvipng} is \texttt{-\/-depth} which returns the
+baseline value in pixels. {[}reference dvipng package - maybe where you
+egt it from linux?{]}
+
+The system call \texttt{dvipng\ -\/-depth\ test.dvi} returns
+\texttt{depth=4} within its output so after recording the output, a
+simple search for \texttt{depth=} will find the baseline value.
+
+\subsubsection{Other potential
+algorithms}\label{other-potential-algorithms}
+
+Some other potential algorithms but have not yet been implemented in
+this function include:
+
+\begin{itemize}
+\tightlist
+\item
+  ``Just ask \TeX{}''
+\end{itemize}
 
 \subsection{Discussion of algorithms}\label{discussion-of-algorithms}
 
@@ -1276,5 +1377,12 @@ package}{Next steps to integrate with dvir package}}\label{next-steps-to-integra
 steps}\label{conclusionsummarynext-steps}
 
 \ldots{} goes here\ldots{}
+
+\newpage{}
+
+\section{Apendices}\label{apendices}
+
+Associated files can be found on Github:
+\url{https://github.com/ajvandervoorn/honours_dissertation}
 
 \end{document}

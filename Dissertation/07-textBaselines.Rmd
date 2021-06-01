@@ -46,7 +46,7 @@ Text characters have a baseline, that is, a horizontal line on which the charact
 
 - [Example - more complicated example, say with several pieces of multi-line text (only if I can demonstrate later that my function works for aligning them!)]
 
-To fix this, `dvir` needs to obtain or calculate a value for the baseline for any given piece of text to offset the bounding box when it is drawing text. All of `dvir`'s information comes from the DVI file we either need to extract a baseline value from the DVI file itself, or calculate it *from* information in the DVI file. Unfortunately DVI files do not state a baseline value so we will explore some possible methods to obtain a baseline value. These methods are referred to as algorithms from here on due to their heuristic nature.
+To fix this, `dvir` needs to obtain or calculate a value for the baseline for any given piece of text to offset the bounding box when it is drawing text. All of `dvir`'s information comes from the DVI file we either need to extract a baseline value from the DVI file itself, or calculate it *from* information in the DVI file. Unfortunately plain DVI files do not state a baseline value, rather they only detail specific placement of each charcter, so we will explore some possible methods to obtain a baseline value. These methods are referred to as algorithms from here on due to their heuristic nature.
 
 ## Implementation
 
@@ -64,7 +64,7 @@ We explored several different algorithms to calculate the baseline for several d
 
 This is a simple algorithm which was determined after inspection of some DVI files. In every DVI file, there is a statement specifying the size of the bounding box of the text.
 
-- **Example** of of the HiResBoundingBox statement here 
+- [**Example** of of the HiResBoundingBox statement here]
 
 After this statement there appears to consistently be a downward move equal to the height of the bounding box of text (from the top left of the bounding box to the bottom left), and then a move upward before the first character is drawn. This algorithms take the cursor location after that upward move to be the baseline. In instances where the entire text has no descenders (i.e. the baseline is the bottom of the bounding box) there will be no upward move before the first character and a value of 0 is returned as the baseline.
 
@@ -95,6 +95,8 @@ https://www.techwalla.com/articles/horizontal-line-options-in-latex
 remove eval=TRUE from these code chunks
 
 Try some examples with \newline command instead of mini page
+
+Change colour and opacity of these baselines?
 --->
 ```{r, eval = TRUE, echo = FALSE}
 source("../Appendices/algorithms.R")
@@ -111,18 +113,6 @@ testText <- c("test",       # Text with no danglies
               "$x + \\frac{\\mu}{2}$ is the equation",          # Equation then text (with lower equation height, and fraction first)
               "\\begin{minipage}{1in}Paragraph, with some line wrapping!\\end{minipage}")  # Multiline text/paragraph
 
-
-
-for (i in seq_along(testText)) {
-  if (i == 1)
-    algorithmBaselines <- baselines(tex = testText[i], 
-                                         algorithm = "alex")
-  else
-    algorithmBaselines <- unit.c(algorithmBaselines, 
-                                 baselines(tex = testText[i], 
-                                           algorithm = "alex"))
-}
-
 # Function to convert 'grid' units to LaTeX units (changing the characters at the end basically)
 unitConvert <- function(x) {
   paste0(as.numeric(x), switch(attr(x, "unit"),
@@ -130,30 +120,63 @@ unitConvert <- function(x) {
                                attr(x, "unit")))
 }
 
-latexCode <- character(0)
-for (i in seq_along(algorithmBaselines)) {
-  latexCode <- c(latexCode, 
-                 paste("\\boxreport{", 
-                       testText[i], 
-                       "}{", 
-                       unitConvert(algorithmBaselines[i]), 
-                       "}\n\\vspace{0.4cm}\n", 
-                       sep = ""))
+baselineFunc <- function(testText, algo, caption) {
+  for (i in seq_along(testText)) {
+    if (i == 1)
+      algorithmBaselines <- baselines(tex = testText[i], 
+                                           algorithm = algo)
+    else
+      algorithmBaselines <- unit.c(algorithmBaselines, 
+                                   baselines(tex = testText[i], 
+                                             algorithm = algo))
+  }
+  latexCode <- character(0)
+  baselineEnviroHead <- paste0("\\begin{figure}\n",
+                             "\\begin{adjustwidth}{0.5in}{0in}\n")
+  baselineEnviroFoot <- paste0("\\end{adjustwidth}\n",
+                               "\\caption{",
+                               caption,
+                               "}\n",
+                               "\\end{figure})")
+  latexCode <- baselineEnviroHead
+  for (i in seq_along(algorithmBaselines)) {
+    latexCode <- c(latexCode, 
+                   paste("\\boxreport{", 
+                         testText[i], 
+                         "}{", 
+                         unitConvert(algorithmBaselines[i]), 
+                         "}\n\\vspace{0.3cm}\n", 
+                         sep = ""))
+  }
+  latexCode <- c(latexCode, baselineEnviroFoot,caption)
+  latexCode
 }
+
+alexLatex <- baselineFunc(testText, "alex", "caption here...")
+
+
 ```
 
 \newsavebox{\dvibox}
+\newlength{\dviwidth}
 
 \newcommand{\boxreport}[2]{%
-  \sbox{\dvibox}{\parbox[b]{4in}{#1}}% Change width to be '1in' if going back to better way of doing it. Better yet, get variable that takes width of text itself (like TeX examples from Paul) 
+  \sbox{\dvibox}{\parbox[b]{1.5in}{#1}}% Change width to be '1in' if going back to better way of doing it. Better yet, get variable that takes width of text itself (like TeX examples from Paul) 
+  \settowidth {\dviwidth} {\usebox{\dvibox}}%
   \usebox{\dvibox}%
   \vspace{-#2}%
-  \hrule%
+  \hrule width \dviwidth \relax
   \vspace{#2}%
 }
-
+```
+\begin{figure}
+\begin{adjustwidth}{0.5in}{0in}
+\end{adjustwidth}
+\caption{Caption...}
+\end{figure}
+```
 ```{r, echo = FALSE, results = "asis"}
-cat(latexCode)
+cat(alexLatex)
 ```
 
 <!---
@@ -184,26 +207,34 @@ To account for these considerations, along with the `dviMoves` algorithm, the fu
 Maybe add example doing length(v), just to show how many potential baselines there are for some examples
 --->
 
+This selection method will return all the baseline values as determined by the algorithm. This is useful for drawing the text with all the baseline values calculated from this method.
 
 #### `dviMoves` selection method `index`
 
-
+When this selection method is chosen, another argument to the function, `dviMovesSelection`, is used to specify a numeric index. The baseline value corresponding to that index is returned.
 
 #### `dviMoves` selection method `bottomUp`
 
-
+This is similar to the `index` method but the baseline values are first ordered from smallest to largest, before using the `dviMovesSelection` argument to select the index of the baseline value to return.
 
 #### `dviMoves` selection method `nextChars`
 
+This method will return the first baseline value just after a specified character in the argument `dviMovesSelection`. Characters are specified by a number, entered as a character string. This method is limited for several reasons:
 
+* It cannot return a baseline value for any instance of a character after the first instance
+* If multiple cursor moves are made before a character is drawn, the earlier moves are still recorded but with a empty character label
+* Some characters are hard to type on a "normal" keyboard, for example $\mu$
+* The DVI file does not actually contain the character, but rather the numeric index of it in the particular font. This is why a number has to be used to select which character it is.
 
-#### Other potential `dviMoves` selection methods (not implemented)
+#### Future options
 
-- best guess
+Some other selection methods could be:
 
-- prev char
+* Taking the baseline value closest to the baseline value determined by one of these other algorithms
 
-- extend dviMoves to only record position just before a character is typeset?
+* prevChar
+
+* extend dviMoves to only record position just before a character is typeset?
 
 
 
@@ -213,7 +244,21 @@ Discussion - what does dviMoves work well or not well for?
 
 ### `preview` algorithm
 
+This algorithm uses the `preview` package in \LaTeX{}. [Reference TuG report here] When this algorithm is selected, the following code is added to the header of the DVI file:
 
+```
+\usepackage[active,showbox,tightpage]{preview}
+\def\\showbox#1%%
+{\immediate\\write16{MatplotlibBox:(\\the\\ht#1+\\the\\dp#1)x\\the\\wd#1}}
+```
+
+This results in the following line being printed in the log file.
+
+```
+MatplotlibBox:(8.04175pt+3.00005pt)x62.81718pt
+```
+
+The baseline value in this case is the value just after the `+` and can be obtained by searching the log file for this line starting with `MatplotlibBox:` and returning the value just after the `+`.
 
 
 <!---
@@ -222,15 +267,20 @@ Discussion - what does it work well or not well for?
 
 ### `dvipng` algorithm
 
+The `dvipng` program is used to turn DVI files into PNG images. An option of `dvipng` is `--depth` which returns the baseline value in pixels. [reference dvipng package - maybe where you egt it from linux?]
 
-
-
+The system call `dvipng --depth test.dvi` returns `depth=4` within its output so after recording the output, a simple search for `depth=` will find the baseline value.
 
 <!---
 Discussion - what does it work well or not well for?
 --->
 
-### any other algorithm?
+### Other potential algorithms
+
+Some other potential algorithms but have not yet been implemented in this function include:
+
+* "Just ask \TeX{}"
+
 
 ## Discussion of algorithms
 

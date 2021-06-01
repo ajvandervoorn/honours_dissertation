@@ -11,9 +11,7 @@ Check if same font is used in SAME grid.latex call, does it need to work harder?
 
 The earlier code speed up was done by stopping `dvir` doing something "silly". Our further profiling lead us to find where next our code spends its time and now it was a matter of making `dvir` "smarter".
 
-\- [**Example:** `profvis()` result showing `fontEnc()` (I think) taking long time]
-
-- Looks like if we could save/cache a font we could reduce the amount of time to run `grid.latex()`
+The font sweeps take a long time compared to the rest of the `grid.latex()` function. We saw that in the previous section with massive code speed ups
 
 - `fonts` R list is re-initialised after every call to `grid.latex()`
 
