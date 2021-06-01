@@ -197,6 +197,9 @@ ability to align text to its baseline means graphics with the addition
 of \TeX{}, for example in lattice plot headers, can be aligned with one
 another and not require ``touching up'' outside of R.
 
+This report, source code and associated files can be found on GitHub:
+\url{https://github.com/ajvandervoorn/honours_dissertation}
+
 \newpage{}
 
 \section{Introduction}\label{introduction}
@@ -237,8 +240,7 @@ it looks when created by \LaTeX{} in figure \ref{muOver2}.
 \end{figure}
 
 The difference is stark and there are several approaches in R which can
-get us closer to the \LaTeX{} result (Murrell, 2018 {[}Revisiting
-Mathematical Equations in R: The `dvir' package{]}).
+get us closer to the \LaTeX{} result Murrell (2018).
 
 \begin{itemize}
 \item
@@ -1684,16 +1686,32 @@ for multi line text
 
 \newpage{}
 
-\section{Conclusion/summary/next
-steps}\label{conclusionsummarynext-steps}
+\section{Conclusion}\label{conclusion}
 
-\ldots{} goes here\ldots{}
+\TeX{} and its extensions have more functionality than could
+realistically be added to R but by targeting the most useful features of
+\TeX{}, as \texttt{dvir} did originally and as has been continued in
+this project, many use cases are accommodated. The changes discussed in
+this report have made the \texttt{dvir} package better especially for
+displaying text and equations, graphics with many \texttt{grid.latex()}
+calls, or even when developing graphics with \texttt{grid.latex()} which
+requires rerunning code with small tweaks to get the perfect graphic.
+
+\newpage
+
+\section{References}\label{references}
+
+\hypertarget{refs}{}
+\hypertarget{ref-murrell-dvir}{}
+Murrell, Paul. 2018. ``Revisiting Mathematical Equations in R: The
+'dvir' Package.'' 2018-08. Department of Statistics, The University of
+Auckland.
 
 \newpage{}
 
 \section{Apendices}\label{apendices}
 
-Associated files can be found on Github:
-\url{https://github.com/ajvandervoorn/honours_dissertation}
+Associated files related to this project can be found on GitHub on the
+link in the Executive Summary.
 
 \end{document}

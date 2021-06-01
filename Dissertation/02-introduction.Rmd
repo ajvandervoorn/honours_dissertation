@@ -31,7 +31,7 @@ Use this code for above example, just need to find a way to caption and referenc
 could use \[\dfrac{\mu^2}{2}\] if that was easier too?
 --->
 
-The difference is stark and there are several approaches in R which can get us closer to the \LaTeX{} result (Murrell, 2018 [Revisiting Mathematical Equations in R: The 'dvir' package]).
+The difference is stark and there are several approaches in R which can get us closer to the \LaTeX{} result @murrell-dvir.
 
 <!--- 
 for these examples following, say that Paul's report descirbes the limitations of these approaches, and replicate the examples

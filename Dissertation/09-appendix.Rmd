@@ -1,5 +1,0 @@
-\newpage{}
-
-# Apendices
-
-Associated files can be found on Github: https://github.com/ajvandervoorn/honours_dissertation
