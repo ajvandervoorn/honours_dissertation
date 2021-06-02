@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.10.26)  2 JUN 2021 11:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.10.26)  2 JUN 2021 22:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1111,132 +1111,37 @@ File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.1a (rcs-revision 1.2)
 Package: changepage 2009/10/20 v1.0c check page and change page layout
 \c@cp@cntr=\count145
 \cp@tempcnt=\count146
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
-Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
-\col@sep=\dimen192
-\extrarowheight=\dimen193
-\NC@list=\toks38
-\extratabsurround=\skip53
-\backup@length=\skip54
-) (/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
-Package: multirow 2016/11/25 v2.2 Span multiple rows of a table
-\multirow@colwidth=\skip55
-\multirow@cntb=\count147
-\multirow@dima=\skip56
-\bigstrutjot=\dimen194
-) (/usr/share/texlive/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen195
-\WF@size=\dimen196
-\c@WF@wrappedlines=\count148
-\WF@box=\box45
-\WF@everypar=\toks39
-Package: wrapfig 2003/01/31  v 3.6
-) (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count149
-\float@exts=\toks40
-\float@box=\box46
-\@float@everytoks=\toks41
-\@floatcapt=\box47
-) (/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
-Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
-\everycr=\toks42
-\minrowclearance=\skip57
-) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/pdflscape.sty
-Package: pdflscape 2016/05/14 v0.11 Display of landscape pages in PDF (HO)
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/lscape.sty
-Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
-)
-Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
-) (/usr/share/texlive/texmf-dist/tex/latex/tabu/tabu.sty
-Package: tabu 2011/02/26 v2.8 - flexible LaTeX tabulars (FC)
-(/usr/share/texlive/texmf-dist/tex/latex/varwidth/varwidth.sty
-Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box48
-\sift@deathcycles=\count150
-\@vwid@loff=\dimen197
-\@vwid@roff=\dimen198
-)
-\c@taburow=\count151
-\tabu@nbcols=\count152
-\tabu@cnt=\count153
-\tabu@Xcol=\count154
-\tabu@alloc=\count155
-\tabu@nested=\count156
-\tabu@target=\dimen199
-\tabu@spreadtarget=\dimen256
-\tabu@naturalX=\dimen257
-\tabucolX=\dimen258
-\tabu@Xsum=\dimen259
-\extrarowdepth=\dimen260
-\abovetabulinesep=\dimen261
-\belowtabulinesep=\dimen262
-\tabustrutrule=\dimen263
-\tabu@thebody=\toks43
-\tabu@footnotes=\toks44
-\tabu@box=\box49
-\tabu@arstrutbox=\box50
-\tabu@hleads=\box51
-\tabu@vleads=\box52
-\tabu@cellskip=\skip58
-) (/usr/share/texlive/texmf-dist/tex/latex/threeparttable/threeparttable.sty
-Package: threeparttable 2003/06/13  v 3.0
-\@tempboxb=\box53
-) (/usr/share/texlive/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
-Package: threeparttablex 2013/07/23 v0.3 by daleif
-(/usr/share/texlive/texmf-dist/tex/latex/environ/environ.sty
-Package: environ 2014/05/04 v0.3 A new way to define environments
-(/usr/share/texlive/texmf-dist/tex/latex/trimspaces/trimspaces.sty
-Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
-))
-\TPTL@width=\skip59
-) (/usr/share/texlive/texmf-dist/tex/generic/ulem/ulem.sty
-\UL@box=\box54
-\UL@hyphenbox=\box55
-\UL@skip=\skip60
-\UL@hook=\toks45
-\UL@height=\dimen264
-\UL@pe=\count157
-\UL@pixel=\dimen265
-\ULC@box=\box56
-Package: ulem 2012/05/18
-\ULdepth=\dimen266
-) (/usr/share/texlive/texmf-dist/tex/latex/makecell/makecell.sty
-Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
-\rotheadsize=\dimen267
-\c@nlinenum=\count158
-\TeXr@lab=\toks46
 ) (./Alexander-van-der-Voorn_dissertation.aux)
 \openout1 = `Alexander-van-der-Voorn_dissertation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 134.
-LaTeX Font Info:    ... okay on input line 134.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 134.
-LaTeX Font Info:    ... okay on input line 134.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 134.
-LaTeX Font Info:    ... okay on input line 134.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 134.
-LaTeX Font Info:    ... okay on input line 134.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 134.
-LaTeX Font Info:    ... okay on input line 134.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 134.
-LaTeX Font Info:    ... okay on input line 134.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 134.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 134.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 120.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 120.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 134.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 134.
-LaTeX Font Info:    ... okay on input line 134.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 134.
-LaTeX Font Info:    ... okay on input line 134.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 134.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 120.
 (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \microtypecontext on input line 134.
+LaTeX Info: Redefining \microtypecontext on input line 120.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
@@ -1250,18 +1155,18 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-\AtBeginShipoutBox=\box57
-Package hyperref Info: Link coloring OFF on input line 134.
+\AtBeginShipoutBox=\box45
+Package hyperref Info: Link coloring OFF on input line 120.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count159
+\c@section@level=\count147
 )
-LaTeX Info: Redefining \ref on input line 134.
-LaTeX Info: Redefining \pageref on input line 134.
-LaTeX Info: Redefining \nameref on input line 134.
+LaTeX Info: Redefining \ref on input line 120.
+LaTeX Info: Redefining \pageref on input line 120.
+LaTeX Info: Redefining \nameref on input line 120.
 (./Alexander-van-der-Voorn_dissertation.out) (./Alexander-van-der-Voorn_dissert
 ation.out)
 \@outlinefile=\write5
@@ -1303,17 +1208,17 @@ ation.out)
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count160
-\scratchdimen=\dimen268
-\scratchbox=\box58
-\nofMPsegments=\count161
-\nofMParguments=\count162
-\everyMPshowfont=\toks47
-\MPscratchCnt=\count163
-\MPscratchDim=\dimen269
-\MPnumerator=\count164
-\makeMPintoPDFobject=\count165
-\everyMPtoPDFconversion=\toks48
+\scratchcounter=\count148
+\scratchdimen=\dimen192
+\scratchbox=\box46
+\nofMPsegments=\count149
+\nofMParguments=\count150
+\everyMPshowfont=\toks38
+\MPscratchCnt=\count151
+\MPscratchDim=\dimen193
+\MPnumerator=\count152
+\makeMPintoPDFobject=\count153
+\everyMPtoPDFconversion=\toks39
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
@@ -1329,39 +1234,39 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 )) ABD: EveryShipout initializing macros
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 136.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 122.
 
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 136.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 122.
 
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 136
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 122
 .
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 136
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 122
 .
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 136.
+(Font)              <12> on input line 122.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 136.
+(Font)              <8> on input line 122.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 136.
-LaTeX Font Info:    Try loading font information for U+msa on input line 136.
+(Font)              <6> on input line 122.
+LaTeX Font Info:    Try loading font information for U+msa on input line 122.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 136.
+LaTeX Font Info:    Try loading font information for U+msb on input line 122.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
@@ -1370,7 +1275,7 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 <../Figures/logo.jpg, id=91, 250.9375pt x 271.0125pt>
 File: ../Figures/logo.jpg Graphic file (type jpg)
 <use ../Figures/logo.jpg>
-Package pdftex.def Info: ../Figures/logo.jpg  used on input line 143.
+Package pdftex.def Info: ../Figures/logo.jpg  used on input line 129.
 (pdftex.def)             Requested size: 93.952pt x 101.46815pt.
 [1
 
@@ -1391,376 +1296,311 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 [2] [3]
 
-Package xcolor Warning: Incompatible color definition on input line 211.
+Package xcolor Warning: Incompatible color definition on input line 198.
 
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 213.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 200.
 
-Package xcolor Warning: Incompatible color definition on input line 219.
+Package xcolor Warning: Incompatible color definition on input line 206.
 
 
-Package xcolor Warning: Incompatible color definition on input line 219.
+Package xcolor Warning: Incompatible color definition on input line 206.
 
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlot-1.pdf, 
-id=137, 469.755pt x 325.215pt>
+id=141, 469.755pt x 325.215pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlot-1.
 pdf Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlot-1.p
 df>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/expressionPlot-1.pdf  used on input line 223.
+x/expressionPlot-1.pdf  used on input line 210.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 247.
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 234.
 
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [4pdfTeX warning (ext4): destination with the same identifier (name{figure.1}
-) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.261 
-      pdfTeX warning (ext4): destination with the same identifier (name{figure.
-2}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.261 
-       <./Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlo
-t-1.pdf>] [5]
+) [4 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlot-
+1.pdf>] [5]
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 323.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 310.
 
-Package xcolor Warning: Incompatible color definition on input line 329.
-
-
-Package xcolor Warning: Incompatible color definition on input line 334.
+Package xcolor Warning: Incompatible color definition on input line 316.
 
 
-Package xcolor Warning: Incompatible color definition on input line 334.
+Package xcolor Warning: Incompatible color definition on input line 321.
+
+
+Package xcolor Warning: Incompatible color definition on input line 321.
 
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1.pdf,
- id=169, 28.105pt x 28.105pt>
+ id=174, 28.105pt x 28.105pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1
 .pdf Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1.
 pdf>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/unnamed-chunk-1-1.pdf  used on input line 338.
+x/unnamed-chunk-1-1.pdf  used on input line 325.
 (pdftex.def)             Requested size: 28.1062pt x 28.1062pt.
-[6pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) 
-has been already used, duplicate ignored
+[6 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1
+.pdf>] [7]
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.361     \item M
-                 etric sweep: To determine the overall bounding box (size) o...
- <./Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1.p
-df>] [7]
-
-Package xcolor Warning: Incompatible color definition on input line 376.
-
-LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 401
-.
-(/usr/share/texmf/tex/latex/lm/ts1lmtt.fd
-File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-
-Package xcolor Warning: Incompatible color definition on input line 421.
+Package xcolor Warning: Incompatible color definition on input line 363.
 
 
-Package xcolor Warning: Incompatible color definition on input line 421.
+Package xcolor Warning: Incompatible color definition on input line 377.
 
 
-Overfull \vbox (0.43936pt too high) detected at line 421
- []
-
-
-Package xcolor Warning: Incompatible color definition on input line 421.
-
-[8]
-
-Package xcolor Warning: Incompatible color definition on input line 421.
-
-
-Package xcolor Warning: Incompatible color definition on input line 421.
+Package xcolor Warning: Incompatible color definition on input line 377.
 
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf, id=2
-11, 469.755pt x 361.35pt>
+09, 469.755pt x 216.81pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf 
 Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/yeeExample-1.pdf  used on input line 425.
-(pdftex.def)             Requested size: 328.82626pt x 252.94327pt.
+x/yeeExample-1.pdf  used on input line 381.
+(pdftex.def)             Requested size: 328.82626pt x 151.76596pt.
 
-LaTeX Warning: Reference `yeeExample' on page 9 undefined on input line 432.
+LaTeX Warning: Reference `yeeExample' on page 8 undefined on input line 388.
 
-<../Figures/profilingSimpleProfvis_0.2-1.PNG, id=213, 695.59875pt x 203.25937pt
+<../Figures/profilingSimpleProfvis_0.2-1.PNG, id=211, 695.59875pt x 203.25937pt
 >
 File: ../Figures/profilingSimpleProfvis_0.2-1.PNG Graphic file (type png)
 <use ../Figures/profilingSimpleProfvis_0.2-1.PNG>
 Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1.PNG  used on i
-nput line 449.
+nput line 405.
 (pdftex.def)             Requested size: 469.75302pt x 137.26547pt.
-<../Figures/profilingYeeProfvis_0.2-1_highlight.PNG, id=215, 700.11563pt x 411.
+<../Figures/profilingYeeProfvis_0.2-1_highlight.PNG, id=213, 700.11563pt x 411.
 03563pt>
 File: ../Figures/profilingYeeProfvis_0.2-1_highlight.PNG Graphic file (type png
 )
 <use ../Figures/profilingYeeProfvis_0.2-1_highlight.PNG>
 Package pdftex.def Info: ../Figures/profilingYeeProfvis_0.2-1_highlight.PNG  us
-ed on input line 465.
+ed on input line 421.
 (pdftex.def)             Requested size: 469.75874pt x 275.79384pt.
-[9pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) 
-has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.484 
-       <./Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.
-pdf>] [10pdfTeX warning (ext4): destination with the same identifier (name{figu
-re.5}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.484 
-      pdfTeX warning (ext4): destination with the same identifier (name{figure.
-6}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.484 
-       <../Figures/profilingSimpleProfvis_0.2-1.PNG> <../Figures/profilingYeePr
-ofvis_0.2-1_highlight.PNG>]
-<../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG, id=294, 750.55406pt x 2
+[8 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf>
+] [9 <../Figures/profilingSimpleProfvis_0.2-1.PNG> <../Figures/profilingYeeProf
+vis_0.2-1_highlight.PNG>]
+<../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG, id=292, 750.55406pt x 2
 82.30469pt>
 File: ../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG Graphic file (type 
 png)
 <use ../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG>
 Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG 
- used on input line 499.
+ used on input line 455.
 (pdftex.def)             Requested size: 469.75938pt x 176.68982pt.
+[10 <../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG>]
 
-Package xcolor Warning: Incompatible color definition on input line 528.
-
-[11pdfTeX warning (ext4): destination with the same identifier (name{figure.7})
- has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.533 \end{Shaded}
-                   <../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG>]
-
-Package xcolor Warning: Incompatible color definition on input line 533.
+Package xcolor Warning: Incompatible color definition on input line 484.
 
 
-Package xcolor Warning: Incompatible color definition on input line 533.
+Package xcolor Warning: Incompatible color definition on input line 489.
 
 
-Package xcolor Warning: Incompatible color definition on input line 539.
+Package xcolor Warning: Incompatible color definition on input line 489.
 
 
-Package xcolor Warning: Incompatible color definition on input line 544.
+Package xcolor Warning: Incompatible color definition on input line 495.
 
 
-Package xcolor Warning: Incompatible color definition on input line 544.
+Package xcolor Warning: Incompatible color definition on input line 500.
 
 
-Package xcolor Warning: Incompatible color definition on input line 562.
+Package xcolor Warning: Incompatible color definition on input line 500.
 
 
-Package xcolor Warning: Incompatible color definition on input line 567.
+Package xcolor Warning: Incompatible color definition on input line 518.
 
 
-Package xcolor Warning: Incompatible color definition on input line 567.
+Package xcolor Warning: Incompatible color definition on input line 523.
 
+
+Package xcolor Warning: Incompatible color definition on input line 523.
+
+LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 531
+.
+(/usr/share/texmf/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1.pdf, 
-id=301, 505.89pt x 289.08pt>
+id=299, 505.89pt x 289.08pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1.
 pdf Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1.p
 df>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/speedUp1Simple-1.pdf  used on input line 575.
+x/speedUp1Simple-1.pdf  used on input line 535.
 (pdftex.def)             Requested size: 328.8323pt x 187.90417pt.
+[11 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1
+.pdf>]
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf, id=
-302, 505.89pt x 289.08pt>
+312, 505.89pt x 289.08pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf
  Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf>
 
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/speedUp1Yee-1.pdf  used on input line 588.
+x/speedUp1Yee-1.pdf  used on input line 552.
 (pdftex.def)             Requested size: 328.8323pt x 187.90417pt.
-[12pdfTeX warning (ext4): destination with the same identifier (name{figure.8})
- has been already used, duplicate ignored
+[12 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pd
+f>]
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.600 \newpage
-              {} <./Alexander-van-der-Voorn_dissertation_files/figure-latex/spe
-edUp1Simple-1.pdf>] [13pdfTeX warning (ext4): destination with the same identif
-ier (name{figure.9}) has been already used, duplicate ignored
+LaTeX Warning: Reference `yeeExample' on page 13 undefined on input line 576.
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.659   O
-         nly requirement is that the font def number is unique within a single 
-<./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf>] 
-[14] [15]
-Underfull \hbox (badness 1264) in paragraph at lines 804--815
+
+Overfull \hbox (44.74348pt too wide) in paragraph at lines 607--607
+[]\T1/lmtt/m/n/10 if (dvir::get("initFonts") || is.null(dvir::get("fonts"))) dv
+ir::set("fonts", vector("list", 255))[] 
+ []
+
+[13]
+<Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1.pdf, 
+id=330, 397.485pt x 289.08pt>
+File: Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1.
+pdf Graphic file (type pdf)
+<use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1.p
+df>
+Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
+x/speedUp2Simple-1.pdf  used on input line 668.
+(pdftex.def)             Requested size: 328.83893pt x 239.15558pt.
+<Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Yee-1.pdf, id=
+331, 397.485pt x 289.08pt>
+File: Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Yee-1.pdf
+ Graphic file (type pdf)
+<use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Yee-1.pdf>
+
+Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
+x/speedUp2Yee-1.pdf  used on input line 681.
+(pdftex.def)             Requested size: 328.83893pt x 239.15558pt.
+[14 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1
+.pdf>] [15 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Y
+ee-1.pdf>] [16]
+Underfull \hbox (badness 1264) in paragraph at lines 807--818
 \T1/lmr/m/n/10 (+20) ments for the \T1/lmtt/m/n/10 grid::linearGradient(...)\T1
 /lmr/m/n/10 (+20) , which is used as an ar-gu-ment to \T1/lmtt/m/n/10 grid::gpa
 r(fill
  []
 
 
-Underfull \hbox (badness 1043) in paragraph at lines 804--815
+Underfull \hbox (badness 1043) in paragraph at lines 807--818
 \T1/lmtt/m/n/10 = linearGradient(...))\T1/lmr/m/n/10 (+20) , which it-self is a
 n ar-gu-ment to a \T1/lmtt/m/n/10 grid \T1/lmr/m/n/10 (+20) draw-ing func-tion,
  for ex-am-ple
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 839.
+Package xcolor Warning: Incompatible color definition on input line 842.
 
 
-Package xcolor Warning: Incompatible color definition on input line 861.
+Package xcolor Warning: Incompatible color definition on input line 864.
 
 
-Package xcolor Warning: Incompatible color definition on input line 861.
+Package xcolor Warning: Incompatible color definition on input line 864.
 
 
-Package xcolor Warning: Incompatible color definition on input line 861.
+Package xcolor Warning: Incompatible color definition on input line 864.
 
-[16]
+[17]
 
-Package xcolor Warning: Incompatible color definition on input line 861.
-
-
-Package xcolor Warning: Incompatible color definition on input line 861.
+Package xcolor Warning: Incompatible color definition on input line 864.
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 896--896
+Package xcolor Warning: Incompatible color definition on input line 864.
+
+
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 899--899
 []  \T1/lmtt/m/n/10 \pgfsysprotocol@literal{SHADING BEING DEFINED: ShadDefID = 
 \the\pgf@sys@dvir@objectcount}%[] 
  []
 
 
-Overfull \hbox (97.24333pt too wide) in paragraph at lines 896--896
+Overfull \hbox (97.24333pt too wide) in paragraph at lines 899--899
 []  \T1/lmtt/m/n/10 \pgfsysprotocol@literal{<g transform="translate(\pgf@sys@to
 number{\pgf@xa},\pgf@sys@tonumber{\pgf@ya})">}%[] 
  []
 
 
-Overfull \hbox (49.99347pt too wide) in paragraph at lines 928--928
+Overfull \hbox (49.99347pt too wide) in paragraph at lines 931--931
 []      \T1/lmtt/m/n/10 \def\noexpand\pgf@sys@dvir@sh@defs{\noexpand\pgfsysprot
 ocol@literal{\pgf@sys@dvir@thestops}}%[] 
  []
 
-[17]
-Overfull \hbox (65.74342pt too wide) in paragraph at lines 941--941
+[18]
+Overfull \hbox (65.74342pt too wide) in paragraph at lines 944--944
 []  \T1/lmtt/m/n/10 \expandafter\expandafter\expandafter{\expandafter\pgf@sys@d
 vir@thestops\expandafter\space\pgf@temp}%[] 
  []
 
-[18] [19]
-Overfull \hbox (44.74348pt too wide) in paragraph at lines 1039--1039
+[19] [20]
+Overfull \hbox (44.74348pt too wide) in paragraph at lines 1042--1042
 []                       \T1/lmtt/m/n/10 colours=( rgb(0,1,0) rgb(0,1,0) rgb(0.
 5,0.75,0) rgb(1,0.5,0) rgb(1,0.5,0) )[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1052--1052
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1055--1055
 []             \T1/lmtt/m/n/10 x=dvisvgm:raw  <linearGradient id="pgfsh2" gradi
 entTransform="rotate(90)">{?nl}[] 
  []
 
 
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1052--1052
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1055--1055
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.0" stop-color=" 
 rgb(0.0%,100.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1052--1052
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1055--1055
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.25" stop-color="
  rgb(0.0%,100.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1052--1052
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1055--1055
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.5" stop-color=" 
 rgb(50.0%,75.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (18.49356pt too wide) in paragraph at lines 1052--1052
+Overfull \hbox (18.49356pt too wide) in paragraph at lines 1055--1055
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.75" stop-color="
  rgb(100.0%,50.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1052--1052
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1055--1055
 []                            \T1/lmtt/m/n/10 <stop offset=" 1.0" stop-color=" 
 rgb(100.0%,50.0%,0.0%) "/>{?nl}[] 
  []
 
-[20] [21]
+[21] [22]
 
-Package xcolor Warning: Incompatible color definition on input line 1179.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1184.
+Package xcolor Warning: Incompatible color definition on input line 1182.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1184.
-
-\dvibox=\box59
-\dviwidth=\skip61
-[22pdfTeX warning (ext4): destination with the same identifier (name{figure.10}
-) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1252 
-       ] [23]
-
-Package xcolor Warning: Incompatible color definition on input line 1489.
+Package xcolor Warning: Incompatible color definition on input line 1187.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1493.
+Package xcolor Warning: Incompatible color definition on input line 1187.
+
+\dvibox=\box47
+\dviwidth=\skip53
+[23] [24]
+
+Package xcolor Warning: Incompatible color definition on input line 1497.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1493.
+Package xcolor Warning: Incompatible color definition on input line 1501.
 
-[24pdfTeX warning (ext4): destination with the same identifier (name{figure.11}
-) has been already used, duplicate ignored
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1508 ... line wrapping!\end{minipage}}{913863sp}
-                                                  ] [25] [26] [27pdfTeX warning
- (ext4): destination with the same identifier (name{figure.12}) has been alread
-y used, duplicate ignored
+Package xcolor Warning: Incompatible color definition on input line 1501.
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1667 O
-        verall, the \texttt{dviMoves} algorithm has performed best out of allpd
-fTeX warning (ext4): destination with the same identifier (name{figure.13}) has
- been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1667 O
-        verall, the \texttt{dviMoves} algorithm has performed best out of all] 
-[28] [29] [30] [31]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1717.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1717.
+[25] [26] [27] [28] [29] [30] [31] [32]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1727.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1727.
 (./Alexander-van-der-Voorn_dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1717.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1717.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1727.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1727.
 
 Package rerunfilecheck Info: File `Alexander-van-der-Voorn_dissertation.out' ha
 s not changed.
@@ -1768,16 +1608,16 @@ s not changed.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1717.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1727.
  ) 
 Here is how much of TeX's memory you used:
- 24444 strings out of 494923
- 423268 string characters out of 6180741
- 504373 words of memory out of 5000000
- 27090 multiletter control sequences out of 15000+600000
- 68709 words of font info for 121 fonts, out of 8000000 for 9000
+ 23152 strings out of 494923
+ 405829 string characters out of 6180741
+ 479125 words of memory out of 5000000
+ 25842 multiletter control sequences out of 15000+600000
+ 74645 words of font info for 125 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 55i,7n,54p,466b,582s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,8n,54p,555b,578s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/s
 hare/texmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/l
@@ -1795,16 +1635,17 @@ nts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi7.pf
 b></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/typ
 e1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/
 share/texmf/fonts/type1/public/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public
-/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/tex
-mf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lms
-y7.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></usr/share/texmf/fon
-ts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtti10.p
-fb></usr/share/texmf/fonts/type1/public/tex-gyre/qhvr.pfb>
-Output written on Alexander-van-der-Voorn_dissertation.pdf (31 pages, 779486 by
+/lm/lmr6.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf
+/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.
+pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/
+type1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></
+usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/
+public/tex-gyre/qhvr.pfb>
+Output written on Alexander-van-der-Voorn_dissertation.pdf (32 pages, 811793 by
 tes).
 PDF statistics:
- 524 PDF objects out of 1000 (max. 8388607)
- 426 compressed objects within 5 object streams
- 87 named destinations out of 1000 (max. 500000)
- 12520 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 551 PDF objects out of 1000 (max. 8388607)
+ 447 compressed objects within 5 object streams
+ 91 named destinations out of 1000 (max. 500000)
+ 14578 words of extra memory for PDF output out of 17280 (max. 10000000)
 

@@ -109,15 +109,15 @@ baselineFunc <- function(testText,
 
 ## The problem
 
-Text characters have a baseline, that is, a horizontal line on which the characters naturally sit so all the letters appear to be in line with each other. Some letters, like a lower case p or j, have a "descender". A descender is the part of a character that sits *below* the baseline. 
+Text characters have a baseline, that is, a horizontal line on which the characters naturally sit so all the letters appear to be in line with each other. Some letters, like a lower case "p" or "j", have a "descender". A descender is the part of a character that sits *below* the baseline. 
 
 - [Example - showing a letter, with the baseline marked and also showing what part is the "descender" part]
 
-`grid.text()` accounts for this baseline so when you bottom align text at a certain y value, the descenders will actually fall below the y value we defined, despite the bottom justification. Unfortunately, `dvir` does not account for text baselines and will do any alignment with the bounding box of the text.
+`grid.text()` accounts for this baseline so when you bottom align text at a certain y-value, the descenders will actually fall below the y-value we defined, despite the bottom justification. Unfortunately, `dvir` does not account for text baselines and will do any alignment with the bounding box of the text.
 
 - [Example - combining `grid.text()` and `grid.latex()` on same y-value to show the difference between them]
 
-- [Example - more complicated example, say with several pieces of multi-line text (only if I can demonstrate later that my function works for aligning them!)]
+- [Example - more complicated example, say with several pieces of multiline text (only if I can demonstrate later that my function works for aligning them!)]
 
 To fix this, `dvir` needs to obtain or calculate a value for the baseline for any given piece of text to offset the bounding box when it is drawing text. All of `dvir`'s information comes from the DVI file we either need to extract a baseline value from the DVI file itself, or calculate it *from* information in the DVI file. Unfortunately plain DVI files do not state a baseline value, rather they only detail specific placement of each charcter, so we will explore some possible methods to obtain a baseline value. These methods are referred to as algorithms from here on due to their heuristic nature.
 
@@ -131,7 +131,7 @@ This function has been written to easily allow integration of other algorithms a
 
 ## Our potential solutions
 
-We explored several different algorithms to calculate the baseline for several different types of text that could be used with `grid.latex()`. These algorithms are detailed below.
+Several different algorithms were explored to calculate the baseline for different types of text that could be used with `grid.latex()`. These algorithms are detailed here.
 
 ### `alex` algorithm
 
@@ -146,9 +146,7 @@ baselineValue <- baselines(tex = "$x - \\mu$", algorithm = "alex")
 baselineValue
 ```
 
-<!---
-Discussion - what does it work well or not well for?
---->
+For plain text this algorithm works quite well. Unfortunately for many equations, particularly ones with superscripts or subscripts, and multiline text the first upward move is *not* to where the baseline is.
 
 <!---
 Where I define testText below - should I either put it in a non-visible chunk to evaluate in abckground, or just call the examples I'm going to do for each example indicudally?
@@ -214,11 +212,11 @@ This is an extension of the `alex` algorithm. Rather than only taking the locati
 
 There are two complications with this method:
 
-- As it returns all the vertical positions the cursor moves to there are many possible "baselines" returned. Any more than one means we have to decide which of the baselines values to actually choose
+- As it returns *all* the vertical positions the cursor moves to there are many possible baseline values returned. Any more than one means we have to decide which of them to choose.
 
-- There are often several up and downward moves in the DVI file between typeset characters so in between the "useful" baselines there can be some which are not so useful or duplicates
+- There are often several up and downward moves in the DVI file between typeset characters so in between the "useful" baselines there can be some which are not so useful or duplicates.
 
-To account for these considerations, along with the `dviMoves` algorithm, the function also allows a choice of method to select a *single* baseline out of the usually many returned by the algorithm. These methods are:
+To account for these considerations, along with the `dviMoves` algorithm, the function also allows a choice of method to select a *single* baseline out of the many returned by the algorithm. These methods are:
 
 #### `dviMoves` selection method `all`
 
@@ -356,13 +354,12 @@ Need to plot these things with latex to see if DVI moves is actuall best? And if
 
 --->
 
-"of the algorithms we looked at..."
-
-Overall, the `dviMoves` algorithm has performed best out of all of these. While most of these algorithms perform well for most of the examples, the `dviMoves` algorithm performs well for *all* the examples, notably for giving the option to align the baseline of *any* line of multi-line text. Utilising the fact it returns all baseline values for all characters, it is possible to align, for example, with any character in a mathematical equation, whether it be of a different size or a superscript or subscript.
+Of the algorithms considered, the `dviMoves` algorithm performed best. While most of these algorithms perform well for some or most of the examples, the `dviMoves` algorithm performs well for *all* the examples, notably for giving the option to align the baseline of *any* line of multi-line text. Utilising the fact it returns all baseline values for all characters, it is possible to align, for example, with any character in a mathematical equation, whether it be of a different size or a superscript or subscript.
 
 - [Example: Show examples from start of this section with baselines being used to make them aligned!]
 
-Best solution is dviMoves, with a "best match" to what the preview package gives, but with the option of specifying by index from bottom up for multi line text
+The `preview` algorithm also calculated a baseline well for all examples, except the multi line text. An implementation of this in `dvir` could perhaps use both the `dviMoves` and `preview` algorithms to calculate the baselines, with the default selection method being the baseline value from `dviMoves` that is closest to the baseline value calculated by the `preview` algorithm.
+
 
 <!---
 - mention the "matching' algorithm of dviMoves (to compare with another algorithm)

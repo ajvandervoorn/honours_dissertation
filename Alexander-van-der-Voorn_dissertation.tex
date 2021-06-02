@@ -112,20 +112,6 @@
 \usepackage{tikz}
 \usepackage{graphicx}
 \usepackage{changepage}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
 
 \title{Improvements to the `dvir' Package}
 \author{Alexander van der Voorn}
@@ -197,8 +183,9 @@ ability to align text to its baseline means graphics with the addition
 of \TeX{}, for example in lattice plot headers, can be aligned with one
 another and not require ``touching up'' outside of R.
 
-This report, source code and associated files can be found on GitHub:
-\url{https://github.com/ajvandervoorn/honours_dissertation}
+This report, source code and associated files
+\href{https://github.com/ajvandervoorn/honours_dissertation}{can be
+found on GitHub}\footnote{\url{https://github.com/ajvandervoorn/honours_dissertation}}.
 
 \newpage{}
 
@@ -375,48 +362,17 @@ package was motivated with a simple example of a mathematical equation.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{xpos <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{,  }\FloatTok{0.7}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\NormalTok{myplot <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{abcd =} \StringTok{"(a)"}\NormalTok{, }\DataTypeTok{col =} \StringTok{"black"}\NormalTok{) \{}
-  \KeywordTok{plot}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{9}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{9}\NormalTok{, }\DataTypeTok{type =} \StringTok{"n"}\NormalTok{, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }
-       \DataTypeTok{bty =} \StringTok{"n"}\NormalTok{, }\DataTypeTok{axes =}\NormalTok{ F, }\DataTypeTok{xlab =} \StringTok{""}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
-  \KeywordTok{arrows}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, xpos, }\DecValTok{0}\NormalTok{, }\DataTypeTok{length =} \FloatTok{0.12}\NormalTok{, }\DataTypeTok{lwd =} \FloatTok{.7}\NormalTok{,}
-         \DataTypeTok{col =}\NormalTok{ col)  }\CommentTok{# All the arrows}
-  \KeywordTok{text}\NormalTok{(}\FloatTok{0.05}\NormalTok{, }\DataTypeTok{y =} \FloatTok{1.1}\NormalTok{, }\DataTypeTok{xpd =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{labels =}\NormalTok{ abcd, }\DataTypeTok{cex =} \FloatTok{1.0}\NormalTok{,}
-       \DataTypeTok{font =} \DecValTok{1}\NormalTok{, }\DataTypeTok{col =}\NormalTok{ col)}
-\NormalTok{\}  }\CommentTok{# myplot}
-\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{),}
-    \DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\FloatTok{2.6}\NormalTok{, }\DecValTok{4}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }\DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }\FloatTok{0.1}\NormalTok{,}
-    \DataTypeTok{font =} \DecValTok{3}\NormalTok{,  }\CommentTok{# italic}
-    \DataTypeTok{las =} \DecValTok{1}\NormalTok{)}
-\KeywordTok{myplot}\NormalTok{()}
-\NormalTok{## Convert to grid}
-\KeywordTok{library}\NormalTok{(gridGraphics)}
-\KeywordTok{grid.echo}\NormalTok{()}
-\NormalTok{## Make arrows "nicer" ? }
-\KeywordTok{grid.edit}\NormalTok{(}\StringTok{"arrows"}\NormalTok{, }\DataTypeTok{grep=}\OtherTok{TRUE}\NormalTok{,}
-          \DataTypeTok{arrow=}\KeywordTok{arrow}\NormalTok{(}\DataTypeTok{angle=}\DecValTok{10}\NormalTok{, }\DataTypeTok{length=}\KeywordTok{unit}\NormalTok{(.}\DecValTok{12}\NormalTok{, }\StringTok{"in"}\NormalTok{), }\DataTypeTok{type=}\StringTok{"closed"}\NormalTok{),}
-          \DataTypeTok{gp=}\KeywordTok{gpar}\NormalTok{(}\DataTypeTok{fill=}\StringTok{"black"}\NormalTok{))}
-\NormalTok{## Navigate to plot window}
-\KeywordTok{downViewport}\NormalTok{(}\StringTok{"graphics-window-1-1"}\NormalTok{)}
-\NormalTok{## Use 'dvir' to draw labels}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dots"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.44}\NormalTok{, }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
-\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$Y_* =$"}\NormalTok{,}
-           \DataTypeTok{x =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{y =} \FloatTok{1.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
+\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$Y_* =$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{y =} \FloatTok{1.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$a_1$"}\NormalTok{, xpos[}\DecValTok{1}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$a_2$"}\NormalTok{, xpos[}\DecValTok{2}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$a_\{L_A\}$"}\NormalTok{, xpos[}\DecValTok{3}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
-\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$Y_\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{pi\} | Y_\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{pi\} }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{notin }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{cal\{A\}$"}\NormalTok{,}
-           \DataTypeTok{x =}\NormalTok{ xpos[}\DecValTok{4}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
-\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_1$"}\NormalTok{,}
-           \DataTypeTok{x =} \FloatTok{0.18}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
-\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_2$"}\NormalTok{,}
-           \DataTypeTok{x =} \FloatTok{0.32}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
-\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dots$"}\NormalTok{,}
-           \DataTypeTok{x =} \FloatTok{0.44}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
-\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_\{L_A\}$"}\NormalTok{,}
-           \DataTypeTok{x =} \FloatTok{0.54}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
-\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$1 - }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{sum_\{s=1\}^\{L_A\}}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_s$"}\NormalTok{,}
-           \DataTypeTok{x =} \FloatTok{0.95}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
+\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$Y_\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{pi\} | Y_\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{pi\} }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{notin }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{cal\{A\}$"}\NormalTok{, }\DataTypeTok{x =}\NormalTok{ xpos[}\DecValTok{4}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
+\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_1$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.18}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
+\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_2$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.32}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
+\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dots$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.44}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
+\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_\{L_A\}$"}\NormalTok{,  }\DataTypeTok{x =} \FloatTok{0.54}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
+\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$1 - }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{sum_\{s=1\}^\{L_A\}}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_s$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.95}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -426,7 +382,7 @@ package was motivated with a simple example of a mathematical equation.
 
 }
 
-\caption{A more complicated example using `dvir`}\label{fig:yeeExample}
+\caption{Using nine `grid.latex()` calls to create a graphic.}\label{fig:yeeExample}
 \end{figure}
 
 The example in figure \ref{yeeExample} uses nine calls to
@@ -509,7 +465,7 @@ spent in \texttt{engine\$fontDef}. The wrappers for the font, metric and
 grid sweeps are \texttt{dviFonts()}, \texttt{dviMetric()} and
 \texttt{dvigrid()} respectively (sixth call from the bottom of the
 stack). Here we can see nearly all of the time spent in the metric and
-grid sweeps are actually redoing the font sweep!
+grid sweeps are actually redoing the font sweep.
 
 The change to be made was simply stopping the metric and grid sweeps
 from doing the font sweep again.
@@ -570,6 +526,10 @@ To quantify the impact this has on code speed we recorded the time to
 run our examples 20 times, after an initial run to compile the package
 after it was loaded.
 
+\begin{verbatim}
+## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+\end{verbatim}
+
 \begin{figure}
 
 {\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1} 
@@ -582,6 +542,10 @@ after it was loaded.
 For the simple example the time spent in the metric and grid sweeps have
 decreased by 76\% and 83\% respectively. The speed of the overall
 \texttt{grid.latex()} call has decreased by 30\%.
+
+\begin{verbatim}
+## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+\end{verbatim}
 
 \begin{figure}
 
@@ -602,85 +566,124 @@ Similarly for the more complicated example in figure
 \section{Code speed (part 2) - font
 caching}\label{code-speed-part-2---font-caching}
 
-The earlier code speed up was done by stopping \texttt{dvir} doing
-something ``silly''. Our further profiling lead us to find where next
-our code spends its time and now it was a matter of making \texttt{dvir}
-``smarter''.
+In the previous section, the speed of \texttt{dvir} was increased by
+stopping it doing something ``silly''. The profiling results from the
+previous section demonstrate how much time \texttt{grid.latex()} spends
+dealing with fonts so this section is about making \texttt{dvir}
+``smarter'' by caching the information it gathers about fonts between
+\texttt{grid.latex()} calls.
 
-The font sweeps take a long time compared to the rest of the
-\texttt{grid.latex()} function. We saw that in the previous section with
-massive code speed ups
+For example, creating figure \ref{yeeExample} requires three
+\texttt{grid.latex()} calls for the same symbol \(\omega\). Each time,
+the following font definition appears in the DVI file for
+\texttt{grid.latex()} to search for during its font sweep.
 
-\begin{itemize}
-\item
-  \texttt{fonts} R list is re-initialised after every call to
-  \texttt{grid.latex()}
-\item
-  Is a font definition in DVI the same over different calls to
-  \texttt{grid.latex()}? Yes! even the font def number (a number
-  seemingly determined by TeX)
-\end{itemize}
+\begin{verbatim}
+fnt_def_1    fontnum=17, checksum=-1209964637, scale=786432, design=786432,
+             fontname=cmmi12
+\end{verbatim}
 
-- {[}\textbf{Example:} font definitions from DVI file (over multiple
-\texttt{grid.latex()} calls) showing same fonts have same def{]}
+Caching fonts requires several steps:
 
 \begin{itemize}
-\item
-  first of all we want the \texttt{fonts} R list to persist over
-  multiple \texttt{grid.latex()} calls in an R session. We did this by
-  storing fonts list in the \texttt{dvir} environment (using
-  \texttt{dvir::set()} and \texttt{dvir::get()})
-\item
-  When come across a font definition (during a font sweep), we check if
-  that font exists - the position in \texttt{fonts} list is determined
-  by the font def number, and so as the same fonts (theoretically) have
-  the same font def number, we can compare the new font we've come
-  across with what is existing in that position in the \texttt{fonts}
-  list. If nothing exists in that position in the list, then we save it
-  as normal. If a font does exist, then we need to check if it's the
-  same (just in case the font def number is not unique for different
-  fonts across different \texttt{grid.latex()} calls)
-\item
-  To do this easiest way was to expand the stored information about
-  fonts in \texttt{fonts} to include the hex code chunk (from DVI) of
-  the font definition
-\item
-  Then we check if all parts of the new hex code chunk are the same as
-  the existing
-\item
-  {[}\textbf{Example:} code for new function for checking if two font
-  definitions are the same{]}
-\item
-  If the definitions are the same, do nothing. If they are different,
-  overwrite the existing font info with the new font info. This actually
-  removes any concern about using only the font def number (which we're
-  pretty sure stays the same for the same font, but maybe it doesn't)
-\item
-  Only requirement is that the font def number is unique within a single
-  call to grid.latex() (or rather the resulting DVI output)
-\item
-  Now only need to change the initialisation (reset) of fonts list to
-  happen on package load, rather than during \texttt{grid.latex()} call
-  (because doing it every \texttt{grid.latex()} call defeats the purpose
-  of storing fonts). Occasionally one might still want to reset the font
-  cache, so added an option \texttt{options(dvir.initFonts\ =\ FALSE)}
-  and added \texttt{initFonts\ =\ getOption("dvir.initFonts")} to
-  \texttt{dviGrob.character()} and \texttt{dviGrob.DVI()}
-\item
-  {[}\textbf{Example:} show function calls with the above, and anything
-  else that helps explain them{]}
+  \item During the font sweep, search all font definitions as per usual.
+  \item For each font definition, check if the font has been cached already.
+  \begin{itemize}
+    \item If yes, do nothing. Refer to the existing font information in the cache when the needs to be used
+    \item If no, search for and store the font information as per usual.
+  \end{itemize}
 \end{itemize}
 
-But why to each of these steps? Need to flesh out more why they achieve
-what we want it to achieve (and any considerations we had in our thought
-process)
+The font information is stored in R as a list. Every time
+\texttt{grid.latex()} processed a ``preamble'' op code in a DVI file,
+that is, every time \texttt{grid.latex()} was called, the font list was
+initialised as an empty list in the \texttt{dvir} namespace with
+\texttt{dvir::set("fonts",\ vector("list",\ 255))}. To stop this
+initialisation happening by default, the following code was put in its
+place.
+
+\begin{verbatim}
+if (dvir::get("initFonts") || is.null(dvir::get("fonts"))) dvir::set("fonts", vector("list", 255))
+\end{verbatim}
+
+Note in this new statement the logical variable \texttt{initFonts},
+stored in the \texttt{dvir} namespace. This lets a user choose whether
+to intialise the font cache on a \texttt{grid.latex()} call. If
+\texttt{initFonts} is \texttt{FALSE} or the font list does not exist,
+for example after the package is loaded, the font list is initialised.
+Otherwise, the existing font cache remains. \texttt{initFonts} was added
+as an argument to \texttt{grid.latex()} with its default value being
+equal to the global option \texttt{dvir.initFonts}.
+
+In a DVI file, each font definition gives the font a identification
+number, for example \texttt{fontnum=17}. In all the DVI files examined
+as part of this project, this font identification number is the same
+when that particular font is used again in another \texttt{grid.latex()}
+call. This number is used as the index of the fonts list where its
+information is stored.
+
+When the font sweep passes a font definition in the DVI file it checks
+first whether the index of the font list matching the font number of the
+new font contains any existing font information:
 
 \begin{itemize}
-\tightlist
-\item
-  {[}\textbf{Example:} Profiling results (\texttt{profvis()} and
-  \texttt{profmem()} showing speed improvement){]}
+  \item If no, then the font information is written to the font list as usual.
+  \item If yes, then it checks if the existing font information is the same as the font information in the DVI file. 
+  \begin{itemize}
+    \item If yes, then it does nothing. 
+    \item If no, then it overwrites the fonts as per usual.
+  \end{itemize}
 \end{itemize}
+
+The result of this is that across multiple \texttt{grid.latex()} calls
+requiring the same fonts, any future uses of that font are much faster
+after the font has been used once. Importantly it also has a ``fail
+safe'' where if there happens to be a case where the font number was
+used with a different font in a previous \texttt{grid.latex()} call, the
+font cache is overwritten with the new font so the correct font will be
+used.
+
+The updated font list is stored in the \texttt{dvir} environment to be
+retrieved the next \texttt{grid.latex()} finds a font definition during
+a font sweep.
+
+The only weakness of this process is if in a \emph{single} DVI file
+different fonts are defined with the same font number. In this case the
+second font will be stored in the font cache in that index and so will
+be used in place of the first font. No instances of this occurring were
+discovered during this project.
+
+- {[}\textbf{Example:} Do example counting how many times same font
+definition is repeated in thomas yee's example{]}
+
+To examine the effect of these changes on code speed we performed
+profiling as was detailed in the previous section.
+
+\begin{verbatim}
+## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+\end{verbatim}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1} 
+
+}
+
+\caption{The total time spent in the `grid.latex()` function and font sweep}\label{fig:speedUp2Simple}
+\end{figure}
+
+\begin{verbatim}
+## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+\end{verbatim}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Yee-1} 
+
+}
+
+\caption{The total time spent in the `grid.latex()` function and font sweep}\label{fig:speedUp2Yee}
+\end{figure}
 
 \subsection{Profiling environment
 specifications}\label{profiling-environment-specifications}
@@ -1089,7 +1092,7 @@ function used as in step 3.
 
 Text characters have a baseline, that is, a horizontal line on which the
 characters naturally sit so all the letters appear to be in line with
-each other. Some letters, like a lower case p or j, have a
+each other. Some letters, like a lower case ``p'' or ``j'', have a
 ``descender''. A descender is the part of a character that sits
 \emph{below} the baseline.
 
@@ -1101,8 +1104,8 @@ each other. Some letters, like a lower case p or j, have a
 \end{itemize}
 
 \texttt{grid.text()} accounts for this baseline so when you bottom align
-text at a certain y value, the descenders will actually fall below the y
-value we defined, despite the bottom justification. Unfortunately,
+text at a certain y-value, the descenders will actually fall below the
+y-value we defined, despite the bottom justification. Unfortunately,
 \texttt{dvir} does not account for text baselines and will do any
 alignment with the bounding box of the text.
 
@@ -1112,8 +1115,8 @@ alignment with the bounding box of the text.
   on same y-value to show the difference between them{]}
 \item
   {[}Example - more complicated example, say with several pieces of
-  multi-line text (only if I can demonstrate later that my function
-  works for aligning them!){]}
+  multiline text (only if I can demonstrate later that my function works
+  for aligning them!){]}
 \end{itemize}
 
 To fix this, \texttt{dvir} needs to obtain or calculate a value for the
@@ -1150,9 +1153,9 @@ implemented into \texttt{dvir} formally.
 
 \subsection{Our potential solutions}\label{our-potential-solutions}
 
-We explored several different algorithms to calculate the baseline for
-several different types of text that could be used with
-\texttt{grid.latex()}. These algorithms are detailed below.
+Several different algorithms were explored to calculate the baseline for
+different types of text that could be used with \texttt{grid.latex()}.
+These algorithms are detailed here.
 
 \subsubsection{\texorpdfstring{\texttt{alex}
 algorithm}{alex algorithm}}\label{alex-algorithm}
@@ -1186,6 +1189,11 @@ is returned as the baseline.
 \begin{verbatim}
 ## [1] 127431scaledpts
 \end{verbatim}
+
+For plain text this algorithm works quite well. Unfortunately for many
+equations, particularly ones with superscripts or subscripts, and
+multiline text the first upward move is \emph{not} to where the baseline
+is.
 
 \newsavebox{\dvibox} \newlength{\dviwidth}
 
@@ -1254,19 +1262,19 @@ There are two complications with this method:
 
 \begin{itemize}
 \item
-  As it returns all the vertical positions the cursor moves to there are
-  many possible ``baselines'' returned. Any more than one means we have
-  to decide which of the baselines values to actually choose
+  As it returns \emph{all} the vertical positions the cursor moves to
+  there are many possible baseline values returned. Any more than one
+  means we have to decide which of them to choose.
 \item
   There are often several up and downward moves in the DVI file between
   typeset characters so in between the ``useful'' baselines there can be
-  some which are not so useful or duplicates
+  some which are not so useful or duplicates.
 \end{itemize}
 
 To account for these considerations, along with the \texttt{dviMoves}
 algorithm, the function also allows a choice of method to select a
-\emph{single} baseline out of the usually many returned by the
-algorithm. These methods are:
+\emph{single} baseline out of the many returned by the algorithm. These
+methods are:
 
 \paragraph{\texorpdfstring{\texttt{dviMoves} selection method
 \texttt{all}}{dviMoves selection method all}}\label{dvimoves-selection-method-all}
@@ -1662,16 +1670,14 @@ this function include:
 
 \subsection{Discussion of algorithms}\label{discussion-of-algorithms}
 
-``of the algorithms we looked at\ldots{}''
-
-Overall, the \texttt{dviMoves} algorithm has performed best out of all
-of these. While most of these algorithms perform well for most of the
-examples, the \texttt{dviMoves} algorithm performs well for \emph{all}
-the examples, notably for giving the option to align the baseline of
-\emph{any} line of multi-line text. Utilising the fact it returns all
-baseline values for all characters, it is possible to align, for
-example, with any character in a mathematical equation, whether it be of
-a different size or a superscript or subscript.
+Of the algorithms considered, the \texttt{dviMoves} algorithm performed
+best. While most of these algorithms perform well for some or most of
+the examples, the \texttt{dviMoves} algorithm performs well for
+\emph{all} the examples, notably for giving the option to align the
+baseline of \emph{any} line of multi-line text. Utilising the fact it
+returns all baseline values for all characters, it is possible to align,
+for example, with any character in a mathematical equation, whether it
+be of a different size or a superscript or subscript.
 
 \begin{itemize}
 \tightlist
@@ -1680,9 +1686,13 @@ a different size or a superscript or subscript.
   being used to make them aligned!{]}
 \end{itemize}
 
-Best solution is dviMoves, with a ``best match'' to what the preview
-package gives, but with the option of specifying by index from bottom up
-for multi line text
+The \texttt{preview} algorithm also calculated a baseline well for all
+examples, except the multi line text. An implementation of this in
+\texttt{dvir} could perhaps use both the \texttt{dviMoves} and
+\texttt{preview} algorithms to calculate the baselines, with the default
+selection method being the baseline value from \texttt{dviMoves} that is
+closest to the baseline value calculated by the \texttt{preview}
+algorithm.
 
 \newpage{}
 

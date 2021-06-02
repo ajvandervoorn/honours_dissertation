@@ -73,7 +73,21 @@ dvir versions:
 --->
 In the introduction of this report the case for the `dvir` package was motivated with a simple example of a mathematical equation. `dvir` can be used on a larger scale too.
 
-```{r yeeExample, fig.cap="A more complicated example using `dvir`", fig.wdith = 5, fig.height = 5}
+```{r eval = FALSE, echo = TRUE}
+grid.latex("\\dots", x = 0.44, y = -0.1, default.units="native")
+grid.latex("$Y_* =$", x = 0.5, y = 1.1, default.units="native")
+grid.latex("$a_1$", xpos[1], y = -0.1, default.units="native")
+grid.latex("$a_2$", xpos[2], y = -0.1, default.units="native")
+grid.latex("$a_{L_A}$", xpos[3], y = -0.1, default.units="native")
+grid.latex("$Y_{\\pi} | Y_{\\pi} \\notin \\cal{A}$", x = xpos[4], y = -0.1, default.units="native")
+grid.latex("$\\omega_1$", x = 0.18, y = 0.50, default.units="native")
+grid.latex("$\\omega_2$", x = 0.32, y = 0.50, default.units="native")
+grid.latex("$\\dots$", x = 0.44, y = 0.50, default.units="native")
+grid.latex("$\\omega_{L_A}$",  x = 0.54, y = 0.50, default.units="native")
+grid.latex("$1 - \\sum_{s=1}^{L_A}\\omega_s$", x = 0.95, y = 0.50, default.units="native")
+```
+
+```{r yeeExample, fig.cap="Using nine `grid.latex()` calls to create a graphic.", fig.wdith = 2.5, fig.height = 4, fig.keep = "last", echo = FALSE}
 xpos <- c(0, 0.25,  0.7, 1)
 myplot <- function(abcd = "(a)", col = "black") {
   plot(1:9, 1:9, type = "n", xlim = c(0, 1), ylim = c(0, 1), 
@@ -83,8 +97,7 @@ myplot <- function(abcd = "(a)", col = "black") {
   text(0.05, y = 1.1, xpd = TRUE, labels = abcd, cex = 1.0,
        font = 1, col = col)
 }  # myplot
-par(mfrow=c(2, 2),
-    mar = c(2.6, 4, 1.5, 2) + 0.1,
+par(mar = c(2.6, 4, 1.5, 2) + 0.1,
     font = 3,  # italic
     las = 1)
 myplot()
@@ -118,7 +131,7 @@ grid.latex("$1 - \\sum_{s=1}^{L_A}\\omega_s$",
            x = 0.95, y = 0.50, default.units="native")
 ```
 
-The example in figure \ref{yeeExample} uses nine calls to `grid.latex()` and was created by a University of Auckland lecturer using the `dvir` package to help write an assignment.
+The example in figure \ref{yeeExample} was created by a University of Auckland lecturer using the `dvir` package to help write an assignment.
 
 One of the first things investigated in the package was the speed of running the code. Anecdotally, generating any R graphic with non-trivial \TeX{}, like that in figure \@ref(fig:yeeExample), took a long time so it was desirable to see if we could speed it up.
 
@@ -151,7 +164,7 @@ What was interesting though was that after the actual font sweep the following s
 
 ![Screenshot of `profvis::profvis()` output for the code `grid.latex("$x - \\mu$")` in `dvir` version 0.2-1, highlighting `engine$fontDef`.](../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG "profilingSimpleProfvis_0.2-1_highlight"){width=100%}
 
-The effect of this is very obvious in figure \@ref(fig:profilingSimpleProfvis_0.2-1_highlight) which is the same as figure \@ref(fig:profilingSimpleProfvis_0.2-1) but highlights the time spent in `engine$fontDef`. The wrappers for the font, metric and grid sweeps are `dviFonts()`, `dviMetric()` and `dvigrid()` respectively (sixth call from the bottom of the stack). Here we can see nearly all of the time spent in the metric and grid sweeps are actually redoing the font sweep!
+The effect of this is very obvious in figure \@ref(fig:profilingSimpleProfvis_0.2-1_highlight) which is the same as figure \@ref(fig:profilingSimpleProfvis_0.2-1) but highlights the time spent in `engine$fontDef`. The wrappers for the font, metric and grid sweeps are `dviFonts()`, `dviMetric()` and `dvigrid()` respectively (sixth call from the bottom of the stack). Here we can see nearly all of the time spent in the metric and grid sweeps are actually redoing the font sweep.
 
 The change to be made was simply stopping the metric and grid sweeps from doing the font sweep again.
 
@@ -204,7 +217,6 @@ Do we want another `profvis()` output here showing the change? Might be good for
 To quantify the impact this has on code speed we recorded the time to run our examples 20 times, after an initial run to compile the package after it was loaded.
 
 ```{r echo = FALSE, eval = TRUE}
-library(kableExtra)
 dvirLibs <- c("/media/sf_Honours_project/VM_18.04/dvir0.2-1",
               "/media/sf_Honours_project/VM_18.04/dvir0.2-2",
               "/media/sf_Honours_project/VM_18.04/dvir0.3-1",
@@ -216,7 +228,7 @@ measurements <- c("Total time",
                   "Total time 'grid.latex()'",
                   "Total time 'dviMetric()'",
                   "Total time 'dvigrid()'",
-                  "Total time 'op_font_def()")
+                  "Total time 'dviFonts()'")
 
 results <- list()
 for (k in c(simpleProfResults, yeeProfResults)) {
@@ -229,7 +241,12 @@ for (k in c(simpleProfResults, yeeProfResults)) {
     x$by.total['"dviMetric"',"total.time"]
   results[[k]][[measurements[4]]] <- 
     x$by.total['"dvigrid"',"total.time"]
-  # results[[k]][[measurements[5]]] <- x$by.total['"op_font_def"',"total.time"]
+  results[[k]][[measurements[5]]] <- 
+    x$by.total['"engine$fontDef"',"total.time"]
+  if (k == simpleProfResults[4] | k == yeeProfResults[4]) {
+    results[[k]][[measurements[5]]] <- 
+      x$by.total['"dviFonts"',"total.time"]
+  }
 }
 ```
 
@@ -283,18 +300,16 @@ kable(resultTable[, 7:9],
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
-versionLabels <- c(Before = "0.2-1 (before changes)", 
-                   After = "0.2-2 (after changes)")
-
-plotProfiling1 <- function(ex, versionLabels) {
-  p <- ggplot(resultDF[resultDF$example == ex, ]) + 
+plotProfiling1 <- function(ex, versionLabels, results, levels) {
+  p <- ggplot(results[results$example == ex, ]) + 
     geom_col(aes(x = version, 
                  y = time,
                  col = version,
                  fill = version)) +
-    facet_grid(cols = vars(factor(func, levels = c("gridlatex", "metric", "grid")))) +
+    facet_grid(cols = vars(factor(func, levels = levels))) +
     scale_x_discrete(limits = c("Before", "After"),
                      expand = rep(0, 2)) +
+    scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
     scale_fill_discrete(name = "dvir Version",
                         limits = c("Before", "After"),
                         labels = versionLabels) +
@@ -304,20 +319,24 @@ plotProfiling1 <- function(ex, versionLabels) {
     labs(x = NULL, y = "Total time\n(ms)") +
     theme(axis.ticks.x = element_blank(),
           axis.text.x = element_blank(),
-          # axis.title.y = element_text(),
           panel.spacing.x = unit(1.5, "lines"))
+          #strip.text.x = element_text(family = c("mono", "sans")))
   p
 }
+
+versionLabels <- c(Before = "0.2-1 (before changes)", 
+                   After = "0.2-2 (after changes)")
+levels1 <- c("gridlatex", "metric", "grid")
 ```
 
 ```{r speedUp1Simple, fig.cap = "The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our simple example.", echo = FALSE, fig.width = 7, fig.height = 4}
-plotProfiling1("simple", versionLabels)
+plotProfiling1("simple", versionLabels, results = resultDF, levels = levels1)
 ```
 
 For the simple example the time spent in the metric and grid sweeps have decreased by 76% and 83% respectively. The speed of the overall `grid.latex()` call has decreased by 30%.
 
 ```{r speedUp1Yee, fig.cap = "The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our complicated example.", echo = FALSE, fig.width = 7, fig.height = 4}
-plotProfiling1("yee", versionLabels)
+plotProfiling1("yee", versionLabels, results = resultDF, levels = levels1)
 ```
 
 Similarly for the more complicated example in figure \@ref{fig:speedUp1Yee} the metric and grid sweeps have decreased by 83% and 89% respectively, with `grid.latex()` overall taking 47% less time. 

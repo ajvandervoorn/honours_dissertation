@@ -5,6 +5,13 @@
 <!---
 https://bookdown.org/yihui/bookdown/citations.html
 
+https://pandoc.org/MANUAL.html#citations
 
+https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html
+
+https://bookdown.org/yihui/rmarkdown/markdown-syntax.html
+
+
+For references, if Paul has referenced them, could look at his bib files...
 --->
 <div id="refs"></div>

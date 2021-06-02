@@ -12,4 +12,4 @@ The `dvir` package currently performs any alignment based on the bounding box of
 
 The magnitude of the speed increase alone makes `dvir` much more practical as it allows much faster testing of code and allows for more complicated graphics with many calls to the `dvir` package. The ability to align text to its baseline means graphics with the addition of \TeX{}, for example in lattice plot headers, can be aligned with one another and not require "touching up" outside of R.
 
-This report, source code and associated files can be found on GitHub:  https://github.com/ajvandervoorn/honours_dissertation
+This report, source code and associated files [can be found on GitHub](https://github.com/ajvandervoorn/honours_dissertation)^[https://github.com/ajvandervoorn/honours_dissertation].

@@ -9,37 +9,104 @@ Check if same font is used in SAME grid.latex call, does it need to work harder?
 
 # Code speed (part 2) - font caching
 
-The earlier code speed up was done by stopping `dvir` doing something "silly". Our further profiling lead us to find where next our code spends its time and now it was a matter of making `dvir` "smarter".
+In the previous section, the speed of `dvir` was increased by stopping it doing something "silly". The profiling results from the previous section demonstrate how much time `grid.latex()` spends dealing with fonts so this section is about making `dvir` "smarter" by caching the information it gathers about fonts between `grid.latex()` calls.
 
-The font sweeps take a long time compared to the rest of the `grid.latex()` function. We saw that in the previous section with massive code speed ups
+For example, creating figure \ref{yeeExample} requires three `grid.latex()` calls for the same symbol $\omega$. Each time, the following font definition appears in the DVI file for `grid.latex()` to search for during its font sweep.
 
-- `fonts` R list is re-initialised after every call to `grid.latex()`
+```
+fnt_def_1    fontnum=17, checksum=-1209964637, scale=786432, design=786432,
+             fontname=cmmi12
+```
 
-- Is a font definition in DVI the same over different calls to `grid.latex()`? Yes! even the font def number (a number seemingly determined by TeX)
+Caching fonts requires several steps:
 
-\- [**Example:** font definitions from DVI file (over multiple `grid.latex()` calls) showing same fonts have same def]
+\begin{itemize}
+  \item During the font sweep, search all font definitions as per usual.
+  \item For each font definition, check if the font has been cached already.
+  \begin{itemize}
+    \item If yes, do nothing. Refer to the existing font information in the cache when the needs to be used
+    \item If no, search for and store the font information as per usual.
+  \end{itemize}
+\end{itemize}
 
-- first of all we want the `fonts` R list to persist over multiple `grid.latex()` calls in an R session. We did this by storing fonts list in the `dvir` environment (using `dvir::set()` and `dvir::get()`)
+The font information is stored in R as a list. Every time `grid.latex()` processed a "preamble" op code in a DVI file, that is, every time `grid.latex()` was called, the font list was initialised as an empty list in the `dvir` namespace with `dvir::set("fonts", vector("list", 255))`. To stop this initialisation happening by default, the following code was put in its place.
 
-- When come across a font definition (during a font sweep), we check if that font exists - the position in `fonts` list is determined by the font def number, and so as the same fonts (theoretically) have the same font def number, we can compare the new font we've come across with what is existing in that position in the `fonts` list. If nothing exists in that position in the list, then we save it as normal. If a font does exist, then we need to check if it's the same (just in case the font def number is not unique for different fonts across different `grid.latex()` calls)
+```
+if (dvir::get("initFonts") || is.null(dvir::get("fonts"))) dvir::set("fonts", vector("list", 255))
+```
 
-  + To do this easiest way was to expand the stored information about fonts in `fonts` to include the hex code chunk (from DVI) of the font definition
+Note in this new statement the logical variable `initFonts`, stored in the `dvir` namespace. This lets a user choose whether to intialise the font cache on a `grid.latex()` call. If `initFonts` is `FALSE` or the font list does not exist, for example after the package is loaded, the font list is initialised. Otherwise, the existing font cache remains. `initFonts` was added as an argument to `grid.latex()` with its default value being equal to the global option `dvir.initFonts`.
+
+In a DVI file, each font definition gives the font a identification number, for example `fontnum=17`. In all the DVI files examined as part of this project, this font identification number is the same when that particular font is used again in another `grid.latex()` call. This number is used as the index of the fonts list where its information is stored. 
+
+When the font sweep passes a font definition in the DVI file it checks first whether the index of the font list matching the font number of the new font contains any existing font information: 
+
+\begin{itemize}
+  \item If no, then the font information is written to the font list as usual.
+  \item If yes, then it checks if the existing font information is the same as the font information in the DVI file. 
+  \begin{itemize}
+    \item If yes, then it does nothing. 
+    \item If no, then it overwrites the fonts as per usual.
+  \end{itemize}
+\end{itemize}
+
+The result of this is that across multiple `grid.latex()` calls requiring the same fonts, any future uses of that font are much faster after the font has been used once. Importantly it also has a "fail safe" where if there happens to be a case where the font number was used with a different font in a previous `grid.latex()` call, the font cache is overwritten with the new font so the correct font will be used.
+
+The updated font list is stored in the `dvir` environment to be retrieved the next `grid.latex()` finds a font definition during a font sweep.
+
+The only weakness of this process is if in a *single* DVI file different fonts are defined with the same font number. In this case the second font will be stored in the font cache in that index and so will be used in place of the first font. No instances of this occurring were discovered during this project.
+
+
+\- [**Example:** Do example counting how many times same font definition is repeated in thomas yee's example]
+
+
+<!---
+
+For talk - the information we actually store about fonts (the hex code chunk from DVI file)
+  + To do this the easiest way was to expand the stored information about fonts in `fonts` to include the hex code chunk (from DVI) of the font definition
 
   + Then we check if all parts of the new hex code chunk are the same as the existing
   
-  + [**Example:** code for new function for checking if two font definitions are the same]
-  
-  + If the definitions are the same, do nothing. If they are different, overwrite the existing font info with the new font info. This actually removes any concern about using only the font def number (which we're pretty sure stays the same for the same font, but maybe it doesn't) 
+Also for talk, need to find WHY this storing of hex coce stuff takes ages, or is the other steps where DVIR searches for the fonts on system? Look at "findTexFontFile" function perhaps?
+--->
 
-  + Only requirement is that the font def number is unique within a single call to grid.latex() (or rather the resulting DVI output)
+To examine the effect of these changes on code speed we performed profiling as was detailed in the previous section.
 
-- Now only need to change the initialisation (reset) of fonts list to happen on package load, rather than during `grid.latex()` call (because doing it every `grid.latex()` call defeats the purpose of storing fonts). Occasionally one might still want to reset the font cache, so added an option `options(dvir.initFonts = FALSE)` and added `initFonts = getOption("dvir.initFonts")` to `dviGrob.character()` and `dviGrob.DVI()`
+```{r echo = FALSE, eval = TRUE}
+results2 <- data.frame(time = c(results[[3]][[2]],
+                                results[[7]][[2]],
+                                results[[3]][[5]],
+                                results[[7]][[5]],
+                                results[[4]][[2]],
+                                results[[8]][[2]],
+                                results[[4]][[5]],
+                                results[[8]][[5]]),
+                       version = rep(c("Before", "After"), 
+                                     each = 4),
+                       func = rep(c("gridlatex", "font"),
+                                  each = 2),
+                       example = c("simple", "yee"))
 
-  + [**Example:** show function calls with the above, and anything else that helps explain them]
+versionLabels2 <- c(Before = "0.3-1 (before changes)", 
+                    After = "0.3-2 (after changes)")
+levels2 <- c("gridlatex", "font")
+```
 
-But why to each of these steps? Need to flesh out more why they achieve what we want it to achieve (and any considerations we had in our thought process)
+<!---
+Check width of these plots compared to plots in previous section (want bars the same width)
+--->
 
-- [**Example:** Profiling results (`profvis()` and `profmem()` showing speed improvement)]
+```{r speedUp2Simple, fig.cap = "The total time spent in the `grid.latex()` function and font sweep", echo = FALSE, fig.width = 5.5, fig.height = 4}
+plotProfiling1("simple", versionLabels2, results = results2, levels = levels2)
+```
+
+```{r speedUp2Yee, fig.cap = "The total time spent in the `grid.latex()` function and font sweep", echo = FALSE, fig.width = 5.5, fig.height = 4}
+plotProfiling1("yee", versionLabels2, results = results2, levels = levels2)
+```
+
+
+
+
 
 ## Profiling environment specifications
 
