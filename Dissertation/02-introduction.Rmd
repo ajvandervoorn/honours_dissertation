@@ -6,7 +6,7 @@ R has the ability to display mathematical symbols and equations in graphics usin
 
 <!--- Need to think of a better example than this one, ideally one that brings in our x - mu somehow --->
 
-```{r expressionPlot, fig.cap="A plot with axis labels made using `expression()`."}
+```{r expressionPlot, fig.cap="A plot with axis labels made using \\texttt{expression()}.", include = TRUE, eval = TRUE}
 mu <- 1:5
 opar <- par(mar = par()$mar + c(0, 1, 0, 0))
 plot(mu, mu ^ 2 / 2, xlab = expression(mu), ylab = "", yaxt = "n")

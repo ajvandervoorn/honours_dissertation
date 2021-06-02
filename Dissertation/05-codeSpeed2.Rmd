@@ -11,7 +11,7 @@ Check if same font is used in SAME grid.latex call, does it need to work harder?
 
 In the previous section, the speed of `dvir` was increased by stopping it doing something "silly". The profiling results from the previous section demonstrate how much time `grid.latex()` spends dealing with fonts so this section is about making `dvir` "smarter" by caching the information it gathers about fonts between `grid.latex()` calls.
 
-For example, creating figure \ref{yeeExample} requires three `grid.latex()` calls for the same symbol $\omega$. Each time, the following font definition appears in the DVI file for `grid.latex()` to search for during its font sweep.
+For example, creating figure \@ref(fig:yeeExample) requires three `grid.latex()` calls for the same symbol $\omega$. Each time, the following font definition appears in the DVI file for `grid.latex()` to search for during its font sweep.
 
 ```
 fnt_def_1    fontnum=17, checksum=-1209964637, scale=786432, design=786432,
@@ -45,8 +45,8 @@ When the font sweep passes a font definition in the DVI file it checks first whe
   \item If no, then the font information is written to the font list as usual.
   \item If yes, then it checks if the existing font information is the same as the font information in the DVI file. 
   \begin{itemize}
-    \item If yes, then it does nothing. 
-    \item If no, then it overwrites the fonts as per usual.
+    \item If yes, do nothing. 
+    \item If no, overwrite the font with the new font information.
   \end{itemize}
 \end{itemize}
 
@@ -86,27 +86,27 @@ results2 <- data.frame(time = c(results[[3]][[2]],
                        func = rep(c("gridlatex", "font"),
                                   each = 2),
                        example = c("simple", "yee"))
-
+results2$time <- results2$time / 20
 versionLabels2 <- c(Before = "0.3-1 (before changes)", 
                     After = "0.3-2 (after changes)")
 levels2 <- c("gridlatex", "font")
 ```
 
 <!---
-Check width of these plots compared to plots in previous section (want bars the same width)
+Check width/height of these plots compared to plots in previous section (want bars the same width)
 --->
 
-```{r speedUp2Simple, fig.cap = "The total time spent in the `grid.latex()` function and font sweep", echo = FALSE, fig.width = 5.5, fig.height = 4}
+```{r speedUp2Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep for each of the 20 runs of the simple example.", echo = FALSE, fig.width = 5, fig.height = 3.5}
 plotProfiling1("simple", versionLabels2, results = results2, levels = levels2)
 ```
 
-```{r speedUp2Yee, fig.cap = "The total time spent in the `grid.latex()` function and font sweep", echo = FALSE, fig.width = 5.5, fig.height = 4}
+For the simple example the time for the font sweep has reduced by 71%, with `grid.latex()` overall taking 45% less time.
+
+```{r speedUp2Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep for each of the 20 runs of the complicated example", echo = FALSE, fig.width = 5, fig.height = 3.5}
 plotProfiling1("yee", versionLabels2, results = results2, levels = levels2)
 ```
 
-
-
-
+Similar results can be seen in for the example in figure \@ref(fig:yeeExample) - a 76% and 46% decrease in the font sweep and `grid.latex()` respectively.
 
 ## Profiling environment specifications
 

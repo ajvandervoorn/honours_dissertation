@@ -1,5 +1,5 @@
 \newpage{}
 
-# Apendices
+# Appendix
 
-Associated files related to this project can be found on GitHub on the link in the Executive Summary.
+Files related to this project can be found on GitHub, via the link in the Executive Summary.

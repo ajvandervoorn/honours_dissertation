@@ -34,7 +34,7 @@ In a simplified form, `dvir` works by providing a high level function, `grid.lat
 <!---
 This isn't the label from earlier! Either don't relate this to the label or redo the caption or redo the text
 --->
-```{r, fig.width = 0.4, fig.height = 0.4, fig.cap = "Using the `dvir` function `grid.latex()`"}
+```{r, fig.width = 0.4, fig.height = 0.4, fig.cap = "Using the \\texttt{dvir} function \\texttt{grid.latex()}"}
 library(dvir)
 grid.latex("$x - \\mu$")
 ```

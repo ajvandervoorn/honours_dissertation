@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.10.26)  2 JUN 2021 22:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.10.26)  3 JUN 2021 01:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -838,6 +838,22 @@ Package grffile Info: Option `space' is set to `true'.
 Package grffile Info: \Gin@ii of package `graphicx' fixed on input line 494.
 ) (/usr/share/texlive/texmf-dist/tex/latex/parskip/parskip.sty
 Package: parskip 2001/04/09 non-zero parskip adjustments
+) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+LaTeX Info: Redefining \color on input line 709.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 ) (/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/usr/sha
 re/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (/usr/share/texlive/texm
 f-dist/tex/latex/pgf/utilities/pgfrcs.sty (/usr/share/texlive/texmf-dist/tex/ge
@@ -904,23 +920,7 @@ File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
 tex
 File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
-)) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
-File: color.cfg 2016/01/02 v1.6 sample color configuration
-)
-Package xcolor Info: Driver file: pdftex.def on input line 225.
-LaTeX Info: Redefining \color on input line 709.
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
-Package xcolor Info: Model `RGB' extended on input line 1364.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
 Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/usr/shar
 e/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex (/usr/share/texl
@@ -1114,34 +1114,34 @@ Package: changepage 2009/10/20 v1.0c check page and change page layout
 ) (./Alexander-van-der-Voorn_dissertation.aux)
 \openout1 = `Alexander-van-der-Voorn_dissertation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 120.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 120.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 121.
+LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 121.
+LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 121.
+LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 121.
+LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 121.
+LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 121.
+LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 121.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 121.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 120.
+LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 121.
+LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 121.
+LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 121.
 (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \microtypecontext on input line 120.
+LaTeX Info: Redefining \microtypecontext on input line 121.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
@@ -1156,7 +1156,7 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (RS)
 )
 \AtBeginShipoutBox=\box45
-Package hyperref Info: Link coloring OFF on input line 120.
+Package hyperref Info: Link coloring OFF on input line 121.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -1164,9 +1164,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count147
 )
-LaTeX Info: Redefining \ref on input line 120.
-LaTeX Info: Redefining \pageref on input line 120.
-LaTeX Info: Redefining \nameref on input line 120.
+LaTeX Info: Redefining \ref on input line 121.
+LaTeX Info: Redefining \pageref on input line 121.
+LaTeX Info: Redefining \nameref on input line 121.
 (./Alexander-van-der-Voorn_dissertation.out) (./Alexander-van-der-Voorn_dissert
 ation.out)
 \@outlinefile=\write5
@@ -1234,39 +1234,39 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 )) ABD: EveryShipout initializing macros
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 122.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 123.
 
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 122.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 123.
 
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 122
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 123
 .
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 122
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 123
 .
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 122.
+(Font)              <12> on input line 123.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 122.
+(Font)              <8> on input line 123.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 122.
-LaTeX Font Info:    Try loading font information for U+msa on input line 122.
+(Font)              <6> on input line 123.
+LaTeX Font Info:    Try loading font information for U+msa on input line 123.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 122.
+LaTeX Font Info:    Try loading font information for U+msb on input line 123.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
@@ -1275,7 +1275,7 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 <../Figures/logo.jpg, id=91, 250.9375pt x 271.0125pt>
 File: ../Figures/logo.jpg Graphic file (type jpg)
 <use ../Figures/logo.jpg>
-Package pdftex.def Info: ../Figures/logo.jpg  used on input line 129.
+Package pdftex.def Info: ../Figures/logo.jpg  used on input line 130.
 (pdftex.def)             Requested size: 93.952pt x 101.46815pt.
 [1
 
@@ -1296,15 +1296,15 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 [2] [3]
 
-Package xcolor Warning: Incompatible color definition on input line 198.
+Package xcolor Warning: Incompatible color definition on input line 199.
 
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 200.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 201.
 
-Package xcolor Warning: Incompatible color definition on input line 206.
+Package xcolor Warning: Incompatible color definition on input line 207.
 
 
-Package xcolor Warning: Incompatible color definition on input line 206.
+Package xcolor Warning: Incompatible color definition on input line 207.
 
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlot-1.pdf, 
 id=141, 469.755pt x 325.215pt>
@@ -1313,24 +1313,24 @@ pdf Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlot-1.p
 df>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/expressionPlot-1.pdf  used on input line 210.
+x/expressionPlot-1.pdf  used on input line 211.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 234.
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 235.
 
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [4 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlot-
 1.pdf>] [5]
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 310.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 311.
 
-Package xcolor Warning: Incompatible color definition on input line 316.
-
-
-Package xcolor Warning: Incompatible color definition on input line 321.
+Package xcolor Warning: Incompatible color definition on input line 317.
 
 
-Package xcolor Warning: Incompatible color definition on input line 321.
+Package xcolor Warning: Incompatible color definition on input line 322.
+
+
+Package xcolor Warning: Incompatible color definition on input line 322.
 
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1.pdf,
  id=174, 28.105pt x 28.105pt>
@@ -1339,285 +1339,275 @@ File: Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1.
 pdf>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/unnamed-chunk-1-1.pdf  used on input line 325.
+x/unnamed-chunk-1-1.pdf  used on input line 326.
 (pdftex.def)             Requested size: 28.1062pt x 28.1062pt.
 [6 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1
 .pdf>] [7]
 
-Package xcolor Warning: Incompatible color definition on input line 363.
+Package xcolor Warning: Incompatible color definition on input line 364.
 
 
-Package xcolor Warning: Incompatible color definition on input line 377.
+Package xcolor Warning: Incompatible color definition on input line 379.
 
 
-Package xcolor Warning: Incompatible color definition on input line 377.
+Package xcolor Warning: Incompatible color definition on input line 379.
 
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf, id=2
-09, 469.755pt x 216.81pt>
+09, 469.755pt x 289.08pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf 
 Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/yeeExample-1.pdf  used on input line 381.
-(pdftex.def)             Requested size: 328.82626pt x 151.76596pt.
-
-LaTeX Warning: Reference `yeeExample' on page 8 undefined on input line 388.
-
-<../Figures/profilingSimpleProfvis_0.2-1.PNG, id=211, 695.59875pt x 203.25937pt
+x/yeeExample-1.pdf  used on input line 383.
+(pdftex.def)             Requested size: 328.82626pt x 202.35461pt.
+<../Figures/profilingSimpleProfvis_0.2-1.png, id=212, 695.59875pt x 203.25937pt
 >
-File: ../Figures/profilingSimpleProfvis_0.2-1.PNG Graphic file (type png)
-<use ../Figures/profilingSimpleProfvis_0.2-1.PNG>
-Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1.PNG  used on i
-nput line 405.
+File: ../Figures/profilingSimpleProfvis_0.2-1.png Graphic file (type png)
+<use ../Figures/profilingSimpleProfvis_0.2-1.png>
+Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1.png  used on i
+nput line 406.
 (pdftex.def)             Requested size: 469.75302pt x 137.26547pt.
-<../Figures/profilingYeeProfvis_0.2-1_highlight.PNG, id=213, 700.11563pt x 411.
+<../Figures/profilingYeeProfvis_0.2-1_highlight.png, id=215, 700.11563pt x 411.
 03563pt>
-File: ../Figures/profilingYeeProfvis_0.2-1_highlight.PNG Graphic file (type png
+File: ../Figures/profilingYeeProfvis_0.2-1_highlight.png Graphic file (type png
 )
-<use ../Figures/profilingYeeProfvis_0.2-1_highlight.PNG>
-Package pdftex.def Info: ../Figures/profilingYeeProfvis_0.2-1_highlight.PNG  us
-ed on input line 421.
+<use ../Figures/profilingYeeProfvis_0.2-1_highlight.png>
+Package pdftex.def Info: ../Figures/profilingYeeProfvis_0.2-1_highlight.png  us
+ed on input line 423.
 (pdftex.def)             Requested size: 469.75874pt x 275.79384pt.
 [8 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf>
-] [9 <../Figures/profilingSimpleProfvis_0.2-1.PNG> <../Figures/profilingYeeProf
-vis_0.2-1_highlight.PNG>]
-<../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG, id=292, 750.55406pt x 2
+]
+<../Figures/profilingSimpleProfvis_0.2-1_highlight.png, id=288, 750.55406pt x 2
 82.30469pt>
-File: ../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG Graphic file (type 
+File: ../Figures/profilingSimpleProfvis_0.2-1_highlight.png Graphic file (type 
 png)
-<use ../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG>
-Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG 
- used on input line 455.
+<use ../Figures/profilingSimpleProfvis_0.2-1_highlight.png>
+Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1_highlight.png 
+ used on input line 457.
 (pdftex.def)             Requested size: 469.75938pt x 176.68982pt.
-[10 <../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG>]
 
-Package xcolor Warning: Incompatible color definition on input line 484.
+Package xcolor Warning: Incompatible color definition on input line 486.
 
+[9 <../Figures/profilingSimpleProfvis_0.2-1.png>] [10 <../Figures/profilingYeeP
+rofvis_0.2-1_highlight.png> <../Figures/profilingSimpleProfvis_0.2-1_highlight.
+png>]
 
-Package xcolor Warning: Incompatible color definition on input line 489.
-
-
-Package xcolor Warning: Incompatible color definition on input line 489.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
+Package xcolor Warning: Incompatible color definition on input line 491.
 
 
-Package xcolor Warning: Incompatible color definition on input line 500.
+Package xcolor Warning: Incompatible color definition on input line 491.
 
 
-Package xcolor Warning: Incompatible color definition on input line 500.
+Package xcolor Warning: Incompatible color definition on input line 497.
 
 
-Package xcolor Warning: Incompatible color definition on input line 518.
+Package xcolor Warning: Incompatible color definition on input line 502.
 
 
-Package xcolor Warning: Incompatible color definition on input line 523.
+Package xcolor Warning: Incompatible color definition on input line 502.
 
 
-Package xcolor Warning: Incompatible color definition on input line 523.
+Package xcolor Warning: Incompatible color definition on input line 520.
 
-LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 531
-.
-(/usr/share/texmf/tex/latex/lm/ts1lmtt.fd
-File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
+
+Package xcolor Warning: Incompatible color definition on input line 525.
+
+
+Package xcolor Warning: Incompatible color definition on input line 525.
+
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1.pdf, 
-id=299, 505.89pt x 289.08pt>
+id=304, 505.89pt x 289.08pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1.
 pdf Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1.p
 df>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/speedUp1Simple-1.pdf  used on input line 535.
+x/speedUp1Simple-1.pdf  used on input line 534.
 (pdftex.def)             Requested size: 328.8323pt x 187.90417pt.
-[11 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1
-.pdf>]
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf, id=
-312, 505.89pt x 289.08pt>
+305, 505.89pt x 289.08pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf
  Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pdf>
 
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/speedUp1Yee-1.pdf  used on input line 552.
+x/speedUp1Yee-1.pdf  used on input line 547.
 (pdftex.def)             Requested size: 328.8323pt x 187.90417pt.
-[12 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pd
-f>]
-
-LaTeX Warning: Reference `yeeExample' on page 13 undefined on input line 576.
-
-
-Overfull \hbox (44.74348pt too wide) in paragraph at lines 607--607
+[11 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Simple-1
+.pdf>]
+Overfull \hbox (44.74348pt too wide) in paragraph at lines 602--602
 []\T1/lmtt/m/n/10 if (dvir::get("initFonts") || is.null(dvir::get("fonts"))) dv
 ir::set("fonts", vector("list", 255))[] 
  []
 
-[13]
+[12 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp1Yee-1.pd
+f>]
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1.pdf, 
-id=330, 397.485pt x 289.08pt>
+id=331, 361.35pt x 252.945pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1.
 pdf Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1.p
 df>
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/speedUp2Simple-1.pdf  used on input line 668.
-(pdftex.def)             Requested size: 328.83893pt x 239.15558pt.
+x/speedUp2Simple-1.pdf  used on input line 659.
+(pdftex.def)             Requested size: 328.82901pt x 230.18031pt.
 <Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Yee-1.pdf, id=
-331, 397.485pt x 289.08pt>
+332, 361.35pt x 252.945pt>
 File: Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Yee-1.pdf
  Graphic file (type pdf)
 <use Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Yee-1.pdf>
 
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
-x/speedUp2Yee-1.pdf  used on input line 681.
-(pdftex.def)             Requested size: 328.83893pt x 239.15558pt.
-[14 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1
-.pdf>] [15 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Y
-ee-1.pdf>] [16]
-Underfull \hbox (badness 1264) in paragraph at lines 807--818
+x/speedUp2Yee-1.pdf  used on input line 671.
+(pdftex.def)             Requested size: 328.82901pt x 230.18031pt.
+[13] [14 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Sim
+ple-1.pdf> <./Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Y
+ee-1.pdf
+
+pdfTeX warning: pdflatex (file ./Alexander-van-der-Voorn_dissertation_files/fig
+ure-latex/speedUp2Yee-1.pdf): PDF inclusion: multiple pdfs with page group incl
+uded in a single page
+>] [15] [16]
+Underfull \hbox (badness 1264) in paragraph at lines 801--812
 \T1/lmr/m/n/10 (+20) ments for the \T1/lmtt/m/n/10 grid::linearGradient(...)\T1
 /lmr/m/n/10 (+20) , which is used as an ar-gu-ment to \T1/lmtt/m/n/10 grid::gpa
 r(fill
  []
 
 
-Underfull \hbox (badness 1043) in paragraph at lines 807--818
+Underfull \hbox (badness 1043) in paragraph at lines 801--812
 \T1/lmtt/m/n/10 = linearGradient(...))\T1/lmr/m/n/10 (+20) , which it-self is a
 n ar-gu-ment to a \T1/lmtt/m/n/10 grid \T1/lmr/m/n/10 (+20) draw-ing func-tion,
  for ex-am-ple
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 842.
+Package xcolor Warning: Incompatible color definition on input line 836.
 
 
-Package xcolor Warning: Incompatible color definition on input line 864.
+Package xcolor Warning: Incompatible color definition on input line 858.
 
 
-Package xcolor Warning: Incompatible color definition on input line 864.
+Package xcolor Warning: Incompatible color definition on input line 858.
 
 
-Package xcolor Warning: Incompatible color definition on input line 864.
+Package xcolor Warning: Incompatible color definition on input line 858.
 
 [17]
 
-Package xcolor Warning: Incompatible color definition on input line 864.
+Package xcolor Warning: Incompatible color definition on input line 858.
 
 
-Package xcolor Warning: Incompatible color definition on input line 864.
+Package xcolor Warning: Incompatible color definition on input line 858.
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 899--899
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 893--893
 []  \T1/lmtt/m/n/10 \pgfsysprotocol@literal{SHADING BEING DEFINED: ShadDefID = 
 \the\pgf@sys@dvir@objectcount}%[] 
  []
 
 
-Overfull \hbox (97.24333pt too wide) in paragraph at lines 899--899
+Overfull \hbox (97.24333pt too wide) in paragraph at lines 893--893
 []  \T1/lmtt/m/n/10 \pgfsysprotocol@literal{<g transform="translate(\pgf@sys@to
 number{\pgf@xa},\pgf@sys@tonumber{\pgf@ya})">}%[] 
  []
 
 
-Overfull \hbox (49.99347pt too wide) in paragraph at lines 931--931
+Overfull \hbox (49.99347pt too wide) in paragraph at lines 925--925
 []      \T1/lmtt/m/n/10 \def\noexpand\pgf@sys@dvir@sh@defs{\noexpand\pgfsysprot
 ocol@literal{\pgf@sys@dvir@thestops}}%[] 
  []
 
 [18]
-Overfull \hbox (65.74342pt too wide) in paragraph at lines 944--944
+Overfull \hbox (65.74342pt too wide) in paragraph at lines 938--938
 []  \T1/lmtt/m/n/10 \expandafter\expandafter\expandafter{\expandafter\pgf@sys@d
 vir@thestops\expandafter\space\pgf@temp}%[] 
  []
 
 [19] [20]
-Overfull \hbox (44.74348pt too wide) in paragraph at lines 1042--1042
+Overfull \hbox (44.74348pt too wide) in paragraph at lines 1036--1036
 []                       \T1/lmtt/m/n/10 colours=( rgb(0,1,0) rgb(0,1,0) rgb(0.
 5,0.75,0) rgb(1,0.5,0) rgb(1,0.5,0) )[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1055--1055
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1049--1049
 []             \T1/lmtt/m/n/10 x=dvisvgm:raw  <linearGradient id="pgfsh2" gradi
 entTransform="rotate(90)">{?nl}[] 
  []
 
 
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1055--1055
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1049--1049
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.0" stop-color=" 
 rgb(0.0%,100.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1055--1055
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1049--1049
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.25" stop-color="
  rgb(0.0%,100.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 1055--1055
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 1049--1049
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.5" stop-color=" 
 rgb(50.0%,75.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (18.49356pt too wide) in paragraph at lines 1055--1055
+Overfull \hbox (18.49356pt too wide) in paragraph at lines 1049--1049
 []                            \T1/lmtt/m/n/10 <stop offset=" 0.75" stop-color="
  rgb(100.0%,50.0%,0.0%) "/>{?nl}[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 1055--1055
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 1049--1049
 []                            \T1/lmtt/m/n/10 <stop offset=" 1.0" stop-color=" 
 rgb(100.0%,50.0%,0.0%) "/>{?nl}[] 
  []
 
 [21] [22]
 
-Package xcolor Warning: Incompatible color definition on input line 1182.
+Package xcolor Warning: Incompatible color definition on input line 1176.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1187.
+Package xcolor Warning: Incompatible color definition on input line 1181.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1187.
+Package xcolor Warning: Incompatible color definition on input line 1181.
 
 \dvibox=\box47
 \dviwidth=\skip53
 [23] [24]
 
-Package xcolor Warning: Incompatible color definition on input line 1497.
+Package xcolor Warning: Incompatible color definition on input line 1491.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1501.
+Package xcolor Warning: Incompatible color definition on input line 1495.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1501.
+Package xcolor Warning: Incompatible color definition on input line 1495.
 
 [25] [26] [27] [28] [29] [30] [31] [32]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1727.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1727.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1721.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1721.
 (./Alexander-van-der-Voorn_dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1727.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1727.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1721.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1721.
 
 Package rerunfilecheck Info: File `Alexander-van-der-Voorn_dissertation.out' ha
 s not changed.
-(rerunfilecheck)             Checksum: 2BA2CF1E967B10EF9C1D1CC54C4947D3;3237.
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1727.
+(rerunfilecheck)             Checksum: 36AD9BBC5DCB521956DEDB9147679D31;3232.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1721.
  ) 
 Here is how much of TeX's memory you used:
- 23152 strings out of 494923
- 405829 string characters out of 6180741
- 479125 words of memory out of 5000000
- 25842 multiletter control sequences out of 15000+600000
- 74645 words of font info for 125 fonts, out of 8000000 for 9000
+ 23119 strings out of 494923
+ 405259 string characters out of 6180741
+ 479728 words of memory out of 5000000
+ 25811 multiletter control sequences out of 15000+600000
+ 74470 words of font info for 125 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 55i,8n,54p,555b,578s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,8n,54p,438b,578s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/s
 hare/texmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/l
@@ -1641,11 +1631,11 @@ pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/
 type1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></
 usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/
 public/tex-gyre/qhvr.pfb>
-Output written on Alexander-van-der-Voorn_dissertation.pdf (32 pages, 811793 by
+Output written on Alexander-van-der-Voorn_dissertation.pdf (32 pages, 810301 by
 tes).
 PDF statistics:
- 551 PDF objects out of 1000 (max. 8388607)
- 447 compressed objects within 5 object streams
+ 556 PDF objects out of 1000 (max. 8388607)
+ 453 compressed objects within 5 object streams
  91 named destinations out of 1000 (max. 500000)
  14578 words of extra memory for PDF output out of 17280 (max. 10000000)
 

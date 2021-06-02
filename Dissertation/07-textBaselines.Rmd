@@ -141,7 +141,7 @@ This is a simple algorithm which was determined after inspection of some DVI fil
 
 After this statement there appears to consistently be a downward move equal to the height of the bounding box of text (from the top left of the bounding box to the bottom left), and then a move upward before the first character is drawn. This algorithms take the cursor location after that upward move to be the baseline. In instances where the entire text has no descenders (i.e. the baseline is the bottom of the bounding box) there will be no upward move before the first character and a value of 0 is returned as the baseline.
 
-```{r baselineDemo, fig.cap = "Using the `baselines()` function, returning the baseline of $x - \\mu$ with the `alex` algorithm"}
+```{r baselineDemo, fig.cap = "Using the \\texttt{baselines()} function, returning the baseline of \\texttt{$x - \\mu$} with the \\texttt{alex} algorithm"}
 baselineValue <- baselines(tex = "$x - \\mu$", algorithm = "alex")
 baselineValue
 ```
@@ -192,7 +192,7 @@ In an ideal world, these examples would be centred, with either fixed width line
 --->
 
 ```{r baselineAlex, echo = FALSE, results = "asis"}
-alexLatex <- baselineFunc(testText, "alex", "Using the `alex` method to calculate the baseline.")
+alexLatex <- baselineFunc(testText, "alex", "Using the \\texttt{alex} algorithm to calculate the baseline.")
 cat(alexLatex)
 ```
 
@@ -248,7 +248,7 @@ Somehow get unique values of baselines here?
 --->
 
 ```{r baselineDviMoves, echo = FALSE, results = "asis"}
-dviMovesLatex <- baselineFunc(testText, "dviMoves", "Using the `dviMoves` method to calculate the baseline.")
+dviMovesLatex <- baselineFunc(testText, "dviMoves", "Using the \\texttt{dviMoves} algorithm to calculate the baselines.")
 cat(dviMovesLatex)
 
 
@@ -317,7 +317,7 @@ MatplotlibBox:(8.04175pt+3.00005pt)x62.81718pt
 The baseline value in this case is the value just after the `+` and can be obtained by searching the log file for this line starting with `MatplotlibBox:` and returning the value just after the `+`.
 
 ```{r baselinePreview, echo = FALSE, results = "asis"}
-previewLatex <- baselineFunc(testText, "preview", "Using the `preview` method to calculate the baseline.")
+previewLatex <- baselineFunc(testText, "preview", "Using the \\texttt{preview} algorithm to calculate the baseline.")
 cat(previewLatex)
 ```
 
@@ -332,7 +332,7 @@ The `dvipng` program is used to turn DVI files into PNG images. An option of `dv
 The system call `dvipng --depth test.dvi` returns `depth=4` within its output so after recording the output, a simple search for `depth=` will find the baseline value.
 
 ```{r baselineDvipng, echo = FALSE, results = "asis"}
-dvipngLatex <- baselineFunc(testText, "dvipng", "Using the `dvipng` method to calculate the baseline.")
+dvipngLatex <- baselineFunc(testText, "dvipng", "Using the \\texttt{dvipng} algorithm to calculate the baseline.")
 cat(dvipngLatex)
 ```
 

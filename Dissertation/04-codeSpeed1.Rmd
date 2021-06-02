@@ -5,7 +5,7 @@
 <!---    
 Profiling:
       Use initFOnts = TRUE
-      Use prof mem or similar (see 769?) for multiple runs with just data output (no fucking around with html things) - gives data and graphs
+      Use prof mem or similar (see 769?) for multiple runs with just data output (no stuffing around with html things) - gives data and graphs
       Test for variability (this is important)
       If profiling, remove any time used for the "wrapper" stuff - ideally only focus on time spent in 'dvir' functions
       For some of the profiling, use example of text formatted in two columns (power of TeX) with equations. Maybe plot on one side and text on the other side with two grid viewports? To show it in action
@@ -79,7 +79,8 @@ grid.latex("$Y_* =$", x = 0.5, y = 1.1, default.units="native")
 grid.latex("$a_1$", xpos[1], y = -0.1, default.units="native")
 grid.latex("$a_2$", xpos[2], y = -0.1, default.units="native")
 grid.latex("$a_{L_A}$", xpos[3], y = -0.1, default.units="native")
-grid.latex("$Y_{\\pi} | Y_{\\pi} \\notin \\cal{A}$", x = xpos[4], y = -0.1, default.units="native")
+grid.latex("$Y_{\\pi} | Y_{\\pi} \\notin \\cal{A}$", 
+           x = xpos[4], y = -0.1, default.units="native")
 grid.latex("$\\omega_1$", x = 0.18, y = 0.50, default.units="native")
 grid.latex("$\\omega_2$", x = 0.32, y = 0.50, default.units="native")
 grid.latex("$\\dots$", x = 0.44, y = 0.50, default.units="native")
@@ -87,7 +88,7 @@ grid.latex("$\\omega_{L_A}$",  x = 0.54, y = 0.50, default.units="native")
 grid.latex("$1 - \\sum_{s=1}^{L_A}\\omega_s$", x = 0.95, y = 0.50, default.units="native")
 ```
 
-```{r yeeExample, fig.cap="Using nine `grid.latex()` calls to create a graphic.", fig.wdith = 2.5, fig.height = 4, fig.keep = "last", echo = FALSE}
+```{r yeeExample, fig.cap="Using nine \\texttt{grid.latex()} calls with base R graphics.", fig.wdith = 2.5, fig.height = 4, fig.keep = "last", echo = FALSE}
 xpos <- c(0, 0.25,  0.7, 1)
 myplot <- function(abcd = "(a)", col = "black") {
   plot(1:9, 1:9, type = "n", xlim = c(0, 1), ylim = c(0, 1), 
@@ -131,13 +132,11 @@ grid.latex("$1 - \\sum_{s=1}^{L_A}\\omega_s$",
            x = 0.95, y = 0.50, default.units="native")
 ```
 
-The example in figure \ref{yeeExample} was created by a University of Auckland lecturer using the `dvir` package to help write an assignment.
+The example in figure \@ref(fig:yeeExample) was created by a University of Auckland lecturer using the `dvir` package to help write an assignment.
 
-One of the first things investigated in the package was the speed of running the code. Anecdotally, generating any R graphic with non-trivial \TeX{}, like that in figure \@ref(fig:yeeExample), took a long time so it was desirable to see if we could speed it up.
+One of the first things investigated in the package was the speed of running the code. Anecdotally, generating any R graphic with non-trivial \TeX{}, like that in figure \@ref(fig:yeeExample), took a long time so it was desirable to speed it up.
 
-To look into this the first task was to profile the existing code to let us see where in the package time was being spent. This was in `dvir` version 0.2-1. 
-
-We visualised the profiling results using `profvis::profvis()`.
+To look into this the first task was to profile the existing code to let us see where in the package time was being spent. This was in `dvir` version 0.2-1. The profiling results were visualised with `profvis::profvis()`.
 
 <!---
 These are old examples of profvis() output. Need to refresh them!
@@ -148,23 +147,29 @@ How to include and reference figures:
 
 https://community.rstudio.com/t/cross-reference-images-in-rmarkdown/83402/2
 --->
-![Screenshot of `profvis::profvis()` output for the code `grid.latex("$x - \\mu$")` in `dvir` version 0.2-1.](../Figures/profilingSimpleProfvis_0.2-1.PNG "profilingSimpleProfvis_0.2-1"){width=100%}
+```{r prof1, fig.cap = 'Screenshot of \\texttt{profvis::profvis()} output for the code \\texttt{grid.latex("$x - \\mu$")} in \texttt{dvir} version 0.2-1.', echo = FALSE, eval = TRUE, out.width='100%'}
+include_graphics("../Figures/profilingSimpleProfvis_0.2-1.PNG")
+```
 
-We can see the function call stack in figure \@ref(fig:profilingSimpleProfvis_0.2-1). At the bottom is the call to `grid.latex()`, which immediately calls `grid.draw()` which in turn calls `latexGrob()`. This calls `readDVI()` for about the first 20ms, then `dviGrob()` for the remaining time to the end of the original `grid.latex()` function call, and so on up the function call stack.
+We can see the function call stack in figure \@ref(fig:prof1). At the bottom is the call to `grid.latex()`, which immediately calls `grid.draw()` which in turn calls `latexGrob()`. This calls `readDVI()` for about the first 20ms, then `dviGrob()` for the remaining time to the end of the original `grid.latex()` function call, and so on up the function call stack.
 
-![Screenshot of `profvis::profvis()` output for the code creating figure \@ref(fig:yeeExample) highlighting the time spent in `engine$fontDef`.](../Figures/profilingYeeProfvis_0.2-1_highlight.PNG "profilingYeeProfvis_0.2-1_highlight"){width=100%}
+```{r prof2, fig.cap = 'Screenshot of \\texttt{profvis::profvis()} output for the code creating the example at the start of this section, highlighting the time spent in \\texttt{engine\\$fontDef}.', echo = FALSE, eval = TRUE, out.width='100%'}
+include_graphics("../Figures/profilingYeeProfvis_0.2-1_highlight.PNG")
+```
 
-The `profvis::profvis()` output for our more complicated example, in figure \@ref(fig:profilingYeeProfvis_0.2-1_highlight) reveals most of the time to create the figure is in `grid.latex()`. Note that the code to draw the arrows and the "(a)" in this example is so quick it occupies the very skinny call stack on the far left of the graph. `grid.latex()` and its subsequent function calls, on the other hand, take up most of the time required to produce the example.
+The `profvis::profvis()` output for our more complicated example, in figure \@ref(fig:prof2) reveals most of the time to create the figure is in `grid.latex()`. Note that the code to draw the arrows and the "(a)" in this example is so quick it occupies the very skinny call stack on the far left of the graph. `grid.latex()` and its subsequent function calls, on the other hand, take up most of the time required to produce the example.
 
-In figure \@ref(fig:profilingYeeProfvis_0.2-1_highlight) some blocks in the call stack have been highlighted - these are related to the `engine$fontDef` operation occuring. This is a part of the "font sweep", as was described in the introduction to `dvir` in section \@ref(dvirDesc).
+In figure \@ref(fig:prof2) some blocks in the call stack have been highlighted - these are related to the `engine$fontDef` operation occuring. This is a part of the "font sweep", as was described in the introduction to `dvir` in section \@ref(dvirDesc).
 
-In the top left corner of figure \@ref(fig:profilingYeeProfvis_0.2-1_highlight) we are told the aggregate time spent with `engine$fontDef` is 1830ms. Compared to the total time of this run (a total of about 2700ms), `dvir` is spending a *lot* of time doing these font sweeps.
+In the top left corner of figure \@ref(fig:prof2) we are told the aggregate time spent with `engine$fontDef` is 1830ms. Compared to the total time of this run (a total of about 2700ms), `dvir` is spending a *lot* of time doing these font sweeps.
 
 What was interesting though was that after the actual font sweep the following sweeps for the metric and grid information *also* called `engine$fontDef`. As the point of the font sweep is that it finds all the font information to be used later on the following metric and grid sweeps should not need to "re-sweep" for the fonts.
 
-![Screenshot of `profvis::profvis()` output for the code `grid.latex("$x - \\mu$")` in `dvir` version 0.2-1, highlighting `engine$fontDef`.](../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG "profilingSimpleProfvis_0.2-1_highlight"){width=100%}
+```{r prof3, fig.cap = 'Screenshot of \\texttt{profvis::profvis()} output for the code \\texttt{grid.latex("$x - \\mu$")} in \\texttt{dvir} version 0.2-1, highlighting \\texttt{engine\\$fontDef}.', echo = FALSE, eval = TRUE, out.width='100%'}
+include_graphics("../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG")
+```
 
-The effect of this is very obvious in figure \@ref(fig:profilingSimpleProfvis_0.2-1_highlight) which is the same as figure \@ref(fig:profilingSimpleProfvis_0.2-1) but highlights the time spent in `engine$fontDef`. The wrappers for the font, metric and grid sweeps are `dviFonts()`, `dviMetric()` and `dvigrid()` respectively (sixth call from the bottom of the stack). Here we can see nearly all of the time spent in the metric and grid sweeps are actually redoing the font sweep.
+The effect of this is very obvious in figure \@ref(fig:prof3) which is the same as figure \@ref(fig:prof1) but highlights the time spent in `engine$fontDef`. The wrappers for the font, metric and grid sweeps are `dviFonts()`, `dviMetric()` and `dvigrid()` respectively (sixth call from the bottom of the stack). Here we can see nearly all of the time spent in the metric and grid sweeps are actually redoing the font sweep.
 
 The change to be made was simply stopping the metric and grid sweeps from doing the font sweep again.
 
@@ -184,14 +189,14 @@ For my own learning - learn how these op codes thing work (like how the function
 
 The following code is taken from the the `dvir` package, showing where the metric and grid sweeps also redid the font sweep. `op_font_def` is a function which takes the font definition in the DVI file related to that instance of the op code and searches for and records the font information. 
 
-```{r metricFont_0.2-1, fig.cap="Metric sweep searching and recording font information in package version 0.2-1, in package file dvir/R/metric.R", eval=FALSE}
+```{r metricFont_0.2-1, fig.cap="Metric sweep searching and recording font information in package version 0.2-1, in package file \\texttt{dvir/R/metric.R}", eval=FALSE}
 metric_info_243 <- op_font_def
 grid_op_243 <- op_font_def
 ```
 
 The following code shows what the code was changed to in `dvir` version 0.2-2. `op_ignore` is an empty function, so when the metric or grid sweeps comes across that op code, they now do nothing.
 
-```{r metricFont_0.2-2, fig.cap="Metric sweep now *not* searching and recording font information in package version 0.2-2, in package file dvir/R/metric.R", eval=FALSE}
+```{r metricFont_0.2-2, fig.cap="Metric sweep now *not* searching and recording font information in package version 0.2-2, in package file \\texttt{dvir/R/metric.R}", eval=FALSE}
 metric_info_243 <- op_ignore
 grid_op_243 <- op_ignore
 ```
@@ -200,7 +205,7 @@ Unfortunately these changes by themself caused an error when running `grid.latex
 
 The resetting of the global fonts list was initiated when the sweeps passed op code 247 in the DVI file, which is the preamble at the start of every DVI file. Setting the metric and grid sweeps to do nothing when they pass the preamble of the DVI file, again by way of `op_ignore`, solved this problem as the global fonts list created by the font sweep is now not overwritten.
 
-```{r metricGlobalFont_0.2-2, fig.cap="Metric sweep now *not* resetting the global fonts list in package version 0.2-2, in package file dvir/R/metric.R", eval=FALSE}
+```{r metricGlobalFont_0.2-2, fig.cap="Metric sweep now *not* resetting the global fonts list in package version 0.2-2, in package file \\texttt{dvir/R/metric.R}", eval=FALSE}
 metric_info_247 <- op_ignore
 grid_op_247 <- op_ignore
 ```
@@ -214,7 +219,7 @@ Do we want another `profvis()` output here showing the change? Might be good for
 \- [**Example:** `profvis()` screenshot of Thomas Yee's example, showing `definePDFFont()` (after change)]
 --->
 
-To quantify the impact this has on code speed we recorded the time to run our examples 20 times, after an initial run to compile the package after it was loaded.
+To quantify the impact this has on code speed the time to run the examples 20 times was recorded, after an initial run to compile the package after it was loaded. The average of these 20 runs was then calculated.
 
 ```{r echo = FALSE, eval = TRUE}
 dvirLibs <- c("/media/sf_Honours_project/VM_18.04/dvir0.2-1",
@@ -251,26 +256,6 @@ for (k in c(simpleProfResults, yeeProfResults)) {
 ```
 
 ```{r, echo = FALSE, eval = TRUE}
-# resultTable <- data.frame(before_gridlatex = c(results[[1]][[2]],
-#                                                results[[5]][[2]]),
-#                           before_metric = c(results[[1]][[3]],
-#                                             results[[5]][[3]]),
-#                           before_grid = c(results[[1]][[4]],
-#                                           results[[5]][[4]]),
-#                           after_gridlatex = c(results[[2]][[2]],
-#                                               results[[6]][[2]]),
-#                           after_metric = c(results[[2]][[3]],
-#                                            results[[6]][[3]]),
-#                           after_grid = c(results[[2]][[4]],
-#                                          results[[6]][[4]]))
-# resultTable$gridlatex_change <- with(resultTable,
-#                                      (after_gridlatex - before_gridlatex) / before_gridlatex)
-# resultTable$metric_change <- with(resultTable,
-#                                   (after_metric - before_metric) / before_metric)
-# resultTable$grid_change <- with(resultTable,
-#                                 (after_grid - before_grid) / before_grid)
-# knitr::kable(resultTable[, 1:6])
-
 resultDF <- data.frame(time = c(results[[1]][[2]],
                                 results[[5]][[2]],
                                 results[[1]][[3]],
@@ -288,15 +273,7 @@ resultDF <- data.frame(time = c(results[[1]][[2]],
                        func = rep(c("gridlatex", "metric", "grid"),
                                   each = 2),
                        example = c("simple", "yee"))
-```
-
-```{r rSpeedUp1Change, eval = FALSE, echo = FALSE}
-
-kable(resultTable[, 7:9],
-      col.names = c("`grid.latex()`", "Metric sweep", "Grid sweep"),
-      digits = 2,
-      caption = "Change in time spent in parts of `dvir` before and after the changes were made",
-      label = "speedUp1Change")
+resultDF$time <- resultDF$time / 20
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
@@ -329,18 +306,17 @@ versionLabels <- c(Before = "0.2-1 (before changes)",
 levels1 <- c("gridlatex", "metric", "grid")
 ```
 
-```{r speedUp1Simple, fig.cap = "The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our simple example.", echo = FALSE, fig.width = 7, fig.height = 4}
+```{r speedUp1Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, for each of the 20 runs of the simple example.", echo = FALSE, fig.width = 7, fig.height = 4}
 plotProfiling1("simple", versionLabels, results = resultDF, levels = levels1)
 ```
 
 For the simple example the time spent in the metric and grid sweeps have decreased by 76% and 83% respectively. The speed of the overall `grid.latex()` call has decreased by 30%.
 
-```{r speedUp1Yee, fig.cap = "The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our complicated example.", echo = FALSE, fig.width = 7, fig.height = 4}
+```{r speedUp1Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, for each of the 20 runs of the complicated example.", echo = FALSE, fig.width = 7, fig.height = 4}
 plotProfiling1("yee", versionLabels, results = resultDF, levels = levels1)
 ```
 
-Similarly for the more complicated example in figure \@ref{fig:speedUp1Yee} the metric and grid sweeps have decreased by 83% and 89% respectively, with `grid.latex()` overall taking 47% less time. 
-
+Similarly for the more complicated example in figure \@ref(fig:speedUp1Yee) the metric and grid sweeps have decreased by 83% and 89% respectively, with `grid.latex()` overall taking 47% less time. 
 <!---
 For plot, maybe 2 by 3 facet wrap thing? rows are examples, columns are the part of the function that's sped up
 

@@ -109,6 +109,7 @@
 
 \linespread{1.25}
 \setcounter{tocdepth}{2}
+\usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{graphicx}
 \usepackage{changepage}
@@ -211,7 +212,7 @@ a call to \texttt{expression()} as a mathematical equation.
 
 }
 
-\caption{A plot with axis labels made using `expression()`.}\label{fig:expressionPlot}
+\caption{A plot with axis labels made using \texttt{expression()}.}\label{fig:expressionPlot}
 \end{figure}
 
 This provides us with most of the symbols used for equations, such as
@@ -326,7 +327,7 @@ expression or text to be displayed.
 
 }
 
-\caption{Using the `dvir` function `grid.latex()`}\label{fig:unnamed-chunk-1}
+\caption{Using the \texttt{dvir} function \texttt{grid.latex()}}\label{fig:unnamed-chunk-1}
 \end{figure}
 
 The following steps are taken when \texttt{grid.latex()} runs:
@@ -367,7 +368,8 @@ package was motivated with a simple example of a mathematical equation.
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$a_1$"}\NormalTok{, xpos[}\DecValTok{1}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$a_2$"}\NormalTok{, xpos[}\DecValTok{2}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$a_\{L_A\}$"}\NormalTok{, xpos[}\DecValTok{3}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
-\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$Y_\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{pi\} | Y_\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{pi\} }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{notin }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{cal\{A\}$"}\NormalTok{, }\DataTypeTok{x =}\NormalTok{ xpos[}\DecValTok{4}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
+\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$Y_\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{pi\} | Y_\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{pi\} }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{notin }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{cal\{A\}$"}\NormalTok{, }
+           \DataTypeTok{x =}\NormalTok{ xpos[}\DecValTok{4}\NormalTok{], }\DataTypeTok{y =} \FloatTok{-0.1}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_1$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.18}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{omega_2$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.32}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dots$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.44}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.50}\NormalTok{, }\DataTypeTok{default.units=}\StringTok{"native"}\NormalTok{)}
@@ -382,64 +384,64 @@ package was motivated with a simple example of a mathematical equation.
 
 }
 
-\caption{Using nine `grid.latex()` calls to create a graphic.}\label{fig:yeeExample}
+\caption{Using nine \texttt{grid.latex()} calls with base R graphics.}\label{fig:yeeExample}
 \end{figure}
 
-The example in figure \ref{yeeExample} uses nine calls to
-\texttt{grid.latex()} and was created by a University of Auckland
-lecturer using the \texttt{dvir} package to help write an assignment.
+The example in figure \ref{fig:yeeExample} was created by a University
+of Auckland lecturer using the \texttt{dvir} package to help write an
+assignment.
 
 One of the first things investigated in the package was the speed of
 running the code. Anecdotally, generating any R graphic with non-trivial
 \TeX{}, like that in figure \ref{fig:yeeExample}, took a long time so it
-was desirable to see if we could speed it up.
+was desirable to speed it up.
 
 To look into this the first task was to profile the existing code to let
 us see where in the package time was being spent. This was in
-\texttt{dvir} version 0.2-1.
-
-We visualised the profiling results using \texttt{profvis::profvis()}.
+\texttt{dvir} version 0.2-1. The profiling results were visualised with
+\texttt{profvis::profvis()}.
 
 \begin{figure}
-\centering
-\includegraphics[width=1.00000\textwidth]{../Figures/profilingSimpleProfvis_0.2-1.PNG}
-\caption{Screenshot of \texttt{profvis::profvis()} output for the code
-\texttt{grid.latex("\$x\ -\ \textbackslash{}\textbackslash{}mu\$")} in
-\texttt{dvir} version 0.2-1.}
+
+{\centering \includegraphics[width=1\linewidth]{../Figures/profilingSimpleProfvis_0.2-1} 
+
+}
+
+\caption{Screenshot of \texttt{profvis::profvis()} output for the code \texttt{grid.latex("$x - \mu$")} in  exttt{dvir} version 0.2-1.}\label{fig:prof1}
 \end{figure}
 
-We can see the function call stack in figure
-@ref(fig:profilingSimpleProfvis\_0.2-1). At the bottom is the call to
-\texttt{grid.latex()}, which immediately calls \texttt{grid.draw()}
-which in turn calls \texttt{latexGrob()}. This calls \texttt{readDVI()}
-for about the first 20ms, then \texttt{dviGrob()} for the remaining time
-to the end of the original \texttt{grid.latex()} function call, and so
-on up the function call stack.
+We can see the function call stack in figure \ref{fig:prof1}. At the
+bottom is the call to \texttt{grid.latex()}, which immediately calls
+\texttt{grid.draw()} which in turn calls \texttt{latexGrob()}. This
+calls \texttt{readDVI()} for about the first 20ms, then
+\texttt{dviGrob()} for the remaining time to the end of the original
+\texttt{grid.latex()} function call, and so on up the function call
+stack.
 
 \begin{figure}
-\centering
-\includegraphics[width=1.00000\textwidth]{../Figures/profilingYeeProfvis_0.2-1_highlight.PNG}
-\caption{Screenshot of \texttt{profvis::profvis()} output for the code
-creating figure \ref{fig:yeeExample} highlighting the time spent in
-\texttt{engine\$fontDef}.}
+
+{\centering \includegraphics[width=1\linewidth]{../Figures/profilingYeeProfvis_0.2-1_highlight} 
+
+}
+
+\caption{Screenshot of \texttt{profvis::profvis()} output for the code creating the example at the start of this section, highlighting the time spent in \texttt{engine\$fontDef}.}\label{fig:prof2}
 \end{figure}
 
 The \texttt{profvis::profvis()} output for our more complicated example,
-in figure @ref(fig:profilingYeeProfvis\_0.2-1\_highlight) reveals most
-of the time to create the figure is in \texttt{grid.latex()}. Note that
-the code to draw the arrows and the ``(a)'' in this example is so quick
-it occupies the very skinny call stack on the far left of the graph.
-\texttt{grid.latex()} and its subsequent function calls, on the other
-hand, take up most of the time required to produce the example.
+in figure \ref{fig:prof2} reveals most of the time to create the figure
+is in \texttt{grid.latex()}. Note that the code to draw the arrows and
+the ``(a)'' in this example is so quick it occupies the very skinny call
+stack on the far left of the graph. \texttt{grid.latex()} and its
+subsequent function calls, on the other hand, take up most of the time
+required to produce the example.
 
-In figure @ref(fig:profilingYeeProfvis\_0.2-1\_highlight) some blocks in
-the call stack have been highlighted - these are related to the
-\texttt{engine\$fontDef} operation occuring. This is a part of the
-``font sweep'', as was described in the introduction to \texttt{dvir} in
-section \ref{dvirDesc}.
+In figure \ref{fig:prof2} some blocks in the call stack have been
+highlighted - these are related to the \texttt{engine\$fontDef}
+operation occuring. This is a part of the ``font sweep'', as was
+described in the introduction to \texttt{dvir} in section
+\ref{dvirDesc}.
 
-In the top left corner of figure
-@ref(fig:profilingYeeProfvis\_0.2-1\_highlight) we are told the
+In the top left corner of figure \ref{fig:prof2} we are told the
 aggregate time spent with \texttt{engine\$fontDef} is 1830ms. Compared
 to the total time of this run (a total of about 2700ms), \texttt{dvir}
 is spending a \emph{lot} of time doing these font sweeps.
@@ -451,18 +453,18 @@ finds all the font information to be used later on the following metric
 and grid sweeps should not need to ``re-sweep'' for the fonts.
 
 \begin{figure}
-\centering
-\includegraphics[width=1.00000\textwidth]{../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG}
-\caption{Screenshot of \texttt{profvis::profvis()} output for the code
-\texttt{grid.latex("\$x\ -\ \textbackslash{}\textbackslash{}mu\$")} in
-\texttt{dvir} version 0.2-1, highlighting \texttt{engine\$fontDef}.}
+
+{\centering \includegraphics[width=1\linewidth]{../Figures/profilingSimpleProfvis_0.2-1_highlight} 
+
+}
+
+\caption{Screenshot of \texttt{profvis::profvis()} output for the code \texttt{grid.latex("$x - \mu$")} in \texttt{dvir} version 0.2-1, highlighting \texttt{engine\$fontDef}.}\label{fig:prof3}
 \end{figure}
 
-The effect of this is very obvious in figure
-@ref(fig:profilingSimpleProfvis\_0.2-1\_highlight) which is the same as
-figure @ref(fig:profilingSimpleProfvis\_0.2-1) but highlights the time
-spent in \texttt{engine\$fontDef}. The wrappers for the font, metric and
-grid sweeps are \texttt{dviFonts()}, \texttt{dviMetric()} and
+The effect of this is very obvious in figure \ref{fig:prof3} which is
+the same as figure \ref{fig:prof1} but highlights the time spent in
+\texttt{engine\$fontDef}. The wrappers for the font, metric and grid
+sweeps are \texttt{dviFonts()}, \texttt{dviMetric()} and
 \texttt{dvigrid()} respectively (sixth call from the bottom of the
 stack). Here we can see nearly all of the time spent in the metric and
 grid sweeps are actually redoing the font sweep.
@@ -522,13 +524,10 @@ created by the font sweep is now not overwritten.
 \end{Highlighting}
 \end{Shaded}
 
-To quantify the impact this has on code speed we recorded the time to
-run our examples 20 times, after an initial run to compile the package
-after it was loaded.
-
-\begin{verbatim}
-## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-\end{verbatim}
+To quantify the impact this has on code speed the time to run the
+examples 20 times was recorded, after an initial run to compile the
+package after it was loaded. The average of these 20 runs was then
+calculated.
 
 \begin{figure}
 
@@ -536,16 +535,12 @@ after it was loaded.
 
 }
 
-\caption{The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our simple example.}\label{fig:speedUp1Simple}
+\caption{The average time spent in the \texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, for each of the 20 runs of the simple example.}\label{fig:speedUp1Simple}
 \end{figure}
 
 For the simple example the time spent in the metric and grid sweeps have
 decreased by 76\% and 83\% respectively. The speed of the overall
 \texttt{grid.latex()} call has decreased by 30\%.
-
-\begin{verbatim}
-## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-\end{verbatim}
 
 \begin{figure}
 
@@ -553,13 +548,13 @@ decreased by 76\% and 83\% respectively. The speed of the overall
 
 }
 
-\caption{The total time spent in the `grid.latex()` function, metric sweep and grid sweep before and after these changes, over 20 runs of our complicated example.}\label{fig:speedUp1Yee}
+\caption{The average time spent in the \texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, for each of the 20 runs of the complicated example.}\label{fig:speedUp1Yee}
 \end{figure}
 
 Similarly for the more complicated example in figure
-@ref\{fig:speedUp1Yee\} the metric and grid sweeps have decreased by
-83\% and 89\% respectively, with \texttt{grid.latex()} overall taking
-47\% less time.
+\ref{fig:speedUp1Yee} the metric and grid sweeps have decreased by 83\%
+and 89\% respectively, with \texttt{grid.latex()} overall taking 47\%
+less time.
 
 \newpage{}
 
@@ -573,7 +568,7 @@ dealing with fonts so this section is about making \texttt{dvir}
 ``smarter'' by caching the information it gathers about fonts between
 \texttt{grid.latex()} calls.
 
-For example, creating figure \ref{yeeExample} requires three
+For example, creating figure \ref{fig:yeeExample} requires three
 \texttt{grid.latex()} calls for the same symbol \(\omega\). Each time,
 the following font definition appears in the DVI file for
 \texttt{grid.latex()} to search for during its font sweep.
@@ -630,8 +625,8 @@ new font contains any existing font information:
   \item If no, then the font information is written to the font list as usual.
   \item If yes, then it checks if the existing font information is the same as the font information in the DVI file. 
   \begin{itemize}
-    \item If yes, then it does nothing. 
-    \item If no, then it overwrites the fonts as per usual.
+    \item If yes, do nothing. 
+    \item If no, overwrite the font with the new font information.
   \end{itemize}
 \end{itemize}
 
@@ -659,22 +654,17 @@ definition is repeated in thomas yee's example{]}
 To examine the effect of these changes on code speed we performed
 profiling as was detailed in the previous section.
 
-\begin{verbatim}
-## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-\end{verbatim}
-
 \begin{figure}
 
 {\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1} 
 
 }
 
-\caption{The total time spent in the `grid.latex()` function and font sweep}\label{fig:speedUp2Simple}
+\caption{The average time spent in the \texttt{grid.latex()} function and font sweep for each of the 20 runs of the simple example.}\label{fig:speedUp2Simple}
 \end{figure}
 
-\begin{verbatim}
-## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-\end{verbatim}
+For the simple example the time for the font sweep has reduced by 71\%,
+with \texttt{grid.latex()} overall taking 45\% less time.
 
 \begin{figure}
 
@@ -682,8 +672,12 @@ profiling as was detailed in the previous section.
 
 }
 
-\caption{The total time spent in the `grid.latex()` function and font sweep}\label{fig:speedUp2Yee}
+\caption{The average time spent in the \texttt{grid.latex()} function and font sweep for each of the 20 runs of the complicated example}\label{fig:speedUp2Yee}
 \end{figure}
+
+Similar results can be seen in for the example in figure
+\ref{fig:yeeExample} - a 76\% and 46\% decrease in the font sweep and
+\texttt{grid.latex()} respectively.
 
 \subsection{Profiling environment
 specifications}\label{profiling-environment-specifications}
@@ -1239,7 +1233,7 @@ is.
  \boxreport{\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}{1700295sp}
  \vspace{0.3cm}
  \end{adjustwidth}
-\caption{Using the `alex` method to calculate the baseline.}
+\caption{Using the \texttt{alex} algorithm to calculate the baseline.}
 \end{figure}
 
 \subsubsection{\texorpdfstring{\texttt{dviMoves}
@@ -1491,7 +1485,7 @@ limited for several reasons:
  \boxpersist{2155406sp}
  \vspace{0.3cm}
  \end{adjustwidth}
-\caption{Using the `dviMoves` method to calculate the baseline.}
+\caption{Using the \texttt{dviMoves} algorithm to calculate the baselines.}
 \end{figure}
 
 \begin{Shaded}
@@ -1611,7 +1605,7 @@ with \texttt{MatplotlibBox:} and returning the value just after the
  \boxreport{\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}{13.94444pt}
  \vspace{0.3cm}
  \end{adjustwidth}
-\caption{Using the `preview` method to calculate the baseline.}
+\caption{Using the \texttt{preview} algorithm to calculate the baseline.}
 \end{figure}
 
 \subsubsection{\texorpdfstring{\texttt{dvipng}
@@ -1653,7 +1647,7 @@ simple search for \texttt{depth=} will find the baseline value.
  \boxreport{\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}{0.208333333333333in}
  \vspace{0.3cm}
  \end{adjustwidth}
-\caption{Using the `dvipng` method to calculate the baseline.}
+\caption{Using the \texttt{dvipng} algorithm to calculate the baseline.}
 \end{figure}
 
 \subsubsection{Other potential
@@ -1719,7 +1713,7 @@ Auckland.
 
 \newpage{}
 
-\section{Apendices}\label{apendices}
+\section{Appendix}\label{appendix}
 
 Associated files related to this project can be found on GitHub on the
 link in the Executive Summary.

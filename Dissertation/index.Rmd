@@ -8,6 +8,7 @@ output:
     toc: FALSE
     dev: cairo_pdf
     extra_dependencies:
+      xcolor: null
       tikz: null
       graphicx: null
       changepage: null
@@ -24,6 +25,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       eval = TRUE)
 library(dvir)
 library(ggplot2)
+library(knitr)
 ```
 
 % macros setup
