@@ -2,7 +2,7 @@
 
 # Introduction
 
-R has the ability to display mathematical symbols and equations in graphics using the "plotmath" feature, interpreting everything within a call to `expression()` as a mathematical equation.
+R [@R] has the ability to display mathematical symbols and equations in graphics using the "plotmath" feature [@plotmath], interpreting everything within a call to `expression()` as a mathematical equation.
 
 <!--- 
 
@@ -21,7 +21,7 @@ axis(2, las = 1)
 mtext(expression(frac(mu ^ 2, 2)), side = 2, line = 3, las = 1)
 ```
 
-This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX{}, but it is limited in its fonts. Compare the y-axis label above with how it looks when created by \LaTeX{} in figure \ref{muOver2}.
+This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX{} [@knuth-tex], but it is limited in its fonts. Compare the y-axis label above with how it looks when created by \LaTeX{} in figure \ref{muOver2}.
 
 \begin{figure}\label{muOver2}
 \begin{equation*}
@@ -38,8 +38,10 @@ Use this code for above example, just need to find a way to caption and referenc
 could use \[\dfrac{\mu^2}{2}\] if that was easier too?
 --->
 
-The difference is stark and @murrell-dvir describes [@murrell-dvir] several approaches in R which can get us closer to the \LaTeX{} result, and their limitations. These examples are replicated here.
+The difference is stark and @murrell-dvir describes several approaches in R which can get us closer to the \LaTeX{} result, and their limitations, as motivation for the `dvir` package. The approaches are replicated here.
 
+[@pkg-extrafont]
+[@pkg-fontcm]
 ```{r}
 # library(grid)
 # expr <- expression(frac(mu ^ 2, 2 "hello"))
@@ -109,12 +111,15 @@ cat(c("\\begin{figure}\\label{tikzDevicePlot}\n\\centering\n",
 
 The `tikzDevice` package in R will draw the axis titles with \TeX{} but will also use \TeX{} for all other text on the plot, like the axis labels in figure \ref{tikzDevicePlot}. This may be appropriate if the graphic is to be included in a \TeX{} document but not so much for other document formats like HTML.
 
-What we want is a middle ground - being able to harness the power of \TeX{} and its typesetting capabilities on *our* choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of the R `grid` graphics package [Reference R grid graphics here], by way of the `grid.latex()` function.
+What we want is a middle ground - being able to harness the power of \TeX{} and its typesetting capabilities on *our* choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of R `grid` graphics, by way of the `grid.latex()` function.
 
 <!---
 For lattice plot, remember tick marks on top and side.... remove if have time....
 
 For lattice plot, need to see if can correctly find x and y locations relative to other stuff in the plot, rather than guessing and checking these exact values, at least navigate to other viewports? (try grid.force() maybe, and make a coloured rectangle in each one)
+
+
+DO I NEED TO USE LATTIVE F THIS?
 --->
 ```{r, include = FALSE}
 # Set lattice options for next plot
@@ -130,7 +135,7 @@ grid.latex("$\\mu$", x = 0.53, y = 0.03)
 grid.latex("$\\dfrac{\\mu^2}{2}$", x = 0.1, preamble = preamble)
 ```
 
-Figure \@ref(fig:latticeGridLatex) recreates figure \@ref(fig:expressionPlot) with the axis titles made using `grid.latex()`. The function `lattice::xyplot()` is used as it is a readily available high-level plotting function using `grid` graphics.
+Figure \@ref(fig:latticeGridLatex) recreates figure \@ref(fig:expressionPlot) with the axis titles made using `grid.latex()`. The function `lattice::xyplot()` [@pkg-lattice] is used as it is a readily available high-level plotting function using `grid` graphics.
 
 <!---
   - [**Example:** example of grid-based plot, changing labels and/or title with `grid.latex()`. Maybe ggplot2?]

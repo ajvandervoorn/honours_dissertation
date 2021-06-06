@@ -65,7 +65,7 @@ cat(paste(newPreamble,
 \begin{enumerate}
   \setcounter{enumi}{1}
   \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
-  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the `dvir` function `readDVI()` translates the DVI file into readable text. This is an extract of a DVI file after using `readDVI()`, stating the definition of a font and then "setting", that is, printing, a character "2".
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then "setting", that is, printing, a character "2".
 \end{enumerate}
 
 \begin{itemize}[noitemsep]
@@ -78,9 +78,9 @@ cat(paste(newPreamble,
   \setcounter{enumi}{3}
   \item Three "sweeps" of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
   \begin{itemize}
-    \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a `fontconfig` file.
-    \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a `grid` viewport which can encompass the entire \TeX{} passed to `grid.latex()` expression using the native DVI coordinates.
+    \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a \texttt{fontconfig} file.
+    \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a \texttt{grid} viewport which can encompass the entire \TeX{} passed to \texttt{grid.latex()} expression using the native DVI coordinates.
     \item Grid sweep: Convert all text and symbols into \textit{grobs} (grid graphical objects) 
   \end{itemize}
-  \item These grobs are then displayed in the R graphics device as per the `grid` package.
+  \item These grobs are then displayed in the R graphics device as per the \texttt{grid} package.
 \end{enumerate}

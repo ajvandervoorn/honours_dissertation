@@ -408,7 +408,7 @@ Discussion - what does dviMoves work well or not well for?
 
 ### `preview` algorithm
 
-This algorithm uses the `preview` package in \LaTeX{}. [Reference TuG report here] When this algorithm is selected, the following code is added to the header of the DVI file:
+This algorithm uses the `preview` package [@man-preview] in \LaTeX{}. @preview-tug describes the use of the algorithm for `dvisvgm`, and it has been implemented here as it has in `matplotlib.texmanager` [@matplotlib]. When this algorithm is selected, the following code is added to the header of the DVI file:
 
 ```
 \usepackage[active,showbox,tightpage]{preview}
@@ -440,7 +440,7 @@ Discussion - what does it work well or not well for?
 
 ### `dvipng` algorithm
 
-The `dvipng` program is used to turn DVI files into PNG images. An option of `dvipng` is `--depth` which returns the baseline value in pixels. [reference dvipng package - maybe where you egt it from linux?]
+The `dvipng` program [@man-dvipng] turns DVI files into PNG images. An option of `dvipng` is `--depth` which returns the baseline value in pixels. [reference dvipng package - maybe where you egt it from linux?]
 
 The system call `dvipng --depth test.dvi` returns `depth=4` within its output so after recording the output, a simple search for `depth=` will find the baseline value.
 

@@ -194,9 +194,10 @@ found on GitHub}\footnote{\url{https://github.com/ajvandervoorn/honours_disserta
 
 \section{Introduction}\label{introduction}
 
-R has the ability to display mathematical symbols and equations in
-graphics using the ``plotmath'' feature, interpreting everything within
-a call to \texttt{expression()} as a mathematical equation.
+R (R Core Team 2021) has the ability to display mathematical symbols and
+equations in graphics using the ``plotmath'' feature (Murrell and Ihaka
+2000), interpreting everything within a call to \texttt{expression()} as
+a mathematical equation.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -218,9 +219,10 @@ a call to \texttt{expression()} as a mathematical equation.
 \end{figure}
 
 This provides us with most of the symbols used for equations, such as
-brackets and fractions, and formats them in a layout resembling \TeX{},
-but it is limited in its fonts. Compare the y-axis label above with how
-it looks when created by \LaTeX{} in figure \ref{muOver2}.
+brackets and fractions, and formats them in a layout resembling \TeX{}
+(Knuth 1986), but it is limited in its fonts. Compare the y-axis label
+above with how it looks when created by \LaTeX{} in figure
+\ref{muOver2}.
 
 \begin{figure}\label{muOver2}
 \begin{equation*}
@@ -229,9 +231,12 @@ it looks when created by \LaTeX{} in figure \ref{muOver2}.
 \caption{The \(y\)-axis label from above, when created in \LaTeX}
 \end{figure}
 
-The difference is stark and Murrell (2018) describes (Murrell 2018)
-several approaches in R which can get us closer to the \LaTeX{} result,
-and their limitations. These examples are replicated here.
+The difference is stark and Murrell (2018) describes several approaches
+in R which can get us closer to the \LaTeX{} result, and their
+limitations, as motivation for the \texttt{dvir} package. The approaches
+are replicated here.
+
+(Chang 2014) (Chang, Kryukov, and Murrell 2014)
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -379,9 +384,8 @@ other document formats like HTML.
 What we want is a middle ground - being able to harness the power of
 \TeX{} and its typesetting capabilities on \emph{our} choice of text or
 equation in R graphics. This is where the \texttt{dvir} package comes in
-- providing a simple user interface, in the style of the R \texttt{grid}
-graphics package {[}Reference R grid graphics here{]}, by way of the
-\texttt{grid.latex()} function.
+- providing a simple user interface, in the style of R \texttt{grid}
+graphics, by way of the \texttt{grid.latex()} function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -404,9 +408,9 @@ graphics package {[}Reference R grid graphics here{]}, by way of the
 
 Figure \ref{fig:latticeGridLatex} recreates figure
 \ref{fig:expressionPlot} with the axis titles made using
-\texttt{grid.latex()}. The function \texttt{lattice::xyplot()} is used
-as it is a readily available high-level plotting function using
-\texttt{grid} graphics.
+\texttt{grid.latex()}. The function \texttt{lattice::xyplot()} (Sarkar
+2008) is used as it is a readily available high-level plotting function
+using \texttt{grid} graphics.
 
 \subsection{Where this project fits
 in}\label{where-this-project-fits-in}
@@ -520,7 +524,7 @@ The following steps are taken when \texttt{grid.latex()} runs:
 \begin{enumerate}
   \setcounter{enumi}{1}
   \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
-  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the `dvir` function `readDVI()` translates the DVI file into readable text. This is an extract of a DVI file after using `readDVI()`, stating the definition of a font and then "setting", that is, printing, a character "2".
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then "setting", that is, printing, a character "2".
 \end{enumerate}
 
 \begin{itemize}[noitemsep]
@@ -533,11 +537,11 @@ The following steps are taken when \texttt{grid.latex()} runs:
   \setcounter{enumi}{3}
   \item Three "sweeps" of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
   \begin{itemize}
-    \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a `fontconfig` file.
-    \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a `grid` viewport which can encompass the entire \TeX{} passed to `grid.latex()` expression using the native DVI coordinates.
+    \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a \texttt{fontconfig} file.
+    \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a \texttt{grid} viewport which can encompass the entire \TeX{} passed to \texttt{grid.latex()} expression using the native DVI coordinates.
     \item Grid sweep: Convert all text and symbols into \textit{grobs} (grid graphical objects) 
   \end{itemize}
-  \item These grobs are then displayed in the R graphics device as per the `grid` package.
+  \item These grobs are then displayed in the R graphics device as per the \texttt{grid} package.
 \end{enumerate}
 
 \newpage{}
@@ -901,8 +905,8 @@ were calculated with the following setup:
 \subsection{\texorpdfstring{\Tikz{} and
 \texttt{dvir}}{ and dvir}}\label{and-dvir}
 
-\Tikz{} is a \TeX{} package that allows drawing of pictures and diagrams
-in \TeX{} documents {[}reference \Tikz{} report/description{]}:
+\Tikz{} (Tantau 2021) is a \TeX{} package that allows drawing of
+pictures and diagrams in \TeX{} documents.
 
 \begin{spacing}{1}
 \begin{verbatim}
@@ -938,16 +942,16 @@ The \Tikz{} package uses these DVI specials to describe shapes, drawings
 and colours in PGF (portable graphics format) which can be translated to
 instructions for other viewing formats, like Postscript, PDF or SVG. How
 the instructions are translated is controlled by a \Tikz{} driver. The
-\texttt{dvir} package includes its own \Tikz{} driver to translate the
-drawing instructions into a form useful to draw the things with R grid
-graphics {[}reference Paul dvir \Tikz{} report{]}.
+\texttt{dvir} package (Murrell 2020a) includes its own \Tikz{} driver to
+translate the drawing instructions into a form useful to draw the things
+with R grid graphics {[}reference Paul dvir \Tikz{} report{]}.
 
 Some \Tikz{} features were not implemented though, notably the ability
 to have fill colours of shapes as linear or radial gradients or
 patterns. The primary reason for this is that R did not support these
 types of fills but the latest R release in May 2021, version 4.1.0,
-provides support for these fills in the \texttt{grid} package, on which
-\texttt{dvir} is built.
+provides support for these fills in the \texttt{grid} package (Murrell
+2020b), on which \texttt{dvir} is built.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -972,7 +976,9 @@ provides support for these fills in the \texttt{grid} package, on which
 \end{figure}
 
 The use of \texttt{grid.tikzpicture()} is demonstrated in figure
-\ref{fig:gridTikz}, recreating the diagram from figure \ref{tikzRaw}
+\ref{fig:gridTikz}, recreating the diagram from figure \ref{tikzRaw}.
+The alteration to the preamble once again only necessary due to the use
+of \texttt{\textbackslash{}dfrac} from the \texttt{amsmath} package.
 
 \begin{itemize}
 \item
@@ -1776,9 +1782,11 @@ $x + \frac{\mu}{2}$ is the equation
 \subsubsection{\texorpdfstring{\texttt{preview}
 algorithm}{preview algorithm}}\label{preview-algorithm}
 
-This algorithm uses the \texttt{preview} package in \LaTeX{}.
-{[}Reference TuG report here{]} When this algorithm is selected, the
-following code is added to the header of the DVI file:
+This algorithm uses the \texttt{preview} package (Kastrup 2017) in
+\LaTeX{}. Gieseking (2017) describes the use of the algorithm for
+\texttt{dvisvgm}, and it has been implemented here as it has in
+\texttt{matplotlib.texmanager} (Hunter 2007). When this algorithm is
+selected, the following code is added to the header of the DVI file:
 
 \begin{verbatim}
 \usepackage[active,showbox,tightpage]{preview}
@@ -1878,10 +1886,10 @@ $x + \frac{\mu}{2}$ is the equation
 \subsubsection{\texorpdfstring{\texttt{dvipng}
 algorithm}{dvipng algorithm}}\label{dvipng-algorithm}
 
-The \texttt{dvipng} program is used to turn DVI files into PNG images.
-An option of \texttt{dvipng} is \texttt{-\/-depth} which returns the
-baseline value in pixels. {[}reference dvipng package - maybe where you
-egt it from linux?{]}
+The \texttt{dvipng} program (Larsson 2020) turns DVI files into PNG
+images. An option of \texttt{dvipng} is \texttt{-\/-depth} which returns
+the baseline value in pixels. {[}reference dvipng package - maybe where
+you egt it from linux?{]}
 
 The system call \texttt{dvipng\ -\/-depth\ test.dvi} returns
 \texttt{depth=4} within its output so after recording the output, a
@@ -2010,10 +2018,70 @@ requires rerunning code with small tweaks to get the perfect graphic.
 \section{References}\label{references}
 
 \hypertarget{refs}{}
+\hypertarget{ref-pkg-extrafont}{}
+Chang, Winston. 2014. \emph{Extrafont: Tools for Using Fonts}.
+\url{https://cran.r-project.org/package=extrafont}.
+
+\hypertarget{ref-pkg-fontcm}{}
+Chang, Winston, Alexej Kryukov, and Paul Murrell. 2014. \emph{Fontcm:
+Computer Modern Font for Use with Extrafont Package}.
+\url{https://CRAN.R-project.org/package=fontcm}.
+
+\hypertarget{ref-preview-tug}{}
+Gieseking, Martin. 2017. ``dvisvgm: Generating Scalable Vector Graphics
+from DVI and EPS Files.'' \emph{TUGboat} 38 (3).
+\url{https://tug.org/TUGboat/tb38-3/tb120gieseking.pdf}.
+
+\hypertarget{ref-matplotlib}{}
+Hunter, J. D. 2007. ``Matplotlib: A 2d Graphics Environment.''
+\emph{Computing in Science \& Engineering} 9 (3). IEEE COMPUTER SOC:
+90--95.
+doi:\href{https://doi.org/10.1109/MCSE.2007.55}{10.1109/MCSE.2007.55}.
+
+\hypertarget{ref-man-preview}{}
+Kastrup, David. 2017. \emph{The preview Package for LaTeX: Version
+12.3}. \url{https://ctan.org/pkg/preview}.
+
+\hypertarget{ref-knuth-tex}{}
+Knuth, Donald E. 1986. \emph{The Texbook}. Addison-Wesley Professional.
+
+\hypertarget{ref-man-dvipng}{}
+Larsson, Jan-Åke. 2020. \emph{dvipng - a DVI-to-PNG Translator: Version
+1.17}. \url{https://ctan.org/pkg/dvipng}.
+
 \hypertarget{ref-murrell-dvir}{}
 Murrell, Paul. 2018. ``Revisiting Mathematical Equations in R: The
 'dvir' Package.'' 2018-08. Department of Statistics, The University of
 Auckland.
+
+\hypertarget{ref-murrell-tikz}{}
+---------. 2020a. ``Adding TikZ Support to 'dvir'.'' 2020-05. Department
+of Statistics, The University of Auckland.
+doi:\href{https://doi.org/http://dx.doi.org/10.17608/k6.auckland.13283900}{http://dx.doi.org/10.17608/k6.auckland.13283900}.
+
+\hypertarget{ref-murrell-grad-fills}{}
+---------. 2020b. ``Catching up with R Graphics.'' 2020-04. Department
+of Statistics, The University of Auckland.
+doi:\href{https://doi.org/http://dx.doi.org/10.17608/k6.auckland.12649751}{http://dx.doi.org/10.17608/k6.auckland.12649751}.
+
+\hypertarget{ref-plotmath}{}
+Murrell, Paul, and Ross Ihaka. 2000. ``An Approach to Providing
+Mathematical Annotation in Plots.'' \emph{Journal of Computational and
+Graphical Statistics} 9 (3). Taylor \& Francis: 582--99.
+doi:\href{https://doi.org/10.1080/10618600.2000.10474900}{10.1080/10618600.2000.10474900}.
+
+\hypertarget{ref-R}{}
+R Core Team. 2021. \emph{R: A Language and Environment for Statistical
+Computing}. Vienna, Austria: R Foundation for Statistical Computing.
+\url{https://www.r-project.org/}.
+
+\hypertarget{ref-pkg-lattice}{}
+Sarkar, Deepayan. 2008. \emph{Lattice: Multivariate Data Visualization
+with R}. New York: Springer. \url{http://lmdvr.r-forge.r-project.org}.
+
+\hypertarget{ref-man-tikz}{}
+Tantau, Till. 2021. \emph{The Tikz and Pgf Packages: Manual for Version
+3.1.9a}. \url{https://pgf-tikz.github.io/pgf/pgfmanual.pdf}.
 
 \newpage{}
 

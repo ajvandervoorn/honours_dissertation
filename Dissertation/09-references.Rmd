@@ -12,6 +12,8 @@ https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html
 https://bookdown.org/yihui/rmarkdown/markdown-syntax.html
 
 
-For references, if Paul has referenced them, could look at his bib files...
+* grid package?
+
+Leave dashed formatting of reference list for now, could change later (as revision to report)
 --->
 <div id="refs"></div>

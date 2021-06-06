@@ -1,6 +1,6 @@
 \contentsline {section}{\numberline {1}Executive summary}{3}{section.1}
 \contentsline {section}{\numberline {2}Introduction}{4}{section.2}
-\contentsline {subsection}{\numberline {2.1}Where this project fits in}{6}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.1}Where this project fits in}{7}{subsection.2.1}
 \contentsline {section}{\numberline {3}Background}{8}{section.3}
 \contentsline {subsection}{\numberline {3.1}T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m {}{}}{8}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}DVI}{8}{subsection.3.2}
