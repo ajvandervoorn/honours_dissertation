@@ -110,7 +110,7 @@ cat(latexRect)
 \end{tikzpicture}
 \end{figure}
 
-The following is an extract of the DVI file when the rectangle above is generated using the SVG DVI driver included with the common \TeX{} distributions, `pgfsys-dvisvgm.def`. It has been edited slightly for readability by adding line breaks.
+The following is an extract of the DVI file when the rectangle above is generated using the SVG DVI driver included with the common \TeX{} distributions, `pgfsys-dvisvgm.def`. It has been edited slightly for readability by adding line breaks and removing a line break "character", `{?nl}`.
 <!---
 The output of the linear gradient info below was element 52 after reading in the DVI file into R using 'readDVI()', in case we want to automate this later
 
@@ -119,26 +119,26 @@ CHECK THIS OUTPUT FOR THE 'matrix()' FUNCTION. WHERE DID IT COME FROM? - I think
 Maybe remove some spaces if want it this code to go into left margin, or think of where else I could line breaks
 --->
 
-```{r dviGradientOutput, eval=FALSE}
+```{ dviGradientOutput, eval=FALSE}
 xxx1         k=67
-             x=dvisvgm:raw <g transform="matrix(1,0,0,1,56.90549,28.45274)">{?nl} 
+             x=dvisvgm:raw <g transform="matrix(1,0,0,1,56.90549,28.45274)"> 
 xxx1         k=67
-             x=dvisvgm:raw <g transform="matrix(2.26802,0,0,1.134,0.0,0.0)">{?nl} 
+             x=dvisvgm:raw <g transform="matrix(2.26802,0,0,1.134,0.0,0.0)">
 xxx1         k=66
-             x=dvisvgm:raw <g transform="matrix(0.0,1.0,-1.0,0.0,0.0,0.0)">{?nl} 
+             x=dvisvgm:raw <g transform="matrix(0.0,1.0,-1.0,0.0,0.0,0.0)">
 xxx4         k=425
-             x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)">{?nl} 
-                            <stop offset=" 0.0" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
-                            <stop offset=" 0.25" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
-                            <stop offset=" 0.5" stop-color=" rgb(50.0%,75.0%,0.0%) "/>{?nl} 
-                            <stop offset=" 0.75" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
-                            <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
-                            </linearGradient>{?nl} 
+             x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)"> 
+                            <stop offset=" 0.0" stop-color=" rgb(0.0%,100.0%,0.0%) "/> 
+                            <stop offset=" 0.25" stop-color=" rgb(0.0%,100.0%,0.0%) "/>
+                            <stop offset=" 0.5" stop-color=" rgb(50.0%,75.0%,0.0%) "/>
+                            <stop offset=" 0.75" stop-color=" rgb(100.0%,50.0%,0.0%) "/>
+                            <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>
+                            </linearGradient>
 xxx1         k=57
              x=dvisvgm:raw <g transform="translate(-50.1875,-50.1875)"> 
 xxx1         k=97
              x=dvisvgm:raw <rect width="100.375" height="100.375" 
-                            style="fill:url(#pgfsh2); stroke:none"/>{?nl} 
+                            style="fill:url(#pgfsh2); stroke:none"/> 
 ```
 
 We can see from this that the linear gradient definition with stops and colours is defined within a `<linearGradient>` element and given an `id` attribute. In the `<rect>` element a CSS style definition sets the fill of the rectangle by referring to the `id` of the previously defined definition. In the linear gradient definition there are colours defined as RGB values and their respective stops so now we need to get the `dvir` driver file to extract the same information in a "R-friendly" form. There are several \TeX{} macros that were defined to do this. These are based on the `pgfsys-common-svg.def` and `pgfsys-dvisgm.def` SVG drivers that come with most \TeX{} distributions.
@@ -158,12 +158,14 @@ A "wrapper" macro of what to do when a gradient fill is requested. Within this, 
 ```
 \def\pgfsys@shadinginsidepgfpicture#1{%
   #1%
-  \pgfsysprotocol@literal{SHADING BEING DEFINED: ShadDefID = \the\pgf@sys@dvir@objectcount}%
+  \pgfsysprotocol@literal{SHADING BEING DEFINED: 
+                          ShadDefID = \the\pgf@sys@dvir@objectcount}%
   \pgf@sys@dvir@sh@defs% 
   \pgf@process{\pgf@sys@dvir@pos}%
   \pgf@xa=-.5\pgf@x%
   \pgf@ya=-.5\pgf@y%
-  \pgfsysprotocol@literal{<g transform="translate(\pgf@sys@tonumber{\pgf@xa},\pgf@sys@tonumber{\pgf@ya})">}%
+  \pgfsysprotocol@literal{
+      <g transform="translate(\pgf@sys@tonumber{\pgf@xa},\pgf@sys@tonumber{\pgf@ya})">}%
   \pgfsysprotocol@literal{SHADING BEING USED: ShadDefID = \the\pgf@sys@dvir@objectcount}
   \pgf@sys@dvir@sh%
 }
@@ -179,7 +181,8 @@ In basic cases, a horizontal linear gradient is defined as a vertical gradient w
     \pgf@sys@dvir@shading@stops%
     \pgf@sys@dvir@shading@stopcolours%
     \expandafter\xdef\csname @pgfshading#1!\endcsname{%
-      \def\noexpand\pgf@sys@dvir@sh@defs{\noexpand\pgfsysprotocol@literal{\pgf@sys@dvir@thestops}}%
+      \def\noexpand\pgf@sys@dvir@sh@defs{
+          \noexpand\pgfsysprotocol@literal{\pgf@sys@dvir@thestops}}%
       \def\noexpand\pgf@sys@dvir@sh{\noexpand\pgfsysprotocol@literal{<rect
         width="\pgf@sys@tonumber{\pgf@y}"
         height="\pgf@sys@tonumber{\pgf@x}"
@@ -199,7 +202,8 @@ This macro allows us to iteratively add stop positions or colours to the ones we
   \edef\pgf@temp{#1}%
   \expandafter\expandafter\expandafter\def
   \expandafter\expandafter\expandafter\pgf@sys@dvir@thestops
-  \expandafter\expandafter\expandafter{\expandafter\pgf@sys@dvir@thestops\expandafter\space\pgf@temp}%
+  \expandafter\expandafter\expandafter{
+      \expandafter\pgf@sys@dvir@thestops\expandafter\space\pgf@temp}%
 }
 ```
 
@@ -294,20 +298,21 @@ The result of these changes mean that the linear gradient definition is specifie
 ```
 xxx1         k=118
              x=dvir::  stops=( 0.0 0.25 0.5 0.75 1.0 ) , 
-                       colours=( rgb(0,1,0) rgb(0,1,0) rgb(0.5,0.75,0) rgb(1,0.5,0) rgb(1,0.5,0) )
+                       colours=( rgb(0,1,0) rgb(0,1,0) rgb(0.5,0.75,0) rgb(1,0.5,0) 
+                                 rgb(1,0.5,0) )
 ```
 
 Compare this with the linear gradient definition from earlier:
 
 ```
 xxx4         k=425
-             x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)">{?nl} 
-                            <stop offset=" 0.0" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
-                            <stop offset=" 0.25" stop-color=" rgb(0.0%,100.0%,0.0%) "/>{?nl} 
-                            <stop offset=" 0.5" stop-color=" rgb(50.0%,75.0%,0.0%) "/>{?nl} 
-                            <stop offset=" 0.75" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
-                            <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>{?nl} 
-                            </linearGradient>{?nl} 
+             x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)">
+                            <stop offset=" 0.0" stop-color=" rgb(0.0%,100.0%,0.0%) "/>
+                            <stop offset=" 0.25" stop-color=" rgb(0.0%,100.0%,0.0%) "/>
+                            <stop offset=" 0.5" stop-color=" rgb(50.0%,75.0%,0.0%) "/>
+                            <stop offset=" 0.75" stop-color=" rgb(100.0%,50.0%,0.0%) "/>
+                            <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>
+                            </linearGradient>
 ```
 
 Unfortunately this was the extent this project could explore implementing \Tikz{} gradient fills in `dvir`. You may notice in both the SVG and `dvir` DVI output that the colour at stops 0 and 0.25 are the same, as is the colour at stops 0.75 and 1. This is related to a larger issue of \Tikz{} using a number of transformations on the "simple" linear gradient definition above which is then clipped to the shape the fill is for. These transformations would require some very detailed work to translate them into a set of instructions to perform the same in R before they are used in `linearGradient()`. 

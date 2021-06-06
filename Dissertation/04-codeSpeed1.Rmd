@@ -147,15 +147,19 @@ How to include and reference figures:
 
 https://community.rstudio.com/t/cross-reference-images-in-rmarkdown/83402/2
 --->
-```{r prof1, fig.cap = 'Screenshot of \\texttt{profvis::profvis()} output for the code \\texttt{grid.latex("$x - \\mu$")} in \texttt{dvir} version 0.2-1.', echo = FALSE, eval = TRUE, out.width='100%'}
+```{r prof1, fig.cap = "Screenshot of 'profvis::profvis()' output for the simple example in 'dvir' version 0.2-1.", echo = FALSE, eval = TRUE, out.width='100%'}
 include_graphics("../Figures/profilingSimpleProfvis_0.2-1.PNG")
 ```
 
 We can see the function call stack in figure \@ref(fig:prof1). At the bottom is the call to `grid.latex()`, which immediately calls `grid.draw()` which in turn calls `latexGrob()`. This calls `readDVI()` for about the first 20ms, then `dviGrob()` for the remaining time to the end of the original `grid.latex()` function call, and so on up the function call stack.
 
-```{r prof2, fig.cap = 'Screenshot of \\texttt{profvis::profvis()} output for the code creating the example at the start of this section, highlighting the time spent in \\texttt{engine\\$fontDef}.', echo = FALSE, eval = TRUE, out.width='100%'}
+```{r prof2, fig.cap = "Screenshot of 'profvis::profvis()' output for the code creating the example at the start of this section, highlighting the time spent in 'engine\\$fontDef'.", echo = FALSE, eval = TRUE, out.width='100%'}
 include_graphics("../Figures/profilingYeeProfvis_0.2-1_highlight.PNG")
 ```
+<!---
+Caption for above figure....
+Screenshot of 'profvis::profvis()' output for the code creating the example at the start of this section, highlighting the time spent in 'engine$fontDef'.
+--->
 
 The `profvis::profvis()` output for our more complicated example, in figure \@ref(fig:prof2) reveals most of the time to create the figure is in `grid.latex()`. Note that the code to draw the arrows and the "(a)" in this example is so quick it occupies the very skinny call stack on the far left of the graph. `grid.latex()` and its subsequent function calls, on the other hand, take up most of the time required to produce the example.
 
@@ -165,10 +169,15 @@ In the top left corner of figure \@ref(fig:prof2) we are told the aggregate time
 
 What was interesting though was that after the actual font sweep the following sweeps for the metric and grid information *also* called `engine$fontDef`. As the point of the font sweep is that it finds all the font information to be used later on the following metric and grid sweeps should not need to "re-sweep" for the fonts.
 
-```{r prof3, fig.cap = 'Screenshot of \\texttt{profvis::profvis()} output for the code \\texttt{grid.latex("$x - \\mu$")} in \\texttt{dvir} version 0.2-1, highlighting \\texttt{engine\\$fontDef}.', echo = FALSE, eval = TRUE, out.width='100%'}
+```{r prof3, fig.cap = "Screenshot of 'profvis::profvis()' output for the simple example in 'dvir' version 0.2-1, highlighting 'engine\\$fontDef'.", echo = FALSE, eval = TRUE, out.width='100%'}
 include_graphics("../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG")
 ```
 
+<!---
+Caption for above...
+Screenshot of 'profvis::profvis()' output for the simple example in 'dvir' version 0.2-1, highlighting 'engine$fontDef'.
+
+--->
 The effect of this is very obvious in figure \@ref(fig:prof3) which is the same as figure \@ref(fig:prof1) but highlights the time spent in `engine$fontDef`. The wrappers for the font, metric and grid sweeps are `dviFonts()`, `dviMetric()` and `dvigrid()` respectively (sixth call from the bottom of the stack). Here we can see nearly all of the time spent in the metric and grid sweeps are actually redoing the font sweep.
 
 The change to be made was simply stopping the metric and grid sweeps from doing the font sweep again.

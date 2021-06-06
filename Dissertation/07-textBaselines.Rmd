@@ -1,7 +1,6 @@
 \newpage{}
 
 <!---
-Give examples throughout this section of function use (like what the output looks like for example, if return a unit value), so don't need to do it when talking about the specific algorithms
 
 Would it be possible to go into each character in the font and get the font metrics?
 
@@ -17,7 +16,10 @@ Maybe could move plotting stuff to "examples" script? Probably nah because of th
 Need to go through algorithms.R and tidy up, and proofread comments and all that
 
 
-Explicitly mention name of algorithms.R function, and maybe the examples script too?, say they're in appendix
+Explicitly mention name of algorithms.R function, and maybe the examples script too?, say they're in appendix! Make it obvious it was part of the project and is provided
+
+
+SHould algorithm names be monospace, or just have quotes around them? just be consistent....
 --->
 
 # Text baselines
@@ -34,30 +36,28 @@ Section outline:
 - Show result of all this (in LaTeX)
 --->
 
-```{r, eval = TRUE, echo = FALSE}
-# Setup the functions etc. for this section
-source("../Appendices/algorithms.R")
-testText <- c("test",
-              "testing",
-              "var",
-              "varying",
-              "$\\sum_{n=1}^{\\infty} 2^{-n} = 1$",
-              "$\\sum\\limits_{n=1}^{\\infty} 2^{-n} = 1$",
-              "$\\sum\\limits_{n=1}^{} 2^{-n} = 1$",
-              "The equation is $x + \\frac{\\mu^2}{2}$",
-              "The equation is $x + \\frac{\\mu}{2}$",
-              "$\\frac{\\mu^2}{2} + x$ is the equation",
-              "$x + \\frac{\\mu}{2}$ is the equation",
-              "\\begin{minipage}{1in}Paragraph, with some line wrapping!\\end{minipage}")
+<!---
+Superceded code:
 
-# Function to convert 'grid' units to LaTeX units (changing the characters at the end basically)
-unitConvert <- function(x) {
-  paste0(as.numeric(x), switch(attr(x, "unit"),
-                               scaledpts = "sp",
-                               inches = "in",
-                               points = "pt",
-                               attr(x, "unit")))
+
+\newsavebox{\dvibox}
+
+\newcommand{\boxreport}[2]{%
+  \sbox{\dvibox}{\parbox[b]{2in}{#1}}% Change width to be '1in' if going back to better way of doing it. Better yet, get variable that takes width of text itself (like TeX examples from Paul) 
+  \settowidth {\dviwidth} {\usebox{\dvibox}}%
+  \usebox{\dvibox}%
+  \vspace{-#2}%
+  \hrule width \dviwidth height 0.1pt \relax
+  \vspace{#2}%
 }
+
+\newcommand{\boxpersist}[1]{%
+  \vspace{-#1}%
+  \hrule width \dviwidth height 0.1pt \relax
+  \vspace{#1}%
+}
+
+
 
 baselineFunc <- function(testText, 
                          algo, 
@@ -74,13 +74,8 @@ baselineFunc <- function(testText,
   
   
   latexCode <- character(0)
-  baselineEnviroHead <- paste0("\\begin{figure}\n",
-                              "\\begin{adjustwidth}{0.5in}{0in}\n")
-  baselineEnviroFoot <- paste0("\\end{adjustwidth}\n",
-                               "\\caption{",
-                               caption,
-                               "}\n",
-                               "\\end{figure}")
+  baselineEnviroHead <- paste0("\\begin{adjustwidth}{0.5in}{0in}\n")
+  baselineEnviroFoot <- paste0("\\end{adjustwidth}\n")
   latexCode <- baselineEnviroHead
   for (i in seq_along(algorithmBaselines)) {
     latexCode <- c(latexCode, 
@@ -104,8 +99,162 @@ baselineFunc <- function(testText,
   latexCode <- c(latexCode, baselineEnviroFoot)
   latexCode
 }
+
+
+
+
+```{r baselineAlex, eval = FALSE, echo = FALSE, results = "asis"}
+alexLatex <- baselineFunc(testText, "alex", "Using the \\texttt{alex} algorithm to calculate the baseline.")
+cat(alexLatex)
 ```
 
+\begin{spacing}{1}
+
+```{r baselineDviMoves, eval = FALSE, echo = FALSE, results = "asis"}
+dviMovesLatex <- baselineFunc(testText, "dviMoves", "Using the \\texttt{dviMoves} algorithm to calculate the baselines.")
+
+cat(dviMovesLatex)
+```
+
+\end{spacing}
+
+```{r, echo = FALSE, eval = FALSE, results = "asis"}
+latexCode <- character(0)
+baselineEnviroHead <- paste0("\\begin{adjustwidth}{0.5in}{0in}\n")
+baselineEnviroFoot <- paste0("\\end{adjustwidth}")
+latexCode <- baselineEnviroHead
+for (i in seq_along(testText)) {
+    algorithmBaselines <- unit(0, "cm")
+    algorithmBaselines <- unit.c(algorithmBaselines, 
+                                 baselines(tex = testText[i],
+                                        algorithm = "dviMoves",
+                                        dviMovesMethod = "all",
+                                        dviMovesSelection = dviMovesSelection))
+
+  
+  # latexCode <- c(latexCode, baselineEnviroHead)
+  for (j in seq_along(algorithmBaselines)) {
+    latexCode <- c(latexCode, 
+                   paste("\\boxreport{", 
+                         testText[i], 
+                         "}{", 
+                         unitConvert(algorithmBaselines[j]), 
+                         "}\n\\vspace{0.3cm}\n", 
+                         sep = ""))
+    
+    # latexCode <- c(latexCode, "\\vspace{0.3cm}\n")
+  }
+}
+
+latexCode <- c(latexCode, baselineEnviroFoot)
+```
+
+\begin{spacing}{1}
+
+```{r results = "asis", eval = FALSE, echo = FALSE}
+# cat(latexCode)
+```
+
+\end{spacing}
+
+
+
+```{r baselinePreview, eval = FALSE, echo = FALSE, results = "asis"}
+previewLatex <- baselineFunc(testText, "preview", "Using the \\texttt{preview} algorithm to calculate the baseline.")
+cat(previewLatex)
+```
+
+```{r baselineDvipng, eval = FALSE, echo = FALSE, results = "asis"}
+dvipngLatex <- baselineFunc(testText, "dvipng", "Using the \\texttt{dvipng} algorithm to calculate the baseline.")
+cat(dvipngLatex)
+```
+
+
+
+--->
+
+```{r, include = FALSE}
+# Setup the functions etc. for this section
+source("../Appendices/algorithms.R")
+testText <- c("test",
+              "testing",
+              "var",
+              "varying",
+              "$\\sum_{n=1}^{\\infty} 2^{-n} = 1$",
+              "$\\sum\\limits_{n=1}^{\\infty} 2^{-n} = 1$",
+              "$\\sum\\limits_{n=1}^{} 2^{-n} = 1$",
+              "The equation is $x + \\frac{\\mu^2}{2}$",
+              "The equation is $x + \\frac{\\mu}{2}$",
+              "$\\frac{\\mu^2}{2} + x$ is the equation",
+              "$x + \\frac{\\mu}{2}$ is the equation",
+              "\\begin{minipage}{1in}Paragraph, with some line wrapping!\\end{minipage}")
+
+# Function to convert 'grid' units to LaTeX units (changing the characters at the end basically)
+unitConvert <- function(x) {
+  paste0(as.numeric(x), switch(attr(x, "unit"),
+                               scaledpts = "sp",
+                               inches = "in",
+                               points = "pt",
+                               attr(x, "unit")))
+}
+# Function to print text and do draw baseliens for given text and baseline(s)
+raiseBox <- function(text, baselineVals) {
+  latex <- paste0("\\settodepth{\\dvidepth} {", 
+                  text, 
+                  "}%\n\\settowidth{\\dviwidth} {",
+                  text,
+                  "}%\n")
+  
+  latex <- paste0(latex, 
+                  paste0("\\raisebox{\\dimexpr -\\dvidepth+", 
+                         unitConvert(baselineVals),
+                         "}{\\makebox[0in][l]{\\rule{\\dviwidth}{.1pt}}}%\n", 
+                         collapse = ""),
+                  text,
+                  "\n\n",
+                  collapse = "")
+  latex
+}
+
+# Wrapper to call raiseBox over multiple examples, with multiple sets of baseline(s)
+makeFigure <- function(examples, allBaselineVals, caption = "") {
+  baselineEnviroHead <- paste0("\\begin{figure}\n\\begin{center}\n")
+  baselineEnviroFoot <- paste0("\\end{center}\n\\caption{",
+                               caption,
+                               "}\n\\end{figure}\n")
+  code <- baselineEnviroHead
+  for (s in seq_along(examples)) {
+    code <- c(code, 
+              raiseBox(examples[s], allBaselineVals[[s]]),
+              "\\vspace{0.3cm}\n")
+  }
+  code <- c(code, baselineEnviroFoot)
+  
+  paste0(code, collapse = "")
+                 
+}
+
+# Wrapper to return baseline values for multiple pieces of text using baselines() function
+returnBaselines <- function(testText,
+                            algo, 
+                            dviMovesMethod = "all", 
+                            dviMovesSelection = "1") {
+  algorithmBaselines <- list()
+  for (i in seq_along(testText)) {
+      algorithmBaselines[[i]] <- baselines(tex = testText[i],
+                                           algorithm = algo,
+                                           dviMovesMethod = dviMovesMethod,
+                                           dviMovesSelection = dviMovesSelection)
+  }
+  algorithmBaselines
+}
+
+```
+
+\newlength{\dviwidth}
+\newlength{\dvidepth}
+\setlength{\fboxsep}{0in}
+\setlength{\parindent}{0in}
 
 ## The problem
 
@@ -129,7 +278,7 @@ Once the baselines have been calculated the bounding box of the text can be bott
 
 This function has been written to easily allow integration of other algorithms and most of the function could be directly implemented in the `dvir` package, should this baseline algorithm feature be implemented into `dvir` formally.
 
-## Our potential solutions
+## Potential solutions
 
 Several different algorithms were explored to calculate the baseline for different types of text that could be used with `grid.latex()`. These algorithms are detailed here.
 
@@ -165,36 +314,16 @@ In an ideal world, these examples would be centred, with either fixed width line
 
 --->
 
-\newsavebox{\dvibox}
-\newlength{\dviwidth}
-
-\newcommand{\boxreport}[2]{%
-  \sbox{\dvibox}{\parbox[b]{2in}{#1}}% Change width to be '1in' if going back to better way of doing it. Better yet, get variable that takes width of text itself (like TeX examples from Paul) 
-  \settowidth {\dviwidth} {\usebox{\dvibox}}%
-  \usebox{\dvibox}%
-  \vspace{-#2}%
-  \hrule width \dviwidth \relax
-  \vspace{#2}%
-}
-
-\newcommand{\boxpersist}[1]{%
-  \vspace{-#1}
-  \hrule width \dviwidth \relax
-  \vspace{#1}%
-}
-
-<!---
-\begin{figure}
-\begin{adjustwidth}{0.5in}{0in}
-\end{adjustwidth}
-\caption{Caption...}
-\end{figure}
---->
-
-```{r baselineAlex, echo = FALSE, results = "asis"}
-alexLatex <- baselineFunc(testText, "alex", "Using the \\texttt{alex} algorithm to calculate the baseline.")
-cat(alexLatex)
+```{r results = "asis", echo = FALSE}
+algo <- "alex"
+cat(makeFigure(testText, 
+               returnBaselines(testText, 
+                               algo, 
+                               dviMovesMethod = "all", 
+                               dviMovesSelection = "1"), 
+               "The baselines as calculated using the \\texttt{alex} algorithm"))
 ```
+
 
 <!---
 TO suss with pictures of baselines
@@ -244,44 +373,23 @@ This method will return the first baseline value just after a specified characte
 * The DVI file does not actually contain the character, but rather the numeric index of it in the particular font. This is why a number has to be used to select which character it is.
 
 <!---
-Somehow get unique values of baselines here?
+Somehow get unique values of baselines here? - Nah no point, drawings look pretty good!
+
+Could maybe try removin the top baseline value though (top of bounding box...)
 --->
 
-```{r baselineDviMoves, echo = FALSE, results = "asis"}
-dviMovesLatex <- baselineFunc(testText, "dviMoves", "Using the \\texttt{dviMoves} algorithm to calculate the baselines.")
-cat(dviMovesLatex)
-
-
-algorithmBaselines <- unit(0, "cm")
-    algorithmBaselines <- unit.c(algorithmBaselines, 
-                                 baselines(tex = testText[12],
-                                        algorithm = "dviMoves",
-                                        dviMovesMethod = "all",
-                                        dviMovesSelection = dviMovesSelection))
-
-  latexCode <- character(0)
-  baselineEnviroHead <- paste0("\\begin{adjustwidth}{0.5in}{0in}\n")
-  baselineEnviroFoot <- paste0("\\end{adjustwidth}\n")
-  latexCode <- baselineEnviroHead
-  for (i in seq_along(algorithmBaselines)) {
-    latexCode <- c(latexCode, 
-                   paste("\\boxreport{", 
-                         testText[12], 
-                         "}{", 
-                         unitConvert(algorithmBaselines[i]), 
-                         "}\n\\vspace{0.3cm}\n", 
-                         sep = ""))
-    
-    latexCode <- c(latexCode, "\\vspace{0.3cm}\n")
-  }
-  latexCode <- c(latexCode, baselineEnviroFoot)
-  
+```{r results = "asis", echo = FALSE}
+algo <- "dviMoves"
+cat(makeFigure(testText, 
+               returnBaselines(testText, 
+                               algo, 
+                               dviMovesMethod = "all", 
+                               dviMovesSelection = "1"), 
+               "Baselines as calculated using the \\texttt{dviMoves} algorithm"))
 ```
 
-```{r results = "asis"}
-cat(latexCode)
-```
 
+<!---
 #### Future options
 
 Some other selection methods could be:
@@ -291,7 +399,7 @@ Some other selection methods could be:
 * prevChar
 
 * extend dviMoves to only record position just before a character is typeset?
-
+--->
 
 
 <!---
@@ -316,9 +424,14 @@ MatplotlibBox:(8.04175pt+3.00005pt)x62.81718pt
 
 The baseline value in this case is the value just after the `+` and can be obtained by searching the log file for this line starting with `MatplotlibBox:` and returning the value just after the `+`.
 
-```{r baselinePreview, echo = FALSE, results = "asis"}
-previewLatex <- baselineFunc(testText, "preview", "Using the \\texttt{preview} algorithm to calculate the baseline.")
-cat(previewLatex)
+```{r results = "asis", echo = FALSE}
+algo <- "preview"
+cat(makeFigure(testText, 
+               returnBaselines(testText, 
+                               algo, 
+                               dviMovesMethod = "all", 
+                               dviMovesSelection = "1"), 
+               "Baselines as calculated using the \\texttt{preview} algorithm"))
 ```
 
 <!---
@@ -331,21 +444,27 @@ The `dvipng` program is used to turn DVI files into PNG images. An option of `dv
 
 The system call `dvipng --depth test.dvi` returns `depth=4` within its output so after recording the output, a simple search for `depth=` will find the baseline value.
 
-```{r baselineDvipng, echo = FALSE, results = "asis"}
-dvipngLatex <- baselineFunc(testText, "dvipng", "Using the \\texttt{dvipng} algorithm to calculate the baseline.")
-cat(dvipngLatex)
+```{r results = "asis", echo = FALSE}
+algo <- "dvipng"
+cat(makeFigure(testText, 
+               returnBaselines(testText, 
+                               algo, 
+                               dviMovesMethod = "all", 
+                               dviMovesSelection = "1"), 
+               "Baselines as calculated using the \\texttt{dvipng} algorithm"))
 ```
 
 <!---
 Discussion - what does it work well or not well for?
 --->
 
+<!---
 ### Other potential algorithms
 
 Some other potential algorithms but have not yet been implemented in this function include:
 
 * "Just ask \TeX{}"
-
+--->
 
 ## Discussion of algorithms
 
@@ -354,11 +473,11 @@ Need to plot these things with latex to see if DVI moves is actuall best? And if
 
 --->
 
-Of the algorithms considered, the `dviMoves` algorithm performed best. While most of these algorithms perform well for some or most of the examples, the `dviMoves` algorithm performs well for *all* the examples, notably for giving the option to align the baseline of *any* line of multi-line text. Utilising the fact it returns all baseline values for all characters, it is possible to align, for example, with any character in a mathematical equation, whether it be of a different size or a superscript or subscript.
+Of the algorithms considered, the `dviMoves` algorithm performed best. While most of these algorithms perform well for some or most of the examples, the `dviMoves` algorithm performs well for *all* the examples, notably for giving the option to align the baseline of *any* line of multi-line text. Utilising how it returns all baseline values for all characters it is possible to align, for example, with any character in a mathematical equation, whether it be of a different size or a superscript or subscript.
 
 - [Example: Show examples from start of this section with baselines being used to make them aligned!]
 
-The `preview` algorithm also calculated a baseline well for all examples, except the multi line text. An implementation of this in `dvir` could perhaps use both the `dviMoves` and `preview` algorithms to calculate the baselines, with the default selection method being the baseline value from `dviMoves` that is closest to the baseline value calculated by the `preview` algorithm.
+The `preview` algorithm also calculated a baseline well for all examples, except the multi-line text. An implementation of this in `dvir` could perhaps use both the `dviMoves` and `preview` algorithms to calculate the baselines, with the default selection method being the baseline value from `dviMoves` that is closest to the baseline value calculated by the `preview` algorithm.
 
 
 <!---

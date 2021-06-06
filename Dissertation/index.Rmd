@@ -12,6 +12,7 @@ output:
       tikz: null
       graphicx: null
       changepage: null
+      setspace: null
 bibliography: references.bib
 header-includes:
     - \linespread{1.25}

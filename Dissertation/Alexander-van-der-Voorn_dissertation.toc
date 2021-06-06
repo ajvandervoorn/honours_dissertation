@@ -1,0 +1,29 @@
+\contentsline {section}{\numberline {1}Executive summary}{3}{section.1}
+\contentsline {section}{\numberline {2}Introduction}{4}{section.2}
+\contentsline {subsection}{\numberline {2.1}Where this project fits in}{5}{subsection.2.1}
+\contentsline {section}{\numberline {3}Background}{6}{section.3}
+\contentsline {subsection}{\numberline {3.1}T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m {}{}}{6}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}DVI}{6}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}The (pre-existing) \texttt {dvir} package}{6}{subsection.3.3}
+\contentsline {section}{\numberline {4}Code speed (part 1) - removing redundant font sweeps}{8}{section.4}
+\contentsline {section}{\numberline {5}Code speed (part 2) - font caching}{12}{section.5}
+\contentsline {subsection}{\numberline {5.1}Profiling environment specifications}{13}{subsection.5.1}
+\contentsline {section}{\numberline {6}Linear gradient fills}{16}{section.6}
+\contentsline {subsection}{\numberline {6.1}\textup {Ti\textit kZ}{} and \texttt {dvir}}{16}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Implementing \textup {Ti\textit kZ}{} linear gradient fills in \texttt {dvir}}{16}{subsection.6.2}
+\contentsline {section}{\numberline {7}Text baselines}{22}{section.7}
+\contentsline {subsection}{\numberline {7.1}The problem}{22}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Implementation}{22}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Potential solutions}{23}{subsection.7.3}
+\contentsline {subsubsection}{\numberline {7.3.1}\texttt {alex} algorithm}{23}{subsubsection.7.3.1}
+\contentsline {subsubsection}{\numberline {7.3.2}\texttt {dviMoves} algorithm}{24}{subsubsection.7.3.2}
+\contentsline {paragraph}{\numberline {7.3.2.1}\texttt {dviMoves} selection method \texttt {all}}{24}{paragraph.7.3.2.1}
+\contentsline {paragraph}{\numberline {7.3.2.2}\texttt {dviMoves} selection method \texttt {index}}{24}{paragraph.7.3.2.2}
+\contentsline {paragraph}{\numberline {7.3.2.3}\texttt {dviMoves} selection method \texttt {bottomUp}}{24}{paragraph.7.3.2.3}
+\contentsline {paragraph}{\numberline {7.3.2.4}\texttt {dviMoves} selection method \texttt {nextChars}}{24}{paragraph.7.3.2.4}
+\contentsline {subsubsection}{\numberline {7.3.3}\texttt {preview} algorithm}{25}{subsubsection.7.3.3}
+\contentsline {subsubsection}{\numberline {7.3.4}\texttt {dvipng} algorithm}{25}{subsubsection.7.3.4}
+\contentsline {subsection}{\numberline {7.4}Discussion of algorithms}{26}{subsection.7.4}
+\contentsline {section}{\numberline {8}Conclusion}{27}{section.8}
+\contentsline {section}{\numberline {9}References}{28}{section.9}
+\contentsline {section}{\numberline {10}Appendix}{29}{section.10}

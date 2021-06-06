@@ -7,9 +7,9 @@ R has the ability to display mathematical symbols and equations in graphics usin
 <!--- Need to think of a better example than this one, ideally one that brings in our x - mu somehow --->
 
 ```{r expressionPlot, fig.cap="A plot with axis labels made using \\texttt{expression()}.", include = TRUE, eval = TRUE}
-mu <- 1:5
+x <- 1:5
 opar <- par(mar = par()$mar + c(0, 1, 0, 0))
-plot(mu, mu ^ 2 / 2, xlab = expression(mu), ylab = "", yaxt = "n")
+plot(x, x ^ 2 / 2, xlab = expression(mu), ylab = "", yaxt = "n")
 axis(2, las = 1)
 mtext(expression(frac(mu ^ 2, 2)), side = 2, line = 3, las = 1)
 ```
@@ -46,10 +46,10 @@ What we want is a middle ground - being able to harness the power of \TeX{} and 
 
 ## Where this project fits in
 
-The `dvir` package already worked really well in a lot of cases. There were however plenty more desirable features of \TeX{} and its extensions though that had not yet been implemented by `dvir`. The power of this package is from ensuring it is comprehensive enough to meet a user's entire \TeX{} needs in R graphics without having to leave R to do annotations in \LaTeX{} itself (or Photoshop/Illustrator!). 
+The `dvir` package already worked really well in a lot of cases. There were however a number of desirable features of \TeX{} and its extensions that had not yet been implemented by `dvir`. The power of this package comes from ensuring it is comprehensive enough to meet a user's entire \TeX{} needs in R graphics without having to leave R to do annotations in \LaTeX{} itself (or Photoshop/Illustrator!). 
 
-By keeping things "in R" users only need to learn R (and basic \TeX) code to create their graphics and their work is in one place and easily reproducible. It may not be realistic to *completely* replicate \TeX{} in R, however there were several aspects of the package identified as having a lot of potential to greatly increase its usefulness. The aspects identified were:
+By keeping things "in R" users only need to learn R (and basic \TeX) code to create their graphics and their work is in one place and easily reproducible. It may not be realistic to *completely* replicate \TeX{} in R, however several aspects of the package were identified as having the potential to increase its usefulness. The aspects identified were:
 
 * the speed of the package - anecdotally it took a while to generate graphics, especially if there were many `grid.latex()` calls
-* expand `dvir`'s capability of creating TikZ drawings by adding support for linear gradient fills
+* expand `dvir`'s capability of creating \Tikz{} drawings by adding support for linear gradient fills
 * adding the ability to align text from `grid.latex()` to a baseline - the natural line on which characters sit

@@ -4,11 +4,11 @@
 
 ## \TeX{}
 
-\TeX{} is a program to format and typeset text, and includes some basic macros to do this. \LaTeX{} is a higher-level implementation of \TeX{}, basically consisting of a lot more macros, creating a much more user-friendly interface to \TeX{}. For example, \LaTeX{} allows one to create a document with numbered sections, title pages and bibliographies without having to write complicated \TeX{} macros themself. There are other extensions to \TeX{} that do similar things to \LaTeX{} too.
+\TeX{} is a program to format and typeset text, and includes some basic macros to do this. \LaTeX{} is a higher-level implementation that sits on top of \TeX{}, basically consisting of a lot more macros, creating a much more user-friendly interface to \TeX{}. For example, \LaTeX{} allows one to create a document with numbered sections, title pages and bibliographies without having to write complicated \TeX{} macros oneself.
 
 ## DVI
 
-A \TeX{} or \LaTeX{} file is just plain text, so there needs to be a step to translate this plain text to what you will see on a formatted document on a screen or page. A DVI (DeVice Independent) file is a binary file *describing* the layout of the document. For example, the height of the page, what characters to display and where, and the fonts to be used.
+A \TeX{} or \LaTeX{} file is just plain text so there needs to be a step to translate this plain text to what you will see on a formatted document on a screen or page. \TeX{} "engine" like `pdflatex` normally processes \TeX{} to PDF but it can also produce a DVI (DeVice Independent) file. A DVI file is a binary file describing the layout of the document. For example, the height of the page, what characters to display and where, and the fonts to be used. DVI provides a format that can be read into R so that we can draw the \TeX{} layout in R. This is what the `dvir` package does.
 
 <!---
 Explain DVI more here (and less in next section explaining dvir packages)
