@@ -38,7 +38,7 @@ Use this code for above example, just need to find a way to caption and referenc
 could use \[\dfrac{\mu^2}{2}\] if that was easier too?
 --->
 
-The difference is stark and @murrell-dvir describes several approaches in R which can get us closer to the \LaTeX{} result, and their limitations. These examples are replicated here.
+The difference is stark and @murrell-dvir describes [@murrell-dvir] several approaches in R which can get us closer to the \LaTeX{} result, and their limitations. These examples are replicated here.
 
 ```{r}
 # library(grid)
@@ -127,7 +127,7 @@ y <- x ^ 2 / 2
 preamble <- "\\documentclass[12pt]{standalone}\n\\usepackage{amsmath}\n\\begin{document}"
 lattice::xyplot(y ~ x, xlab = "", ylab = "", aspect = 1, col = "black")
 grid.latex("$\\mu$", x = 0.53, y = 0.03)
-grid.latex("$\\dfrac{\\mu^2}{2}$", x = 0.03, preamble = preamble)
+grid.latex("$\\dfrac{\\mu^2}{2}$", x = 0.1, preamble = preamble)
 ```
 
 Figure \@ref(fig:latticeGridLatex) recreates figure \@ref(fig:expressionPlot) with the axis titles made using `grid.latex()`. The function `lattice::xyplot()` is used as it is a readily available high-level plotting function using `grid` graphics.

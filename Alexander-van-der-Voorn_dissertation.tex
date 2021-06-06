@@ -229,9 +229,9 @@ it looks when created by \LaTeX{} in figure \ref{muOver2}.
 \caption{The \(y\)-axis label from above, when created in \LaTeX}
 \end{figure}
 
-The difference is stark and Murrell (2018) describes several approaches
-in R which can get us closer to the \LaTeX{} result, and their
-limitations. These examples are replicated here.
+The difference is stark and Murrell (2018) describes (Murrell 2018)
+several approaches in R which can get us closer to the \LaTeX{} result,
+and their limitations. These examples are replicated here.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -389,7 +389,7 @@ graphics package {[}Reference R grid graphics here{]}, by way of the
 \NormalTok{preamble <-}\StringTok{ "}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{documentclass[12pt]\{standalone\}}\CharTok{\textbackslash{}n\textbackslash{}\textbackslash{}}\StringTok{usepackage\{amsmath\}}\CharTok{\textbackslash{}n\textbackslash{}\textbackslash{}}\StringTok{begin\{document\}"}
 \NormalTok{lattice}\OperatorTok{::}\KeywordTok{xyplot}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{xlab =} \StringTok{""}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{, }\DataTypeTok{aspect =} \DecValTok{1}\NormalTok{, }\DataTypeTok{col =} \StringTok{"black"}\NormalTok{)}
 \KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.53}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.03}\NormalTok{)}
-\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.03}\NormalTok{, }\DataTypeTok{preamble =}\NormalTok{ preamble)}
+\KeywordTok{grid.latex}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$"}\NormalTok{, }\DataTypeTok{x =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{preamble =}\NormalTok{ preamble)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -477,9 +477,9 @@ so the \texttt{amsmath} package needs to be specified in the preamble.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(dvir)}
+\NormalTok{texCode <-}\StringTok{ "$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$"}
 \NormalTok{newPreamble <-}\StringTok{ }
 \StringTok{  "}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{documentclass[12pt]\{standalone\}}\CharTok{\textbackslash{}n\textbackslash{}\textbackslash{}}\StringTok{usepackage\{amsmath\}}\CharTok{\textbackslash{}n\textbackslash{}\textbackslash{}}\StringTok{begin\{document\}"}
-\NormalTok{texCode <-}\StringTok{ "$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$"}
 \KeywordTok{grid.latex}\NormalTok{(texCode, }\DataTypeTok{preamble =}\NormalTok{ newPreamble)}
 \end{Highlighting}
 \end{Shaded}
@@ -646,7 +646,7 @@ and grid sweeps should not need to ``re-sweep'' for the fonts.
 
 }
 
-\caption{Screenshot of 'profvis::profvis()' output for the simple example in 'dvir' version 0.2-1, highlighting 'engine\$fontDef'.}\label{fig:prof3}
+\caption{Screenshot of \texttt{profvis::profvis()} output for the simple example in \texttt{dvir} version 0.2-1, highlighting \texttt{engine\$fontDef}.}\label{fig:prof3}
 \end{figure}
 
 The effect of this is very obvious in figure \ref{fig:prof3} which is
@@ -904,17 +904,28 @@ were calculated with the following setup:
 \Tikz{} is a \TeX{} package that allows drawing of pictures and diagrams
 in \TeX{} documents {[}reference \Tikz{} report/description{]}:
 
-\begin{itemize}
-\item
-  {[}\textbf{Example:} simple \Tikz{} drawing (circles with labels, and
-  an arrow maybe){]}
-\item
-  {[}\textbf{Example:} more complicated \Tikz{} drawing, maybe with
-  colouring and stuff{]}
-\end{itemize}
+\begin{spacing}{1}
+\begin{verbatim}
+\begin{tikzpicture}
+\path (0, 1) node[circle,fill=red!40,draw,thick] (x) {$\mu$}
+      (3, 0) node[circle,fill=blue!40,draw,thick] (y) {$\dfrac{\mu^2}{2}$};
+\draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);
+\end{tikzpicture}
+\end{verbatim}
+\end{spacing}
 
-The original DVI specification only needed to account for text and
-typesetting (and the most basic of rectangles) and so was not designed
+\begin{figure}\label{tikzRaw}
+\centering
+\begin{tikzpicture}
+\path (0, 1) node[circle,fill=red!40,draw,thick] (x) {$\mu$} 
+      (3, 0) node[circle,fill=blue!40,draw,thick] (y) {$\dfrac{\mu^2}{2}$};
+\draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);
+\end{tikzpicture}
+\caption{A picture made with \Tikz{}}
+\end{figure}
+
+The original DVI specification only needed to account for text,
+typesetting and the most basic of rectangles and so was not designed
 with drawing and graphics in mind. The type of instruction in the DVI
 file are labelled with an ``op code''. Each op code described a type of
 instruction like defining fonts, setting characters to display and
@@ -938,17 +949,37 @@ types of fills but the latest R release in May 2021, version 4.1.0,
 provides support for these fills in the \texttt{grid} package, on which
 \texttt{dvir} is built.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tikzCode <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{path (0, 1) node[circle,fill=red!40,draw,thick] (x) \{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu$\}"}\NormalTok{,}
+                  \StringTok{"      (3, 0) node[circle,fill=blue!40,draw,thick] (y) \{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$\};"}\NormalTok{,}
+                  \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);"}\NormalTok{,}
+                  \DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{tikzPreamble <-}\StringTok{ }\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{usepackage}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{\{tikz\}"}\NormalTok{, }
+                     \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{usepackage\{tikz\}}\CharTok{\textbackslash{}n\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{usepackage\{amsmath\}"}\NormalTok{, }
+                     \KeywordTok{tikzpicturePreamble}\NormalTok{())}
+\KeywordTok{grid.tikzpicture}\NormalTok{(tikzCode, }\DataTypeTok{preamble =}\NormalTok{ tikzPreamble)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/gridTikz-1} 
+
+}
+
+\caption{Using \texttt{grid.tikzpicture()} to make the diagram from earlier}\label{fig:gridTikz}
+\end{figure}
+
+The use of \texttt{grid.tikzpicture()} is demonstrated in figure
+\ref{fig:gridTikz}, recreating the diagram from figure \ref{tikzRaw}
+
 \begin{itemize}
-\item
-  {[}\textbf{Example:} replicate one of the above examples in R{]}
 \item
   {[}\textbf{Example:} \Tikz{} radial gradient fill example{]}
 \item
   {[}\textbf{Example:} Make same \Tikz{} example as above in R with dvir
   (obviously fill will be blank){]}
-\item
-  {[}\textbf{Example:} Use R 4.1.0 to make a linear gradient in a
-  shape{]}
 \end{itemize}
 
 As it is, the \Tikz{} driver simply ignores any gradient or pattern fill

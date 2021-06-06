@@ -88,7 +88,7 @@ grid.latex("$\\omega_{L_A}$",  x = 0.54, y = 0.50, default.units="native")
 grid.latex("$1 - \\sum_{s=1}^{L_A}\\omega_s$", x = 0.95, y = 0.50, default.units="native")
 ```
 
-```{r yeeExample, fig.cap="Using nine \\texttt{grid.latex()} calls with base R graphics.", fig.width = 3, fig.height = 3, fig.keep = "last", echo = FALSE}
+```{r yeeExample, fig.cap="Using nine \\texttt{grid.latex()} calls with base R graphics.", fig.width = 4, fig.height = 3, fig.keep = "last", echo = FALSE}
 xpos <- c(0, 0.25,  0.7, 1)
 myplot <- function(abcd = "(a)", col = "black") {
   plot(1:9, 1:9, type = "n", xlim = c(0, 1), ylim = c(0, 1), 
@@ -98,7 +98,7 @@ myplot <- function(abcd = "(a)", col = "black") {
   text(0.05, y = 1.1, xpd = TRUE, labels = abcd, cex = 1.0,
        font = 1, col = col)
 }  # myplot
-par(mar = c(2.6, 4, 1.5, 2) + 0.1,
+par(mar = c(1.6, 4, 1.5, 2) + 0.1,
     font = 3,  # italic
     las = 1)
 myplot()
