@@ -466,7 +466,7 @@ Some other potential algorithms but have not yet been implemented in this functi
 * "Just ask \TeX{}"
 --->
 
-## Discussion of algorithms
+## Discussion of these algorithms
 
 <!---
 Need to plot these things with latex to see if DVI moves is actuall best? And if it works for all situations?

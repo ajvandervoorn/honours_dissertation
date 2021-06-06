@@ -228,13 +228,153 @@ it looks when created by \LaTeX{} in figure \ref{muOver2}.
 \caption{The \(y\)-axis label from above, when created in \LaTeX}
 \end{figure}
 
-The difference is stark and there are several approaches in R which can
-get us closer to the \LaTeX{} result Murrell (2018).
+The difference is stark and Murrell (2018) describes several approaches
+in R which can get us closer to the \LaTeX{} result, and their
+limitations. These examples are replicated here.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# library(grid)}
+\CommentTok{# expr <- expression(frac(mu ^ 2, 2 "hello"))}
+\CommentTok{# grid.text(expr)}
+\CommentTok{# }
+\CommentTok{# library(extrafont)}
+\CommentTok{# font_install('fontcm')}
+\CommentTok{# loadfonts("pdf")}
+\CommentTok{# pdf("extrafont2.pdf", width=1, height=1)}
+\CommentTok{# grid.text(expr,}
+\CommentTok{#           gp = gpar(fontfamily="CM Roman"))}
+\CommentTok{# dev.off()}
+\CommentTok{# embed_fonts("extrafont2.pdf", outfile="extrafont2-embed.pdf")}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{itemize}
+\tightlist
 \item
   {[}\textbf{Example:} use \texttt{extrafont} and \texttt{fontcm}
-  packages, embed CM fonts in PDF{]}
+  packages, embed CM fonts in PDF - can't because It works all too
+  well!{]}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tikzDevice)}
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{tikzDocumentDeclaration =} \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{documentclass[12pt]\{article\}"}\NormalTok{)}
+\NormalTok{packages <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{getOption}\NormalTok{(}\StringTok{"tikzLatexPackages"}\NormalTok{),}
+              \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{usepackage\{amsmath\}}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\KeywordTok{options}\NormalTok{(}\StringTok{"tikzLatexPackages"}\NormalTok{ =}\StringTok{ }\NormalTok{packages) }
+
+\KeywordTok{tikz}\NormalTok{(}\StringTok{"tikzDevice.tex"}\NormalTok{, }\DataTypeTok{standAlone =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{opar <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar =} \KeywordTok{par}\NormalTok{()}\OperatorTok{$}\NormalTok{mar }\OperatorTok{+}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(x, x }\OperatorTok{^}\StringTok{ }\DecValTok{2} \OperatorTok{/}\StringTok{ }\DecValTok{2}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu$"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{, }\DataTypeTok{yaxt =} \StringTok{"n"}\NormalTok{)}
+\KeywordTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DataTypeTok{las =} \DecValTok{1}\NormalTok{)}
+\KeywordTok{mtext}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$"}\NormalTok{, }\DataTypeTok{side =} \DecValTok{2}\NormalTok{, }\DataTypeTok{line =} \DecValTok{3}\NormalTok{, }\DataTypeTok{las =} \DecValTok{1}\NormalTok{)}
+\KeywordTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## cairo_pdf 
+##         2
+\end{verbatim}
+
+\begin{figure}
+\centering
+ 
+\begin{tikzpicture}[x=1pt,y=1pt,scale=0.5]
+\definecolor{fillColor}{RGB}{255,255,255}
+\path[use as bounding box,fill=fillColor,fill opacity=0.00] (0,0) rectangle (505.89,505.89);
+\begin{scope}
+\path[clip] ( 73.44, 73.44) rectangle (475.65,446.85);
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 88.34, 87.27) circle (  2.70);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (181.44,130.49) circle (  2.70);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (274.55,202.52) circle (  2.70);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (367.65,303.36) circle (  2.70);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (460.75,433.02) circle (  2.70);
+\end{scope}
+\begin{scope}
+\path[clip] (  0.00,  0.00) rectangle (505.89,505.89);
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 88.34, 73.44) -- (460.75, 73.44);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 88.34, 73.44) -- ( 88.34, 66.24);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (181.44, 73.44) -- (181.44, 66.24);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (274.55, 73.44) -- (274.55, 66.24);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (367.65, 73.44) -- (367.65, 66.24);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (460.75, 73.44) -- (460.75, 66.24);
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 88.34, 47.52) {1};
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (181.44, 47.52) {2};
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (274.55, 47.52) {3};
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (367.65, 47.52) {4};
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (460.75, 47.52) {5};
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 73.44, 73.44) --
+    (475.65, 73.44) --
+    (475.65,446.85) --
+    ( 73.44,446.85) --
+    ( 73.44, 73.44);
+\end{scope}
+\begin{scope}
+\path[clip] (  0.00,  0.00) rectangle (505.89,505.89);
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (274.55, 18.72) {$\mu$};
+\end{scope}
+\begin{scope}
+\path[clip] (  0.00,  0.00) rectangle (505.89,505.89);
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 73.44,130.49) -- ( 73.44,418.61);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 73.44,130.49) -- ( 66.24,130.49);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 73.44,188.11) -- ( 66.24,188.11);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 73.44,245.74) -- ( 66.24,245.74);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 73.44,303.36) -- ( 66.24,303.36);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 73.44,360.99) -- ( 66.24,360.99);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 73.44,418.61) -- ( 66.24,418.61);
+
+\node[text=drawColor,anchor=base east,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 59.04,126.36) {2};
+
+\node[text=drawColor,anchor=base east,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 59.04,183.98) {4};
+
+\node[text=drawColor,anchor=base east,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 59.04,241.61) {6};
+
+\node[text=drawColor,anchor=base east,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 59.04,299.23) {8};
+
+\node[text=drawColor,anchor=base east,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 59.04,356.86) {10};
+
+\node[text=drawColor,anchor=base east,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 59.04,414.48) {12};
+
+\node[text=drawColor,anchor=base east,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 30.24,256.01) {$\dfrac{\mu^2}{2}$};
+\end{scope}
+\end{tikzpicture}
+ \caption{Drawing the plot with the \texttt{tikzDevice} package}
+ \end{figure}
+
+\begin{itemize}
+\tightlist
 \item
   {[}\textbf{Example:} use \texttt{tikzDevice} package, which creates
   PGF/TikZ version of plot (and as such converts all text in plot to
@@ -242,9 +382,9 @@ get us closer to the \LaTeX{} result Murrell (2018).
 \end{itemize}
 
 What we want is a middle ground - being able to harness the power of
-\TeX{} and its typsetting capabilities on our choice of text or equation
-in R graphics. This is where the \texttt{dvir} package comes in -
-providing a simple user interface, in the style of the R \texttt{grid}
+\TeX{} and its typesetting capabilities on our choice of text or
+equation in R graphics. This is where the \texttt{dvir} package comes in
+- providing a simple user interface, in the style of the R \texttt{grid}
 graphics package {[}Reference R grid graphics here{]}, by way of the
 \texttt{grid.latex()} function:
 
@@ -327,11 +467,11 @@ expression or text to be displayed.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-1-1} 
+{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-4-1} 
 
 }
 
-\caption{Using the \texttt{dvir} function \texttt{grid.latex()}}\label{fig:unnamed-chunk-1}
+\caption{Using the \texttt{dvir} function \texttt{grid.latex()}}\label{fig:unnamed-chunk-4}
 \end{figure}
 
 The following steps are taken when \texttt{grid.latex()} runs:
@@ -1750,7 +1890,8 @@ $x + \frac{\mu}{2}$ is the equation
 \caption{Baselines as calculated using the \texttt{dvipng} algorithm}
 \end{figure}
 
-\subsection{Discussion of algorithms}\label{discussion-of-algorithms}
+\subsection{Discussion of these
+algorithms}\label{discussion-of-these-algorithms}
 
 Of the algorithms considered, the \texttt{dviMoves} algorithm performed
 best. While most of these algorithms perform well for some or most of

@@ -31,16 +31,71 @@ Use this code for above example, just need to find a way to caption and referenc
 could use \[\dfrac{\mu^2}{2}\] if that was easier too?
 --->
 
-The difference is stark and there are several approaches in R which can get us closer to the \LaTeX{} result @murrell-dvir.
+The difference is stark and @murrell-dvir describes several approaches in R which can get us closer to the \LaTeX{} result, and their limitations. These examples are replicated here.
+
+```{r}
+# library(grid)
+# expr <- expression(frac(mu ^ 2, 2 "hello"))
+# grid.text(expr)
+# 
+# library(extrafont)
+# font_install('fontcm')
+# loadfonts("pdf")
+# pdf("extrafont2.pdf", width=1, height=1)
+# grid.text(expr,
+#           gp = gpar(fontfamily="CM Roman"))
+# dev.off()
+# embed_fonts("extrafont2.pdf", outfile="extrafont2-embed.pdf")
+
+```
+
+<!---
+
+Do plot with type = "l"?
+--->
+
 
 <!--- 
 for these examples following, say that Paul's report descirbes the limitations of these approaches, and replicate the examples
 --->
-  - [**Example:** use `extrafont` and `fontcm` packages, embed CM fonts in PDF]
+  - [**Example:** use `extrafont` and `fontcm` packages, embed CM fonts in PDF - can't because It works all too well!]
 
+```{r}
+library(tikzDevice)
+options(tikzDocumentDeclaration = "\\documentclass[12pt]{article}")
+packages <- c(getOption("tikzLatexPackages"),
+              "\\usepackage{amsmath}\n")
+options("tikzLatexPackages" = packages) 
+
+tikz("tikzDevice.tex", standAlone = TRUE)
+opar <- par(mar = par()$mar + c(0, 1, 0, 0))
+plot(x, x ^ 2 / 2, xlab = "$\\mu$", ylab = "", yaxt = "n")
+axis(2, las = 1)
+mtext("$\\dfrac{\\mu^2}{2}$", side = 2, line = 3, las = 1)
+dev.off()
+```
+
+<!---
+Try get scaling a bit better in this tikz one, to better match the original plot? Or make the earlier one square! (this is probably easier)
+--->
+
+```{r echo = FALSE, results = "asis"}
+tikzTex <- readLines("tikzDevice.tex")
+start <- which(grepl("begin\\{document}", tikzTex))
+end <- which(grepl("end\\{document}", tikzTex))
+
+beginTikzPic <- which(grepl("begin\\{tikzpicture}", tikzTex))
+tikzTex[beginTikzPic] <- gsub("]", ",scale=0.5]", tikzTex[beginTikzPic])
+cat(c("\\begin{figure}\n\\centering\n", 
+      paste0(tikzTex[(start + 1):(end - 1)], 
+             collapse = "\n"),
+      "\\caption{Drawing the plot with the \\texttt{tikzDevice} package}\n",
+      "\\end{figure}"))
+```
+  
   - [**Example:** use `tikzDevice` package, which creates PGF/TikZ version of plot (and as such converts all text in plot to LaTeX (including labels))]
 
-What we want is a middle ground - being able to harness the power of \TeX{} and its typsetting capabilities on our choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of the R `grid` graphics package [Reference R grid graphics here], by way of the `grid.latex()` function:
+What we want is a middle ground - being able to harness the power of \TeX{} and its typesetting capabilities on our choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of the R `grid` graphics package [Reference R grid graphics here], by way of the `grid.latex()` function:
 
   - [**Example:** example of grid-based plot, changing labels and/or title with `grid.latex()`. Maybe ggplot2?]
 

@@ -22,8 +22,7 @@ header-includes:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, 
                       fig.align="center", 
-                      out.width='70%', 
-                      eval = TRUE)
+                      out.width='70%')
 library(dvir)
 library(ggplot2)
 library(knitr)
