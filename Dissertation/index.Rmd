@@ -13,6 +13,7 @@ output:
       graphicx: null
       changepage: null
       setspace: null
+      enumitem: null
 bibliography: references.bib
 header-includes:
     - \linespread{1.25}

@@ -29,34 +29,58 @@ DVIR BACKGROUND INFO (CHECK IF IT IS COVERED BELOW):
   The purpose of `definePDFFont()` is to do a sweep of the DVI file from `grid.latex()` looking for all fonts required, before recording the font names in the font config file, searching the relevant directories for the font files and encoding the fonts. A variable `fonts` is saved with all this information. The further sweeps over the DVI file to determine the bounding box of each character and thus entire image, and to create grid grobs and viewports each redundantly called `definePDFFont()` rather than referring to the already existing variable `fonts` from the first sweep.
 --->
 
-In a simplified form, `dvir` works by providing a high level function, `grid.latex()`, to call with the \TeX{} code of the expression or text to be displayed.
+In a simplified form, `dvir` works by providing a high level function, `grid.latex()`, to call with the \TeX{} code of the expression or text to be displayed. In this instance, the preamble is changed only because the axis title uses `\dfrac` so the `amsmath` package needs to be specified in the preamble.
 
 <!---
 This isn't the label from earlier! Either don't relate this to the label or redo the caption or redo the text
 --->
 ```{r, fig.width = 0.4, fig.height = 0.4, fig.cap = "Using the \\texttt{dvir} function \\texttt{grid.latex()}"}
 library(dvir)
-grid.latex("$x - \\mu$")
+newPreamble <- 
+  "\\documentclass[12pt]{standalone}\n\\usepackage{amsmath}\n\\begin{document}"
+texCode <- "$\\dfrac{\\mu^2}{2}$"
+grid.latex(texCode, preamble = newPreamble)
 ```
 
 The following steps are taken when `grid.latex()` runs:
 
 \begin{enumerate}
   \item A \TeX{} document is created with the expression and a changeable default preamble and postamble.
+\end{enumerate}
+```{r, results = FALSE}
+postamble <- paste0("\\end{document}")
+cat(paste(newPreamble,
+          texCode,
+          postamble,
+          sep = "\n"))
+```
+\begin{itemize}[noitemsep]
+  \item[] \begin{verbatim}\documentclass[12pt]{standalone}\end{verbatim}
+  \item[] \begin{verbatim}\usepackage{amsmath}\end{verbatim}
+  \item[] \begin{verbatim}\begin{document}\end{verbatim} 
+  \item[] \begin{verbatim}$\dfrac{\mu^2}{2}$\end{verbatim}
+  \item[] \begin{verbatim}\end{document}\end{verbatim}
+\end{itemize}
 
-  - [**Example:** TeX document with pre- and post-amble]
-  
+\begin{enumerate}
+  \setcounter{enumi}{1}
   \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
-  
-  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the `dvir` function `readDVI()` translates the DVI file into readable text.
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the `dvir` function `readDVI()` translates the DVI file into readable text. This is an extract of a DVI file after using `readDVI()`, stating the definition of a font and then "setting", that is, printing, a character "2".
+\end{enumerate}
 
-  - [**Example:** Extract of DVI file using `readDVI()` (not the whole thing, just the bit relevant to our example ($x - \mu$))]
-  
+\begin{itemize}[noitemsep]
+  \item[] \begin{verbatim}fnt_def_1    fontnum=15, checksum=2088458503, scale=524288,\end{verbatim}
+  \item[] \begin{verbatim}             design=524288, fontname=cmr8\end{verbatim}
+  \item[] \begin{verbatim}set_char_50  '2'\end{verbatim}
+\end{itemize}
+
+\begin{enumerate}
+  \setcounter{enumi}{3}
   \item Three "sweeps" of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
   \begin{itemize}
     \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a `fontconfig` file.
     \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a `grid` viewport which can encompass the entire \TeX{} passed to `grid.latex()` expression using the native DVI coordinates.
-    \item Grid sweep: Convert all text and symbols into *grobs* (grid graphical objects) 
+    \item Grid sweep: Convert all text and symbols into \textit{grobs} (grid graphical objects) 
   \end{itemize}
   \item These grobs are then displayed in the R graphics device as per the `grid` package.
 \end{enumerate}

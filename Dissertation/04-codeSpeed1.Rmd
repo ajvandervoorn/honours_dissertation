@@ -88,7 +88,7 @@ grid.latex("$\\omega_{L_A}$",  x = 0.54, y = 0.50, default.units="native")
 grid.latex("$1 - \\sum_{s=1}^{L_A}\\omega_s$", x = 0.95, y = 0.50, default.units="native")
 ```
 
-```{r yeeExample, fig.cap="Using nine \\texttt{grid.latex()} calls with base R graphics.", fig.wdith = 2.5, fig.height = 4, fig.keep = "last", echo = FALSE}
+```{r yeeExample, fig.cap="Using nine \\texttt{grid.latex()} calls with base R graphics.", fig.width = 3, fig.height = 3, fig.keep = "last", echo = FALSE}
 xpos <- c(0, 0.25,  0.7, 1)
 myplot <- function(abcd = "(a)", col = "black") {
   plot(1:9, 1:9, type = "n", xlim = c(0, 1), ylim = c(0, 1), 
@@ -147,13 +147,13 @@ How to include and reference figures:
 
 https://community.rstudio.com/t/cross-reference-images-in-rmarkdown/83402/2
 --->
-```{r prof1, fig.cap = "Screenshot of 'profvis::profvis()' output for the simple example in 'dvir' version 0.2-1.", echo = FALSE, eval = TRUE, out.width='100%'}
+```{r prof1, fig.cap = "Screenshot of \\texttt{profvis::profvis()} output for the simple example in \\texttt{dvir} version 0.2-1.", echo = FALSE, eval = TRUE, out.width='100%'}
 include_graphics("../Figures/profilingSimpleProfvis_0.2-1.PNG")
 ```
 
 We can see the function call stack in figure \@ref(fig:prof1). At the bottom is the call to `grid.latex()`, which immediately calls `grid.draw()` which in turn calls `latexGrob()`. This calls `readDVI()` for about the first 20ms, then `dviGrob()` for the remaining time to the end of the original `grid.latex()` function call, and so on up the function call stack.
 
-```{r prof2, fig.cap = "Screenshot of 'profvis::profvis()' output for the code creating the example at the start of this section, highlighting the time spent in 'engine\\$fontDef'.", echo = FALSE, eval = TRUE, out.width='100%'}
+```{r prof2, fig.cap = "Screenshot of \\texttt{profvis::profvis()} output for the code creating the example at the start of this section, highlighting the time spent in \\texttt{engine\\$fontDef}.", echo = FALSE, eval = TRUE, out.width='100%'}
 include_graphics("../Figures/profilingYeeProfvis_0.2-1_highlight.PNG")
 ```
 <!---
@@ -169,7 +169,7 @@ In the top left corner of figure \@ref(fig:prof2) we are told the aggregate time
 
 What was interesting though was that after the actual font sweep the following sweeps for the metric and grid information *also* called `engine$fontDef`. As the point of the font sweep is that it finds all the font information to be used later on the following metric and grid sweeps should not need to "re-sweep" for the fonts.
 
-```{r prof3, fig.cap = "Screenshot of 'profvis::profvis()' output for the simple example in 'dvir' version 0.2-1, highlighting 'engine\\$fontDef'.", echo = FALSE, eval = TRUE, out.width='100%'}
+```{r prof3, fig.cap = "Screenshot of \\texttt{profvis::profvis()} output for the simple example in \\texttt{dvir} version 0.2-1, highlighting \\texttt{engine\\$fontDef}.", echo = FALSE, eval = TRUE, out.width='100%'}
 include_graphics("../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG")
 ```
 
@@ -220,12 +220,7 @@ grid_op_247 <- op_ignore
 ```
 
 <!---
-Do we want another `profvis()` output here showing the change? Might be good for visual impact. Especially simple example.
-
-
-\- [**Example:** `profvis()` screenshot of simple example, showing `definePDFFont()` (after change)]
-
-\- [**Example:** `profvis()` screenshot of Thomas Yee's example, showing `definePDFFont()` (after change)]
+Do we want another `profvis()` output here showing the change? Might be good for visual impact. Especially simple example
 --->
 
 To quantify the impact this has on code speed the time to run the examples 20 times was recorded, after an initial run to compile the package after it was loaded. The average of these 20 runs was then calculated.
