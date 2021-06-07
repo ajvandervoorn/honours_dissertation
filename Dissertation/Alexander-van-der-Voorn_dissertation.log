@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.10.26)  8 JUN 2021 01:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.10.26)  8 JUN 2021 07:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1461,33 +1461,33 @@ Graphic file (type pdf)
 Package pdftex.def Info: Alexander-van-der-Voorn_dissertation_files/figure-late
 x/yeeExample-1.pdf  used on input line 595.
 (pdftex.def)             Requested size: 289.09251pt x 216.81938pt.
-<../Figures/profilingSimpleProfvis_0.2-1.png, id=283, 695.59875pt x 203.25937pt
->
+<../Figures/profilingSimpleProfvis_0.2-1.png, id=283, 800.9925pt x 223.58531pt>
+
 File: ../Figures/profilingSimpleProfvis_0.2-1.png Graphic file (type png)
 <use ../Figures/profilingSimpleProfvis_0.2-1.png>
 Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1.png  used on i
 nput line 618.
-(pdftex.def)             Requested size: 469.75302pt x 137.26547pt.
+(pdftex.def)             Requested size: 469.75816pt x 131.12608pt.
 [11 <./Alexander-van-der-Voorn_dissertation_files/figure-latex/yeeExample-1.pdf
 >]
-<../Figures/profilingYeeProfvis_0.2-1_highlight.png, id=353, 700.11563pt x 411.
-03563pt>
+<../Figures/profilingYeeProfvis_0.2-1_highlight.png, id=353, 920.68968pt x 379.
+4175pt>
 File: ../Figures/profilingYeeProfvis_0.2-1_highlight.png Graphic file (type png
 )
 <use ../Figures/profilingYeeProfvis_0.2-1_highlight.png>
 Package pdftex.def Info: ../Figures/profilingYeeProfvis_0.2-1_highlight.png  us
 ed on input line 635.
-(pdftex.def)             Requested size: 469.75874pt x 275.79384pt.
+(pdftex.def)             Requested size: 469.77031pt x 193.59299pt.
 [12 <../Figures/profilingSimpleProfvis_0.2-1.png> <../Figures/profilingYeeProfv
 is_0.2-1_highlight.png>]
-<../Figures/profilingSimpleProfvis_0.2-1_highlight.png, id=365, 750.55406pt x 2
-82.30469pt>
+<../Figures/profilingSimpleProfvis_0.2-1_highlight.png, id=365, 800.23969pt x 3
+36.50719pt>
 File: ../Figures/profilingSimpleProfvis_0.2-1_highlight.png Graphic file (type 
 png)
 <use ../Figures/profilingSimpleProfvis_0.2-1_highlight.png>
 Package pdftex.def Info: ../Figures/profilingSimpleProfvis_0.2-1_highlight.png 
  used on input line 669.
-(pdftex.def)             Requested size: 469.75938pt x 176.68982pt.
+(pdftex.def)             Requested size: 469.75624pt x 197.53624pt.
 
 Package xcolor Warning: Incompatible color definition on input line 698.
 
@@ -1766,8 +1766,8 @@ lic/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></usr/share
 /texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm
 /lmtti10.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qhvr.pfb></usr/share
 /texmf/fonts/type1/public/tex-gyre/qhvri.pfb>
-Output written on Alexander-van-der-Voorn_dissertation.pdf (33 pages, 999092 by
-tes).
+Output written on Alexander-van-der-Voorn_dissertation.pdf (33 pages, 1025065 b
+ytes).
 PDF statistics:
  706 PDF objects out of 1000 (max. 8388607)
  574 compressed objects within 6 object streams

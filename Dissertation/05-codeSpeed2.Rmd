@@ -67,7 +67,7 @@ results2 <- data.frame(time = c(results[[3]][[2]],
                                 results[[8]][[5]]),
                        version = rep(c("Before", "After"), 
                                      each = 4),
-                       func = rep(c("'gridlatex'", "font"),
+                       func = rep(c("gridlatex", "font"),
                                   each = 2),
                        example = c("simple", "yee"))
 results2$time <- results2$time / 20

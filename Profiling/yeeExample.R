@@ -1,6 +1,6 @@
 # file <- "diagram.pdf"
 # cairo_pdf(file, width=7, height=3.8)
-dev.control("enable")
+# dev.control("enable")
 ## Where the arrows end up
 xpos <- c(0, 0.25,  0.7, 1)  
 ## Coordinate system 

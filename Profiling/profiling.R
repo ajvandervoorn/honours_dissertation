@@ -3,7 +3,8 @@
 # library(dvir)
 # Get functions to make simple and motivating examples
 # source("dvirMotivFunc.R")
-numRuns <- 20
+library(profvis)
+numRuns <- 1
 
 # Libraries of different 'dvir' versions
 dvirLibs <- c("/media/sf_Honours_project/VM_18.04/dvir0.2-1",
@@ -27,7 +28,7 @@ simpleExample <- FALSE
 # unload dvir if it is loaded
 if ("dvir" %in% (.packages())) detach(package:dvir, unload=TRUE)
 
-for (i in 1:4) {
+for (i in 1:1) {
   # Load specific version of 'dvir' from directory 
   library(dvir, 
           lib.loc = dvirLibs[i])
@@ -36,14 +37,19 @@ for (i in 1:4) {
   
   # Warm up run (for package compiling etc.)
   source(if (simpleExample) "simpleExample.R" else "yeeExample.R")
+  source(if (simpleExample) "simpleExample.R" else "yeeExample.R")
+  source(if (simpleExample) "simpleExample.R" else "yeeExample.R")
   
-  Rprof(if (simpleExample) simpleProfResults[i] else yeeProfResults[i], 
-        line.profiling = TRUE, 
-        interval = 0.01)
+  # Rprof(if (simpleExample) simpleProfResults[i] else yeeProfResults[i], 
+  #       line.profiling = TRUE, 
+  #       interval = 0.01)
   for (j in 1:numRuns) {
-    source(if (simpleExample) "simpleExample.R" else "yeeExample.R")
+    p <- profvis(source(if (simpleExample) "simpleExample.R" else "yeeExample.R"))
+    filename <- paste0(ifelse(simpleExample, simpleProfResults[i], yeeProfResults[i]), ".html")
+    htmlwidgets::saveWidget(p, filename)
+    # source(if (simpleExample) "simpleExample.R" else "yeeExample.R")
   }
-  Rprof(NULL)
+  # Rprof(NULL)
   
   # Unload the package
   detach(package:dvir, unload=TRUE)
