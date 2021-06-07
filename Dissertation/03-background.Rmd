@@ -10,30 +10,10 @@
 
 A \TeX{} or \LaTeX{} file is just plain text so there needs to be a step to translate this plain text to what you will see on a formatted document on a screen or page. \TeX{} "engine" like `pdflatex` normally processes \TeX{} to PDF but it can also produce a DVI (DeVice Independent) file. A DVI file is a binary file describing the layout of the document. For example, the height of the page, what characters to display and where, and the fonts to be used. DVI provides a format that can be read into R so that we can draw the \TeX{} layout in R. This is what the `dvir` package does.
 
-<!---
-Explain DVI more here (and less in next section explaining dvir packages)
-
-A DVI file describes the visual layout of the document to produce but is not specific to any type of output file (PDF, HTML, etc.)
-
---->
-
 ## The (pre-existing) `dvir` package {#dvirDesc}
-
-<!---
-(not sure how to make clear this is all stuff that was in 'dvir' before any of my work (and the fact I didn't change any of this high level stuff))  
-
-DVIR BACKGROUND INFO (CHECK IF IT IS COVERED BELOW):
-  Font sweep (check if this bit is added):
-    run through the DVI file, identify all the fonts used, and find and record the font file locations on the system.
-
-  The purpose of `definePDFFont()` is to do a sweep of the DVI file from `grid.latex()` looking for all fonts required, before recording the font names in the font config file, searching the relevant directories for the font files and encoding the fonts. A variable `fonts` is saved with all this information. The further sweeps over the DVI file to determine the bounding box of each character and thus entire image, and to create grid grobs and viewports each redundantly called `definePDFFont()` rather than referring to the already existing variable `fonts` from the first sweep.
---->
 
 In a simplified form, `dvir` works by providing a high level function, `grid.latex()`, to call with the \TeX{} code of the expression or text to be displayed. In this instance, the preamble is changed only because the axis title uses `\dfrac` so the `amsmath` package needs to be specified in the preamble.
 
-<!---
-This isn't the label from earlier! Either don't relate this to the label or redo the caption or redo the text
---->
 ```{r, fig.width = 0.4, fig.height = 0.4, fig.cap = "Using the \\texttt{dvir} function \\texttt{grid.latex()}"}
 library(dvir)
 texCode <- "$\\dfrac{\\mu^2}{2}$"
@@ -47,6 +27,7 @@ The following steps are taken when `grid.latex()` runs:
 \begin{enumerate}
   \item A \TeX{} document is created with the expression and a changeable default preamble and postamble.
 \end{enumerate}
+
 ```{r, results = FALSE}
 postamble <- paste0("\\end{document}")
 cat(paste(newPreamble,
@@ -54,6 +35,7 @@ cat(paste(newPreamble,
           postamble,
           sep = "\n"))
 ```
+
 \begin{spacing}{1}
 \begin{itemize}[noitemsep]
   \item[] \begin{verbatim}\documentclass[12pt]{standalone}\end{verbatim}
@@ -67,7 +49,7 @@ cat(paste(newPreamble,
 \begin{enumerate}
   \setcounter{enumi}{1}
   \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
-  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then "setting", that is, printing, a character "2".
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then \textit{setting}, that is, printing, a character ``2''.
 \end{enumerate}
 
 \begin{spacing}{1}
@@ -80,7 +62,7 @@ cat(paste(newPreamble,
 
 \begin{enumerate}
   \setcounter{enumi}{3}
-  \item Three "sweeps" of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
+  \item Three ``sweeps'' of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
   \begin{itemize}
     \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a \texttt{fontconfig} file.
     \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a \texttt{grid} viewport which can encompass the entire \TeX{} passed to \texttt{grid.latex()} expression using the native DVI coordinates.

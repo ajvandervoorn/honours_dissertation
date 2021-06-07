@@ -2,18 +2,4 @@
 
 # References
 
-<!---
-https://bookdown.org/yihui/bookdown/citations.html
-
-https://pandoc.org/MANUAL.html#citations
-
-https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html
-
-https://bookdown.org/yihui/rmarkdown/markdown-syntax.html
-
-
-* grid package?
-
-Leave dashed formatting of reference list for now, could change later (as revision to report)
---->
 <div id="refs"></div>

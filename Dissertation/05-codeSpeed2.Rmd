@@ -1,12 +1,5 @@
 \newpage{}
 
-<!---
-For complicated example, maybe work out how many times same font is defined in different grid.latex() calls?
-
-Check if same font is used in SAME grid.latex call, does it need to work harder?
-
---->
-
 # Code speed (part 2) - font caching
 
 In the previous section, the speed of `dvir` was increased by stopping it doing something "silly". The profiling results from the previous section demonstrate how much time `grid.latex()` spends dealing with fonts so this section is about making `dvir` "smarter" by caching the information it gathers about fonts between `grid.latex()` calls.
@@ -61,16 +54,6 @@ The updated font list is stored in the `dvir` environment to be retrieved the ne
 
 The only weakness of this process is if in a *single* DVI file different fonts are defined with the same font number. In this case the second font will be stored in the font cache in that index and so will be used in place of the first font. No instances of this occurring were discovered during this project.
 
-<!---
-
-For talk - the information we actually store about fonts (the hex code chunk from DVI file)
-  + To do this the easiest way was to expand the stored information about fonts in `fonts` to include the hex code chunk (from DVI) of the font definition
-
-  + Then we check if all parts of the new hex code chunk are the same as the existing
-  
-Also for talk, need to find WHY this storing of hex coce stuff takes ages, or is the other steps where DVIR searches for the fonts on system? Look at "findTexFontFile" function perhaps?
---->
-
 To examine the effect of these changes on code speed we performed profiling as was detailed in the previous section.
 
 ```{r echo = FALSE, eval = TRUE}
@@ -84,7 +67,7 @@ results2 <- data.frame(time = c(results[[3]][[2]],
                                 results[[8]][[5]]),
                        version = rep(c("Before", "After"), 
                                      each = 4),
-                       func = rep(c("gridlatex", "font"),
+                       func = rep(c("'grid.latex()'", "font"),
                                   each = 2),
                        example = c("simple", "yee"))
 results2$time <- results2$time / 20
@@ -92,10 +75,6 @@ versionLabels2 <- c(Before = "0.3-1 (before changes)",
                     After = "0.3-2 (after changes)")
 levels2 <- c("gridlatex", "font")
 ```
-
-<!---
-Check width/height of these plots compared to plots in previous section (want bars the same width)
---->
 
 ```{r speedUp2Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep, over 20 runs of the simple example.", echo = FALSE, fig.width = 5, fig.height = 4}
 plotProfiling1("simple", versionLabels2, results = results2, levels = levels2)

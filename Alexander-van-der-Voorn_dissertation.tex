@@ -204,7 +204,6 @@ a mathematical equation.
 \NormalTok{x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{5}
 \NormalTok{y <-}\StringTok{ }\NormalTok{x }\OperatorTok{^}\StringTok{ }\DecValTok{2} \OperatorTok{/}\StringTok{ }\DecValTok{2}
 \NormalTok{expr <-}\StringTok{ }\KeywordTok{expression}\NormalTok{(}\KeywordTok{frac}\NormalTok{(mu }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
-\CommentTok{# par(mar = par()$mar + c(0, 1, 0, 0))}
 \KeywordTok{plot}\NormalTok{(x, y, }\DataTypeTok{xlab =} \KeywordTok{expression}\NormalTok{(mu), }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{, }\DataTypeTok{yaxt =} \StringTok{"n"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
 \KeywordTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DataTypeTok{las =} \DecValTok{1}\NormalTok{)}
 \KeywordTok{mtext}\NormalTok{(expr, }\DataTypeTok{side =} \DecValTok{2}\NormalTok{, }\DataTypeTok{line =} \DecValTok{3}\NormalTok{, }\DataTypeTok{las =} \DecValTok{1}\NormalTok{)}
@@ -413,8 +412,8 @@ What we want is a middle ground - being able to harness the power of
 equation in R graphics. This is where the \texttt{dvir} package comes in
 - providing a simple user interface, in the style of R \texttt{grid}
 graphics, by way of the \texttt{grid.latex()} function. Figure
-\ref{fig:plotGridLatex} recreates figure \ref{fig:expressionPlot} with
-the axis titles made using \texttt{grid.latex()}.
+\ref{fig:plotGridLatex} recreates figure \ref{fig:expressionPlot}, but
+with the axis titles made using \texttt{grid.latex()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -552,7 +551,7 @@ The following steps are taken when \texttt{grid.latex()} runs:
 \begin{enumerate}
   \setcounter{enumi}{1}
   \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
-  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then "setting", that is, printing, a character "2".
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then \textit{setting}, that is, printing, a character ``2''.
 \end{enumerate}
 
 \begin{spacing}{1}
@@ -565,7 +564,7 @@ The following steps are taken when \texttt{grid.latex()} runs:
 
 \begin{enumerate}
   \setcounter{enumi}{3}
-  \item Three "sweeps" of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
+  \item Three ``sweeps'' of the DVI file are completed to extract necessary information about what to display in R (and where and how to display it):
   \begin{itemize}
     \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a \texttt{fontconfig} file.
     \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a \texttt{grid} viewport which can encompass the entire \TeX{} passed to \texttt{grid.latex()} expression using the native DVI coordinates.
@@ -581,7 +580,7 @@ sweeps}\label{code-speed-part-1---removing-redundant-font-sweeps}
 
 In the introduction of this report the case for the \texttt{dvir}
 package was motivated with a simple example of a mathematical equation.
-\texttt{dvir} can be used on a larger scale too.
+The \texttt{dvir} package can be used on a larger scale too.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -700,10 +699,10 @@ it an identifier to reference in the DVI file when it wants to use that
 font to display a character.
 
 The following code is taken from the the \texttt{dvir} package, showing
-where the metric and grid sweeps also redid the font sweep.
-\texttt{op\_font\_def} is a function which takes the font definition in
-the DVI file related to that instance of the op code and searches for
-and records the font information.
+where the metric and grid sweeps also redid the font sweep. The function
+\texttt{op\_font\_def} takes the font definition in the DVI file related
+to that instance of the op code and searches for and records the font
+information.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -713,8 +712,9 @@ and records the font information.
 \end{Shaded}
 
 The following code shows what the code was changed to in \texttt{dvir}
-version 0.2-2. \texttt{op\_ignore} is an empty function, so when the
-metric or grid sweeps comes across that op code, they now do nothing.
+version 0.2-2. The function \texttt{op\_ignore} is an empty function, so
+when the metric or grid sweeps comes across that op code, they now do
+nothing.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -723,7 +723,7 @@ metric or grid sweeps comes across that op code, they now do nothing.
 \end{Highlighting}
 \end{Shaded}
 
-Unfortunately these changes by themself caused an error when running
+Unfortunately these changes alone caused an error when running
 \texttt{grid.latex()}. This is because one task undertaken before the
 font sweep is to reset or overwrite the global fonts list (which the
 font sweep then writes to). The metric and grid sweeps were also doing
@@ -824,9 +824,12 @@ initialised as an empty list in the \texttt{dvir} namespace with
 initialisation happening by default, the following code was put in its
 place.
 
-\begin{verbatim}
-if (dvir::get("initFonts") || is.null(dvir::get("fonts"))) dvir::set("fonts", vector("list", 255))
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (dvir}\OperatorTok{::}\KeywordTok{get}\NormalTok{(}\StringTok{"initFonts"}\NormalTok{) }\OperatorTok{||}\StringTok{ }\KeywordTok{is.null}\NormalTok{(dvir}\OperatorTok{::}\KeywordTok{get}\NormalTok{(}\StringTok{"fonts"}\NormalTok{))) }
+\NormalTok{  dvir}\OperatorTok{::}\KeywordTok{set}\NormalTok{(}\StringTok{"fonts"}\NormalTok{, }\KeywordTok{vector}\NormalTok{(}\StringTok{"list"}\NormalTok{, }\DecValTok{255}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 Note in this new statement the logical variable \texttt{initFonts},
 stored in the \texttt{dvir} namespace. This lets a user choose whether
@@ -987,10 +990,11 @@ provides support for these fills in the \texttt{grid} package (Murrell
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tikzCode <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{path (0, 1) node[circle,fill=red!40,draw,thick] (x) \{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu$\}"}\NormalTok{,}
-                  \StringTok{"(3, 0) node[circle,fill=blue!40,draw,thick] (y) \{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$\};"}\NormalTok{,}
-                  \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);"}\NormalTok{,}
-                  \DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{tikzCode <-}\StringTok{ }
+\StringTok{  }\KeywordTok{paste}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{path (0, 1) node[circle,fill=red!40,draw,thick] (x) \{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu$\}"}\NormalTok{,}
+        \StringTok{"       (3, 0) node[circle,fill=blue!40,draw,thick] (y) \{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$\};"}\NormalTok{,}
+        \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);"}\NormalTok{,}
+        \DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \NormalTok{tikzPreamble <-}\StringTok{ }\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{usepackage}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{\{tikz\}"}\NormalTok{, }
                      \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{usepackage\{tikz\}}\CharTok{\textbackslash{}n\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{usepackage\{amsmath\}"}\NormalTok{, }
                      \KeywordTok{tikzpicturePreamble}\NormalTok{())}
@@ -1349,7 +1353,12 @@ function used as in step 3.
 
 \section{Text baselines}\label{text-baselines}
 
-\newlength{\dviwidth} \newlength{\dvidepth} \setlength{\fboxsep}{0in}
+\newlength{\dviwidth}
+
+\newlength{\dvidepth}
+
+\setlength{\fboxsep}{0in}
+
 \setlength{\parindent}{0in}
 
 \subsection{The problem}\label{the-problem}
@@ -1362,11 +1371,11 @@ the baseline.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-15-1} 
+{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-16-1} 
 
 }
 
-\caption{The baseline and descender of the letter \textit{y}}\label{fig:unnamed-chunk-15}
+\caption{The baseline and descender of the letter \textit{y}}\label{fig:unnamed-chunk-16}
 \end{figure}
 
 The \texttt{grid.text()} function accounts for this baseline so when you
@@ -1414,8 +1423,8 @@ algorithms from here on due to their heuristic nature.
 
 To explore the algorithms detailed below and evaluate their usefulness
 an R function, \texttt{baselines()} has been created. This function can
-be found in the appendix in the R script file \texttt{algorithms.R}.
-This function takes several arguments, including the baseline selection
+be found in the appendix in the file \texttt{algorithms.R}. This
+function takes several arguments, including the baseline selection
 algorithm as detailed below, any additional information needed for that
 particular algorithm, and the \TeX{} code as you would use with
 \texttt{grid.latex()}. The output of this function is the baseline value
@@ -1446,10 +1455,12 @@ This is a simple algorithm which was determined after inspection of some
 DVI files. In every DVI file, there is a statement specifying the size
 of the bounding box of the text.
 
+\begin{spacing}{1}
 \begin{verbatim}
 xxx1         k=50
              x=ps::%%HiResBoundingBox: 0 0 14.21944pt 25.85977pt.
 \end{verbatim}
+\end{spacing}
 
 After this statement there appears to consistently be a downward move
 equal to the height of the bounding box of text (from the top left of
@@ -1472,7 +1483,6 @@ value returned is 0.
 \end{verbatim}
 
 \begin{figure}
-\label{alexAlgo}
 \begin{center}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
@@ -1511,7 +1521,7 @@ $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
 \end{center}
-\caption{The baselines as calculated using the \texttt{alex} algorithm}
+\caption{The baselines as calculated using the \texttt{alex} algorithm}\label{alexAlgo}
 \end{figure}
 
 For plain text this algorithm works quite well. Unfortunately for many
@@ -1605,7 +1615,6 @@ limited for several reasons:
 \end{itemize}
 
 \begin{figure}
-\label{dviMovesAlgo}
 \begin{center}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
@@ -1726,7 +1735,7 @@ $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
 \end{center}
-\caption{Baselines as calculated using the \texttt{dviMoves} algorithm}
+\caption{Baselines as calculated using the \texttt{dviMoves} algorithm}\label{dviMovesAlgo}
 \end{figure}
 
 This algorithm performs very well. In figure \ref{dviMovesAlgo} nearly
@@ -1746,17 +1755,21 @@ This algorithm uses the \texttt{preview} package (Kastrup 2017) in
 When this algorithm is selected, the following code is added to the
 header of the DVI file:
 
+\begin{spacing}{1}
 \begin{verbatim}
 \usepackage[active,showbox,tightpage]{preview}
 \def\\showbox#1%%
 {\immediate\\write16{MatplotlibBox:(\\the\\ht#1+\\the\\dp#1)x\\the\\wd#1}}
 \end{verbatim}
+\end{spacing}
 
 This results in the following line being printed in the log file.
 
+\begin{spacing}{1}
 \begin{verbatim}
 MatplotlibBox:(8.04175pt+3.00005pt)x62.81718pt
 \end{verbatim}
+\end{spacing}
 
 The baseline value in this case is the value just after the \texttt{+}
 and can be obtained by searching the log file for this line starting
@@ -1764,7 +1777,6 @@ with \texttt{MatplotlibBox:} and returning the value just after the
 \texttt{+}.
 
 \begin{figure}
-\label{previewAlgo}
 \begin{center}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
@@ -1803,7 +1815,7 @@ $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
 \end{center}
-\caption{Baselines as calculated using the \texttt{preview} algorithm}
+\caption{Baselines as calculated using the \texttt{preview} algorithm}\label{previewAlgo}
 \end{figure}
 
 This algorithm also performs very well. In all examples in figure
@@ -1825,7 +1837,6 @@ The system call \texttt{dvipng\ -\/-depth\ test.dvi} returns
 simple search for \texttt{depth=} will find the baseline value.
 
 \begin{figure}
-\label{dvipngAlgo}
 \begin{center}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
@@ -1864,7 +1875,7 @@ $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
 \end{center}
-\caption{Baselines as calculated using the \texttt{dvipng} algorithm}
+\caption{Baselines as calculated using the \texttt{dvipng} algorithm}\label{dvipngAlgo}
 \end{figure}
 
 It may not be obvious in printed form in figure \ref{dvipngAlgo} but the
@@ -1915,6 +1926,8 @@ requires rerunning code with small tweaks to get the perfect graphic.
 \tightlist
 \item
   talk about how text baselines is almost there\ldots{}.
+\item
+  for coee speed, now it is ``reading/writing to disk'' thast is slow
 \end{itemize}
 
 \newpage{}
@@ -1981,7 +1994,9 @@ Computing}. Vienna, Austria: R Foundation for Statistical Computing.
 
 \hypertarget{ref-man-tikz}{}
 Tantau, Till. 2021. \emph{The Tikz and Pgf Packages: Manual for Version
-3.1.9a}. \url{https://pgf-tikz.github.io/pgf/pgfmanual.pdf}.
+3.1.9a}.
+\href{https://ctan.org/pkg/pgf\%0A\%20\%20\%20}{https://ctan.org/pkg/pgf
+  }.
 
 \newpage{}
 

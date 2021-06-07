@@ -1,44 +1,10 @@
 \newpage{}
 
-<!---
-
-Would it be possible to go into each character in the font and get the font metrics?
-
-VERY IMPORTANT TO TRY OUT LATEX WITH THESE, IN CASE THEY DON'T WORK
-
-Remember for things like multi line text, would need to add baselines of each line to the total height from the text above it (or from below)
-
-
-
-In algorithms.R, delete "plotting" stuff (currently commented out) if we don't want that to be in final product
-Maybe could move plotting stuff to "examples" script? Probably nah because of the fact they don't get the right baseline in R
-
-Need to go through algorithms.R and tidy up, and proofread comments and all that
-
-
-Explicitly mention name of algorithms.R function, and maybe the examples script too?, say they're in appendix! Make it obvious it was part of the project and is provided
-
-
-SHould algorithm names be monospace, or just have quotes around them? just be consistent....
---->
-
 # Text baselines
 
 ```{r, include = FALSE}
 # Setup the functions etc. for this section
 source("../Appendices/algorithms.R")
-testText <- c("test",
-              "testing",
-              "var",
-              "varying",
-              "$\\sum_{n=1}^{\\infty} 2^{-n} = 1$",
-              "$\\sum\\limits_{n=1}^{\\infty} 2^{-n} = 1$",
-              "$\\sum\\limits_{n=1}^{} 2^{-n} = 1$",
-              "The equation is $x + \\frac{\\mu^2}{2}$",
-              "The equation is $x + \\frac{\\mu}{2}$",
-              "$\\frac{\\mu^2}{2} + x$ is the equation",
-              "$x + \\frac{\\mu}{2}$ is the equation",
-              "\\begin{minipage}{1in}Paragraph, with some line wrapping!\\end{minipage}")
 
 testText <- c("testing",
               "$\\sum_{n=1}^{\\infty} 2^{-n} = 1$",
@@ -55,7 +21,7 @@ unitConvert <- function(x) {
                                points = "pt",
                                attr(x, "unit")))
 }
-# Function to print text and do draw baseliens for given text and baseline(s)
+# Function to print text and do draw baselines for given text and baseline(s)
 raiseBox <- function(text, baselineVals) {
   latex <- paste0("\\settodepth{\\dvidepth} {", 
                   text, 
@@ -74,13 +40,14 @@ raiseBox <- function(text, baselineVals) {
   latex
 }
 
-# Wrapper to call raiseBox over multiple examples, with multiple sets of baseline(s)
+# Wrapper to call \raiseBox over multiple examples, with multiple sets of baseline(s)
 makeFigure <- function(examples, allBaselineVals, caption = "", label = "") {
-  baselineEnviroHead <- paste0("\\begin{figure}\n\\label{",
-                               label,
-                               "}\n\\begin{center}\n")
+  baselineEnviroHead <- paste0("\\begin{figure}\n",
+                               "\\begin{center}\n")
   baselineEnviroFoot <- paste0("\\end{center}\n\\caption{",
                                caption,
+                               "}\\label{",
+                               label,
                                "}\n\\end{figure}\n")
   code <- baselineEnviroHead
   for (s in seq_along(examples)) {
@@ -91,7 +58,6 @@ makeFigure <- function(examples, allBaselineVals, caption = "", label = "") {
   code <- c(code, baselineEnviroFoot)
   
   paste0(code, collapse = "")
-                 
 }
 
 # Wrapper to return baseline values for multiple pieces of text using baselines() function
@@ -112,8 +78,11 @@ returnBaselines <- function(testText,
 ```
 
 \newlength{\dviwidth}
+
 \newlength{\dvidepth}
+
 \setlength{\fboxsep}{0in}
+
 \setlength{\parindent}{0in}
 
 ## The problem
@@ -164,7 +133,7 @@ To fix this, `dvir` needs to obtain or calculate a value for the baseline for an
 
 ## Implementation
 
-To explore the algorithms detailed below and evaluate their usefulness an R function, `baselines()` has been created. This function can be found in the appendix in the R script file `algorithms.R`. This function takes several arguments, including the baseline selection algorithm as detailed below, any additional information needed for that particular algorithm, and the \TeX{} code as you would use with `grid.latex()`. The output of this function is the baseline value or values. These values are returned as `grid` units as they are distances from the bottom of the bounding box of the text to its baseline.
+To explore the algorithms detailed below and evaluate their usefulness an R function, `baselines()` has been created. This function can be found in the appendix in the file `algorithms.R`. This function takes several arguments, including the baseline selection algorithm as detailed below, any additional information needed for that particular algorithm, and the \TeX{} code as you would use with `grid.latex()`. The output of this function is the baseline value or values. These values are returned as `grid` units as they are distances from the bottom of the bounding box of the text to its baseline.
 
 Once the baselines have been calculated the bounding box of the text can be bottom aligned with the y-value specified but then moved down by the value of the baseline. This means the baseline of the text will be at the specified y-value.
 
@@ -178,10 +147,12 @@ Several different algorithms were explored to calculate the baseline for differe
 
 This is a simple algorithm which was determined after inspection of some DVI files. In every DVI file, there is a statement specifying the size of the bounding box of the text.
 
-```
+\begin{spacing}{1}
+\begin{verbatim}
 xxx1         k=50
              x=ps::%%HiResBoundingBox: 0 0 14.21944pt 25.85977pt.
-```
+\end{verbatim}
+\end{spacing}
 
 After this statement there appears to consistently be a downward move equal to the height of the bounding box of text (from the top left of the bounding box to the bottom left), and then a move upward before the first character is drawn. This algorithms take the cursor location after that upward move to be the baseline. In instances where the entire text has no descenders (i.e. the baseline is the bottom of the bounding box) there will be no upward move before the first character and the baseline value returned is 0.
 
@@ -189,23 +160,6 @@ After this statement there appears to consistently be a downward move equal to t
 baselineValue <- baselines(tex = "$x - \\mu$", algorithm = "alex")
 baselineValue
 ```
-
-<!---
-Where I define testText below - should I either put it in a non-visible chunk to evaluate in abckground, or just call the examples I'm going to do for each example indicudally?
---->
-
-<!---
-Here's the LaTeX stuff I need for examples!
-
-https://www.techwalla.com/articles/horizontal-line-options-in-latex
-
-remove eval=TRUE from these code chunks
-
-Try some examples with \newline command instead of mini page
-
-In an ideal world, these examples would be centred, with either fixed width line or one relative to their size. Worry about it later...
-
---->
 
 ```{r results = "asis", echo = FALSE}
 algo <- "alex"
@@ -219,16 +173,6 @@ cat(makeFigure(testText,
 ```
 
 For plain text this algorithm works quite well. Unfortunately for many equations, particularly ones with superscripts or subscripts, the first upward move is *not* to where the baseline is. Note in figure \ref{alexAlgo} the `alex` algorithm has calculated the baseline of the fifth example to be the bottom of the $\mu$. This demonstrates that this algorithm is only practical when the first character's baseline is the one to be aligned, and in the case of the second example, does not serve much purpose at all.
-
-<!---
-TO suss with pictures of baselines
--Which exampels to show
--Centre align?
--Make colour light red
--Change width of rule to match text width (either using vriable \dviwidth like before or just choosing arbitrary value)
---->
-
-
 
 ### `dviMoves` algorithm
 
@@ -263,12 +207,6 @@ This method will return the first baseline value just after a specified characte
 * Some characters are hard to type on a "normal" keyboard, for example $\mu$
 * The DVI file does not actually contain the character, but rather the numeric index of it in the particular font. This is why a number has to be used to select which character it is.
 
-<!---
-Somehow get unique values of baselines here? - Nah no point, drawings look pretty good!
-
-Could maybe try removin the top baseline value though (top of bounding box...)
---->
-
 ```{r results = "asis", echo = FALSE}
 algo <- "dviMoves"
 cat(makeFigure(testText, 
@@ -288,17 +226,21 @@ This algorithm uses the `preview` package [@man-preview] in \LaTeX{}. @preview-t
 
 When this algorithm is selected, the following code is added to the header of the DVI file:
 
+\begin{spacing}{1}
 \begin{verbatim}
 \usepackage[active,showbox,tightpage]{preview}
 \def\\showbox#1%%
 {\immediate\\write16{MatplotlibBox:(\\the\\ht#1+\\the\\dp#1)x\\the\\wd#1}}
 \end{verbatim}
+\end{spacing}
 
 This results in the following line being printed in the log file.
 
-```
+\begin{spacing}{1}
+\begin{verbatim}
 MatplotlibBox:(8.04175pt+3.00005pt)x62.81718pt
-```
+\end{verbatim}
+\end{spacing}
 
 The baseline value in this case is the value just after the `+` and can be obtained by searching the log file for this line starting with `MatplotlibBox:` and returning the value just after the `+`.
 

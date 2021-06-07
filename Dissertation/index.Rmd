@@ -46,15 +46,3 @@ New Zealand
 
 \newpage
 \tableofcontents
-
-<!---
-For cross references, can I use latex referencin commands around code chunks? Could "results=asis" the reference info in code chunk as workaround?
-Sections:
-
-Appendices
-
-
-Date?
-
-date: "`r format(Sys.time(), '%d %B, %Y')`"
---->

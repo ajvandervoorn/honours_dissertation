@@ -4,24 +4,10 @@
 
 R [@R] has the ability to display mathematical symbols and equations in graphics using the "plotmath" feature [@plotmath], interpreting everything within a call to `expression()` as a mathematical equation.
 
-<!--- 
-
-Need to think of a better example than this one, ideally one that brings in our x - mu somehow 
-
-Redo this plot with lattice?
-
-CHECK - that I haven't confused axis labela and axis titles... should be axis titles!
-
-I removed plot margi space - should I add it back....?
-
-Note the slightly differening sizes in the text in this section (maybe scale included images as appropriate to match the "raw" latex code)
---->
-
 ```{r expressionPlot, fig.cap="A plot with axis labels made using \\texttt{expression()}.", include = TRUE, eval = TRUE, fig.asp = 1}
 x <- 1:5
 y <- x ^ 2 / 2
 expr <- expression(frac(mu ^ 2, 2))
-# par(mar = par()$mar + c(0, 1, 0, 0))
 plot(x, y, xlab = expression(mu), ylab = "", yaxt = "n", type = "l")
 axis(2, las = 1)
 mtext(expr, side = 2, line = 3, las = 1)
@@ -35,14 +21,6 @@ This provides us with most of the symbols used for equations, such as brackets a
 \end{equation*}
 \caption{The y-axis title from above, created with \LaTeX}
 \end{figure}
-
-<!---
-Use this code for above example, just need to find a way to caption and reference it. Also delete image from figures folder when done
-
-
-
-could use \[\dfrac{\mu^2}{2}\] if that was easier too?
---->
 
 The difference is stark and @murrell-dvir describes several approaches in R, and their limitations, which can get us closer to the \LaTeX{} result as motivation for the `dvir` package. The approaches are replicated here.
 
@@ -83,13 +61,6 @@ $\left(\dfrac{x - \mu}{\sigma}\right)$
 \caption{A \LaTeX{} equation with brackets}
 \end{figure}
 
-
-<!--- 
-for these examples following, say that Paul's report descirbes the limitations of these approaches, and replicate the examples
-
-FOR THIS, SAY IT WORKS FOR OUR LABEL, BUT DOESN"T WITH OTHER THINGS, LIKE THE BRACKETS
---->
-
 ```{r results = FALSE}
 # Using the 'tikzDevice' package
 library(tikzDevice)
@@ -105,12 +76,6 @@ axis(2, las = 1)
 mtext("$\\dfrac{\\mu^2}{2}$", side = 2, line = 3, las = 1)
 dev.off()
 ```
-
-<!---
-Try get scaling a bit better in this tikz one, to better match the original plot? Or make the earlier one square! (this is probably easier)
-
-Try make the plots all same size (like same sqize square) too!
---->
 
 ```{r echo = FALSE, results = "asis"}
 tikzTex <- readLines("tikzDevice.tex")
@@ -128,7 +93,7 @@ cat(c("\\begin{figure}\\label{tikzDevicePlot}\n\\centering\n",
 
 The `tikzDevice` package in R will draw the axis titles with \TeX{} but will also use \TeX{} for all other text on the plot, like the axis labels in figure \ref{tikzDevicePlot}. This may be appropriate if the graphic is to be included in a \TeX{} document but not so much for other document formats like HTML.
 
-What we want is a middle ground - being able to harness the power of \TeX{} and its typesetting capabilities on *our* choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of R `grid` graphics, by way of the `grid.latex()` function. Figure \@ref(fig:plotGridLatex) recreates figure \@ref(fig:expressionPlot) with the axis titles made using `grid.latex()`.
+What we want is a middle ground - being able to harness the power of \TeX{} and its typesetting capabilities on *our* choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of R `grid` graphics, by way of the `grid.latex()` function. Figure \@ref(fig:plotGridLatex) recreates figure \@ref(fig:expressionPlot), but with the axis titles made using `grid.latex()`.
 
 ```{r plotGridLatex, fig.cap = "Changing axis titles with \\texttt{grid.latex()}", fig.asp = 1}
 library(dvir)
