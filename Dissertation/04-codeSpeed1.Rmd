@@ -310,17 +310,17 @@ versionLabels <- c(Before = "0.2-1 (before changes)",
 levels1 <- c("gridlatex", "metric", "grid")
 ```
 
-```{r speedUp1Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, for each of the 20 runs of the simple example.", echo = FALSE, fig.width = 7, fig.height = 4}
+```{r speedUp1Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, over 20 runs of the simple example.", echo = FALSE, fig.width = 7, fig.height = 4}
 plotProfiling1("simple", versionLabels, results = resultDF, levels = levels1)
 ```
 
 For the simple example the time spent in the metric and grid sweeps have decreased by 76% and 83% respectively. The speed of the overall `grid.latex()` call has decreased by 30%.
 
-```{r speedUp1Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, for each of the 20 runs of the complicated example.", echo = FALSE, fig.width = 7, fig.height = 4}
+```{r speedUp1Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, over 20 runs of the complicated example.", echo = FALSE, fig.width = 7, fig.height = 4}
 plotProfiling1("yee", versionLabels, results = resultDF, levels = levels1)
 ```
 
-Similarly for the more complicated example in figure \@ref(fig:speedUp1Yee) the metric and grid sweeps have decreased by 83% and 89% respectively, with `grid.latex()` overall taking 47% less time. 
+Similarly for the more complicated example in figure \@ref(fig:speedUp1Yee) the metric and grid sweeps have decreased by 83% and 89% respectively, with `grid.latex()` overall taking 47% less time.
 <!---
 For plot, maybe 2 by 3 facet wrap thing? rows are examples, columns are the part of the function that's sped up
 

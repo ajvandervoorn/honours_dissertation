@@ -3,3 +3,9 @@
 # Discussion
 
 \TeX{} and its extensions have more functionality than could realistically be added to R but by targeting the most useful features of \TeX{}, as `dvir` did originally and as has been continued in this project, many use cases are accommodated. The changes discussed in this report have made the `dvir` package better especially for displaying text and equations, graphics with many `grid.latex()` calls, or even when developing graphics with `grid.latex()` which requires rerunning code with small tweaks to get the perfect graphic.
+
+
+
+
+- talk about how text baselines is almost there....
+- for coee speed, now it is "reading/writing to disk" thast is slow

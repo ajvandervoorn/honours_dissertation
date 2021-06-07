@@ -54,6 +54,7 @@ cat(paste(newPreamble,
           postamble,
           sep = "\n"))
 ```
+\begin{spacing}{1}
 \begin{itemize}[noitemsep]
   \item[] \begin{verbatim}\documentclass[12pt]{standalone}\end{verbatim}
   \item[] \begin{verbatim}\usepackage{amsmath}\end{verbatim}
@@ -61,6 +62,7 @@ cat(paste(newPreamble,
   \item[] \begin{verbatim}$\dfrac{\mu^2}{2}$\end{verbatim}
   \item[] \begin{verbatim}\end{document}\end{verbatim}
 \end{itemize}
+\end{spacing}
 
 \begin{enumerate}
   \setcounter{enumi}{1}
@@ -68,11 +70,13 @@ cat(paste(newPreamble,
   \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then "setting", that is, printing, a character "2".
 \end{enumerate}
 
+\begin{spacing}{1}
 \begin{itemize}[noitemsep]
   \item[] \begin{verbatim}fnt_def_1    fontnum=15, checksum=2088458503, scale=524288,\end{verbatim}
   \item[] \begin{verbatim}             design=524288, fontname=cmr8\end{verbatim}
   \item[] \begin{verbatim}set_char_50  '2'\end{verbatim}
 \end{itemize}
+\end{spacing}
 
 \begin{enumerate}
   \setcounter{enumi}{3}

@@ -13,10 +13,13 @@ In the previous section, the speed of `dvir` was increased by stopping it doing 
 
 For example, creating figure \@ref(fig:yeeExample) requires three `grid.latex()` calls for the same symbol $\omega$. Each time, the following font definition appears in the DVI file for `grid.latex()` to search for during its font sweep.
 
-```
+\begin{spacing}{1}
+\begin{verbatim}
 fnt_def_1    fontnum=17, checksum=-1209964637, scale=786432, design=786432,
              fontname=cmmi12
-```
+\end{verbatim}
+\end{spacing}
+
 In fact, the example's 11 `grid.latex()` calls define fonts 29 times in total, for eight unique fonts.
 
 Caching fonts requires several steps:
@@ -32,8 +35,9 @@ Caching fonts requires several steps:
 
 The font information is stored in R as a list. Every time `grid.latex()` processed a "preamble" op code in a DVI file, that is, every time `grid.latex()` was called, the font list was initialised as an empty list in the `dvir` namespace with `dvir::set("fonts", vector("list", 255))`. To stop this initialisation happening by default, the following code was put in its place.
 
-```
-if (dvir::get("initFonts") || is.null(dvir::get("fonts"))) dvir::set("fonts", vector("list", 255))
+```{r, eval = FALSE}
+if (dvir::get("initFonts") || is.null(dvir::get("fonts"))) 
+  dvir::set("fonts", vector("list", 255))
 ```
 
 Note in this new statement the logical variable `initFonts`, stored in the `dvir` namespace. This lets a user choose whether to intialise the font cache on a `grid.latex()` call. If `initFonts` is `FALSE` or the font list does not exist, for example after the package is loaded, the font list is initialised. Otherwise, the existing font cache remains. `initFonts` was added as an argument to `grid.latex()` with its default value being equal to the global option `dvir.initFonts`.
@@ -93,13 +97,13 @@ levels2 <- c("gridlatex", "font")
 Check width/height of these plots compared to plots in previous section (want bars the same width)
 --->
 
-```{r speedUp2Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep for each of the 20 runs of the simple example.", echo = FALSE, fig.width = 5, fig.height = 4}
+```{r speedUp2Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep, over 20 runs of the simple example.", echo = FALSE, fig.width = 5, fig.height = 4}
 plotProfiling1("simple", versionLabels2, results = results2, levels = levels2)
 ```
 
 For the simple example the time for the font sweep has reduced by 71%, with `grid.latex()` overall taking 45% less time.
 
-```{r speedUp2Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep for each of the 20 runs of the complicated example", echo = FALSE, fig.width = 5, fig.height = 4}
+```{r speedUp2Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep, over 20 runs of the complicated example", echo = FALSE, fig.width = 5, fig.height = 4}
 plotProfiling1("yee", versionLabels2, results = results2, levels = levels2)
 ```
 

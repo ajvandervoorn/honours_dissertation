@@ -75,7 +75,7 @@ embed_fonts("extrafont-2.pdf", outfile = "extrafont-2-embed.pdf")
 include_graphics("../Figures/extrafont-2-embed.pdf")
 ```
 
-In the case of figure \@ref(fig:bracExampleExtra), note how `extrafont` has once again used the correct font for the greek symbols, but does not quite replicate the rest of the result from \LaTeX{}, as in \ref{bracExample}.
+In the case of figure \@ref(fig:bracExampleExtra), note how `extrafont` has once again used the correct font for the greek symbols, but does not quite replicate the rest of the result from \LaTeX{}, as in figure \ref{bracExample}.
 
 \begin{figure}\label{bracExample}
 \centering
@@ -128,7 +128,7 @@ cat(c("\\begin{figure}\\label{tikzDevicePlot}\n\\centering\n",
 
 The `tikzDevice` package in R will draw the axis titles with \TeX{} but will also use \TeX{} for all other text on the plot, like the axis labels in figure \ref{tikzDevicePlot}. This may be appropriate if the graphic is to be included in a \TeX{} document but not so much for other document formats like HTML.
 
-What we want is a middle ground - being able to harness the power of \TeX{} and its typesetting capabilities on *our* choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of R `grid` graphics, by way of the `grid.latex()` function.
+What we want is a middle ground - being able to harness the power of \TeX{} and its typesetting capabilities on *our* choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of R `grid` graphics, by way of the `grid.latex()` function. Figure \@ref(fig:plotGridLatex) recreates figure \@ref(fig:expressionPlot) with the axis titles made using `grid.latex()`.
 
 ```{r plotGridLatex, fig.cap = "Changing axis titles with \\texttt{grid.latex()}", fig.asp = 1}
 library(dvir)
@@ -140,14 +140,6 @@ axis(2, las = 1)
 grid.latex("$\\mu$", x = 0.545, y = 0.07)
 grid.latex("$\\dfrac{\\mu^2}{2}$", x = 0.06, preamble = preamble)
 ```
-
-Figure \@ref(fig:plotGridLatex) recreates figure \@ref(fig:expressionPlot) with the axis titles made using `grid.latex()`.
-
-<!---
-  - [**Example:** example of grid-based plot, changing labels and/or title with `grid.latex()`. Maybe ggplot2?]
-  
-  Nah - got the lattice plot of our example....
-  --->
 
 ## Where this project fits in
 

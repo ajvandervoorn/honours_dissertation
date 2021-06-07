@@ -11,19 +11,19 @@
 \contentsline {section}{\numberline {6}Linear gradient fills}{19}{section.6}
 \contentsline {subsection}{\numberline {6.1}\textup {Ti\textit kZ}{} and \texttt {dvir}}{19}{subsection.6.1}
 \contentsline {subsection}{\numberline {6.2}Implementing \textup {Ti\textit kZ}{} linear gradient fills in \texttt {dvir}}{20}{subsection.6.2}
-\contentsline {section}{\numberline {7}Text baselines}{26}{section.7}
-\contentsline {subsection}{\numberline {7.1}The problem}{26}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Implementation}{26}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Potential solutions}{27}{subsection.7.3}
-\contentsline {subsubsection}{\numberline {7.3.1}\texttt {alex} algorithm}{27}{subsubsection.7.3.1}
-\contentsline {subsubsection}{\numberline {7.3.2}\texttt {dviMoves} algorithm}{27}{subsubsection.7.3.2}
-\contentsline {paragraph}{\numberline {7.3.2.1}\texttt {dviMoves} selection method \texttt {all}}{28}{paragraph.7.3.2.1}
-\contentsline {paragraph}{\numberline {7.3.2.2}\texttt {dviMoves} selection method \texttt {index}}{28}{paragraph.7.3.2.2}
-\contentsline {paragraph}{\numberline {7.3.2.3}\texttt {dviMoves} selection method \texttt {bottomUp}}{28}{paragraph.7.3.2.3}
+\contentsline {section}{\numberline {7}Text baselines}{25}{section.7}
+\contentsline {subsection}{\numberline {7.1}The problem}{25}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Implementation}{25}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Potential solutions}{26}{subsection.7.3}
+\contentsline {subsubsection}{\numberline {7.3.1}\texttt {alex} algorithm}{26}{subsubsection.7.3.1}
+\contentsline {subsubsection}{\numberline {7.3.2}\texttt {dviMoves} algorithm}{26}{subsubsection.7.3.2}
+\contentsline {paragraph}{\numberline {7.3.2.1}\texttt {dviMoves} selection method \texttt {all}}{27}{paragraph.7.3.2.1}
+\contentsline {paragraph}{\numberline {7.3.2.2}\texttt {dviMoves} selection method \texttt {index}}{27}{paragraph.7.3.2.2}
+\contentsline {paragraph}{\numberline {7.3.2.3}\texttt {dviMoves} selection method \texttt {bottomUp}}{27}{paragraph.7.3.2.3}
 \contentsline {paragraph}{\numberline {7.3.2.4}\texttt {dviMoves} selection method \texttt {nextChars}}{28}{paragraph.7.3.2.4}
-\contentsline {subsubsection}{\numberline {7.3.3}\texttt {preview} algorithm}{29}{subsubsection.7.3.3}
+\contentsline {subsubsection}{\numberline {7.3.3}\texttt {preview} algorithm}{28}{subsubsection.7.3.3}
 \contentsline {subsubsection}{\numberline {7.3.4}\texttt {dvipng} algorithm}{29}{subsubsection.7.3.4}
-\contentsline {subsection}{\numberline {7.4}Discussion of these algorithms}{31}{subsection.7.4}
-\contentsline {section}{\numberline {8}Discussion}{32}{section.8}
-\contentsline {section}{\numberline {9}References}{33}{section.9}
-\contentsline {section}{\numberline {10}Appendix}{34}{section.10}
+\contentsline {subsection}{\numberline {7.4}Discussion of these algorithms}{30}{subsection.7.4}
+\contentsline {section}{\numberline {8}Discussion}{31}{section.8}
+\contentsline {section}{\numberline {9}References}{32}{section.9}
+\contentsline {section}{\numberline {10}Appendix}{33}{section.10}

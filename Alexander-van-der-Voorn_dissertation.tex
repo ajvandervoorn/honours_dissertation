@@ -286,7 +286,7 @@ particular example but not if we wanted to include other \TeX{} symbols.
 In the case of figure \ref{fig:bracExampleExtra}, note how
 \texttt{extrafont} has once again used the correct font for the greek
 symbols, but does not quite replicate the rest of the result from
-\LaTeX{}, as in \ref{bracExample}.
+\LaTeX{}, as in figure \ref{bracExample}.
 
 \begin{figure}\label{bracExample}
 \centering
@@ -412,7 +412,9 @@ What we want is a middle ground - being able to harness the power of
 \TeX{} and its typesetting capabilities on \emph{our} choice of text or
 equation in R graphics. This is where the \texttt{dvir} package comes in
 - providing a simple user interface, in the style of R \texttt{grid}
-graphics, by way of the \texttt{grid.latex()} function.
+graphics, by way of the \texttt{grid.latex()} function. Figure
+\ref{fig:plotGridLatex} recreates figure \ref{fig:expressionPlot} with
+the axis titles made using \texttt{grid.latex()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -435,9 +437,6 @@ graphics, by way of the \texttt{grid.latex()} function.
 
 \caption{Changing axis titles with \texttt{grid.latex()}}\label{fig:plotGridLatex}
 \end{figure}
-
-Figure \ref{fig:plotGridLatex} recreates figure \ref{fig:expressionPlot}
-with the axis titles made using \texttt{grid.latex()}.
 
 \subsection{Where this project fits
 in}\label{where-this-project-fits-in}
@@ -540,6 +539,7 @@ The following steps are taken when \texttt{grid.latex()} runs:
 \end{Highlighting}
 \end{Shaded}
 
+\begin{spacing}{1}
 \begin{itemize}[noitemsep]
   \item[] \begin{verbatim}\documentclass[12pt]{standalone}\end{verbatim}
   \item[] \begin{verbatim}\usepackage{amsmath}\end{verbatim}
@@ -547,6 +547,7 @@ The following steps are taken when \texttt{grid.latex()} runs:
   \item[] \begin{verbatim}$\dfrac{\mu^2}{2}$\end{verbatim}
   \item[] \begin{verbatim}\end{document}\end{verbatim}
 \end{itemize}
+\end{spacing}
 
 \begin{enumerate}
   \setcounter{enumi}{1}
@@ -554,11 +555,13 @@ The following steps are taken when \texttt{grid.latex()} runs:
   \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then "setting", that is, printing, a character "2".
 \end{enumerate}
 
+\begin{spacing}{1}
 \begin{itemize}[noitemsep]
   \item[] \begin{verbatim}fnt_def_1    fontnum=15, checksum=2088458503, scale=524288,\end{verbatim}
   \item[] \begin{verbatim}             design=524288, fontname=cmr8\end{verbatim}
   \item[] \begin{verbatim}set_char_50  '2'\end{verbatim}
 \end{itemize}
+\end{spacing}
 
 \begin{enumerate}
   \setcounter{enumi}{3}
@@ -754,7 +757,7 @@ calculated.
 
 }
 
-\caption{The average time spent in the \texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, for each of the 20 runs of the simple example.}\label{fig:speedUp1Simple}
+\caption{The average time spent in the \texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, over 20 runs of the simple example.}\label{fig:speedUp1Simple}
 \end{figure}
 
 For the simple example the time spent in the metric and grid sweeps have
@@ -767,7 +770,7 @@ decreased by 76\% and 83\% respectively. The speed of the overall
 
 }
 
-\caption{The average time spent in the \texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, for each of the 20 runs of the complicated example.}\label{fig:speedUp1Yee}
+\caption{The average time spent in the \texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, over 20 runs of the complicated example.}\label{fig:speedUp1Yee}
 \end{figure}
 
 Similarly for the more complicated example in figure
@@ -792,10 +795,12 @@ For example, creating figure \ref{fig:yeeExample} requires three
 the following font definition appears in the DVI file for
 \texttt{grid.latex()} to search for during its font sweep.
 
+\begin{spacing}{1}
 \begin{verbatim}
 fnt_def_1    fontnum=17, checksum=-1209964637, scale=786432, design=786432,
              fontname=cmmi12
 \end{verbatim}
+\end{spacing}
 
 In fact, the example's 11 \texttt{grid.latex()} calls define fonts 29
 times in total, for eight unique fonts.
@@ -879,7 +884,7 @@ profiling as was detailed in the previous section.
 
 }
 
-\caption{The average time spent in the \texttt{grid.latex()} function and font sweep for each of the 20 runs of the simple example.}\label{fig:speedUp2Simple}
+\caption{The average time spent in the \texttt{grid.latex()} function and font sweep, over 20 runs of the simple example.}\label{fig:speedUp2Simple}
 \end{figure}
 
 For the simple example the time for the font sweep has reduced by 71\%,
@@ -891,7 +896,7 @@ with \texttt{grid.latex()} overall taking 45\% less time.
 
 }
 
-\caption{The average time spent in the \texttt{grid.latex()} function and font sweep for each of the 20 runs of the complicated example}\label{fig:speedUp2Yee}
+\caption{The average time spent in the \texttt{grid.latex()} function and font sweep, over 20 runs of the complicated example}\label{fig:speedUp2Yee}
 \end{figure}
 
 Similar results can be seen in for the example in figure
@@ -983,7 +988,7 @@ provides support for these fills in the \texttt{grid} package (Murrell
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{tikzCode <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{path (0, 1) node[circle,fill=red!40,draw,thick] (x) \{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu$\}"}\NormalTok{,}
-                  \StringTok{"      (3, 0) node[circle,fill=blue!40,draw,thick] (y) \{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$\};"}\NormalTok{,}
+                  \StringTok{"(3, 0) node[circle,fill=blue!40,draw,thick] (y) \{$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dfrac\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mu^2\}\{2\}$\};"}\NormalTok{,}
                   \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);"}\NormalTok{,}
                   \DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \NormalTok{tikzPreamble <-}\StringTok{ }\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{usepackage}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{\{tikz\}"}\NormalTok{, }
@@ -999,7 +1004,7 @@ provides support for these fills in the \texttt{grid} package (Murrell
 
 }
 
-\caption{Using \texttt{grid.tikzpicture()} to make the diagram from earlier}\label{fig:gridTikz}
+\caption{Using \texttt{grid.tikzpicture()} to make the earlier diagram}\label{fig:gridTikz}
 \end{figure}
 
 The use of \texttt{grid.tikzpicture()} is demonstrated in figure
@@ -1007,22 +1012,8 @@ The use of \texttt{grid.tikzpicture()} is demonstrated in figure
 The alteration to the preamble once again only necessary due to the use
 of \texttt{\textbackslash{}dfrac} from the \texttt{amsmath} package.
 
-\begin{itemize}
-\tightlist
-\item
-  {[}\textbf{Example:} Make same \Tikz{} example as above in R with dvir
-  (obviously fill will be blank){]}
-\end{itemize}
-
 As it is, the \Tikz{} driver simply ignores any gradient or pattern fill
 information when creating the DVI file for \texttt{dvir}.
-
-\begin{itemize}
-\tightlist
-\item
-  {[}\textbf{Example:} Use \texttt{grid.tikzpicture()} for picture with
-  gradient fill in text, but resulting R graphic does not have fill{]}
-\end{itemize}
 
 \subsection{\texorpdfstring{Implementing \Tikz{} linear gradient fills
 in
@@ -1086,6 +1077,7 @@ distributions, \texttt{pgfsys-dvisvgm.def}. It has been edited slightly
 for readability by adding line breaks and removing the line break
 character string \texttt{\{?nl\}}.
 
+\begin{spacing}{1}
 \begin{verbatim}
 xxx1         k=67
              x=dvisvgm:raw <g transform="matrix(1,0,0,1,56.90549,28.45274)"> 
@@ -1107,6 +1099,7 @@ xxx1         k=97
              x=dvisvgm:raw <rect width="100.375" height="100.375" 
                             style="fill:url(#pgfsh2); stroke:none"/> 
 \end{verbatim}
+\end{spacing}
 
 We can see from this that the linear gradient definition with stops and
 colours is defined within a
@@ -1129,6 +1122,7 @@ For clarity, a line stating when the gradient fill is defined and then
 again when it is used has been added to the DVI file but these can be
 removed.
 
+\begin{spacing}{1}
 \begin{verbatim}
 \def\pgfsys@shadinginsidepgfpicture#1{%
   #1%
@@ -1144,6 +1138,7 @@ removed.
   \pgf@sys@dvir@sh%
 }
 \end{verbatim}
+\end{spacing}
 
 In basic cases, a horizontal linear gradient is defined as a vertical
 gradient with a 90 degree rotation which is why this is called ``vert''
@@ -1157,6 +1152,7 @@ a vector of stops and a separate vector of colours as arguments to
 \texttt{linearGradient()}. SVG specifies the position and colour of each
 stop together.
 
+\begin{spacing}{1}
 \begin{verbatim}
 \def\pgfsys@vertshading#1#2#3{%
   {%
@@ -1177,10 +1173,12 @@ stop together.
   }%
 }
 \end{verbatim}
+\end{spacing}
 
 This macro allows us to iteratively add stop positions or colours to the
 ones we have already gathered.
 
+\begin{spacing}{1}
 \begin{verbatim}
 \let\pgf@sys@dvir@thestops=\pgfutil@empty
 \def\pgf@sys@dvir@addtostops#1{%
@@ -1191,10 +1189,12 @@ ones we have already gathered.
       \expandafter\pgf@sys@dvir@thestops\expandafter\space\pgf@temp}%
 }
 \end{verbatim}
+\end{spacing}
 
 The following macros process all the stop locations, collating them into
 an R friendly vector suitable to parse to \texttt{linearGradient()}
 
+\begin{spacing}{1}
 \begin{verbatim}
 \def\pgf@sys@dvir@shading@stops{%
   % Step 1: Compute 1/\pgf@sys@shading@end@pos
@@ -1229,10 +1229,12 @@ an R friendly vector suitable to parse to \texttt{linearGradient()}
   \expandafter\pgf@sys@dvir@addtostops{\pgf@sys@tonumber\pgf@x}%
 }
 \end{verbatim}
+\end{spacing}
 
 Similar to the above, these collate all the colours of the stops into an
 R friendly vector.
 
+\begin{spacing}{1}
 \begin{verbatim}
 \def\pgf@sys@dvir@shading@stopcolours{%
   % Step 1: Compute 1/\pgf@sys@shading@end@pos
@@ -1264,35 +1266,43 @@ R friendly vector.
   \expandafter\pgf@sys@dvir@shading@dorgb#3%
 }
 \end{verbatim}
+\end{spacing}
 
 This is a helper function to return formatted RGB values.
 
+\begin{spacing}{1}
 \begin{verbatim}
 \def\pgf@sys@dvir@shading@dorgb#1#2#3{%
   \pgf@sys@dvir@color@rgb#1,#2,#3\relax%
   \pgf@sys@dvir@addtostops{\pgf@sys@dvir@prepared}%
 }
 \end{verbatim}
+\end{spacing}
 
 A counter is defined in order to give each gradient definition unique
 identifier.
 
+\begin{spacing}{1}
 \begin{verbatim}
 \newcount\pgf@sys@dvir@objectcount
 \end{verbatim}
+\end{spacing}
 
 The result of these changes mean that the linear gradient definition is
-specified in the DVI file in a form usable by R, sans some commas:
+specified in the DVI file in a form usable by R, sans some commas.
 
+\begin{spacing}{1}
 \begin{verbatim}
 xxx1         k=118
              x=dvir::  stops=( 0.0 0.25 0.5 0.75 1.0 ) , 
                        colours=( rgb(0,1,0) rgb(0,1,0) rgb(0.5,0.75,0) rgb(1,0.5,0) 
                                  rgb(1,0.5,0) )
 \end{verbatim}
+\end{spacing}
 
 Compare this with the linear gradient definition from earlier:
 
+\begin{spacing}{1}
 \begin{verbatim}
 xxx4         k=425
              x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)">
@@ -1303,6 +1313,7 @@ xxx4         k=425
                             <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>
                             </linearGradient>
 \end{verbatim}
+\end{spacing}
 
 Unfortunately this was the extent this project could explore
 implementing \Tikz{} gradient fills in \texttt{dvir}. You may notice in
@@ -1351,24 +1362,28 @@ the baseline.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-16-1} 
+{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-15-1} 
 
 }
 
-\caption{The baseline and descender of the letter \textit{y}}\label{fig:unnamed-chunk-16}
+\caption{The baseline and descender of the letter \textit{y}}\label{fig:unnamed-chunk-15}
 \end{figure}
 
-\texttt{grid.text()} accounts for this baseline so when you bottom align
-text at a certain y-value, the descenders will actually fall below the
-y-value we defined, despite the bottom justification. Unfortunately,
-\texttt{dvir} does not account for text baselines and will do any
-alignment with the bounding box of the text, which, in the case of
-figure \ref{fig:baselineCombine}, is at the bottom of the descenders.
+The \texttt{grid.text()} function accounts for this baseline so when you
+bottom-align text at a certain y-value, the descenders will actually
+fall below the y-value we defined, despite the bottom justification.
+Unfortunately, \texttt{dvir} does not account for text baselines and
+will do any alignment in relation to bounding box of the text, which, in
+the case of figure \ref{fig:baselineCombine}, is at the bottom of the
+descenders.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{texText <-}\StringTok{ "\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{LARGE changing to }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{LaTeX\{\}\}"}
-\KeywordTok{grid.text}\NormalTok{(}\StringTok{"An example of "}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{just =} \KeywordTok{c}\NormalTok{(}\StringTok{"right"}\NormalTok{, }\StringTok{"bottom"}\NormalTok{), }\DataTypeTok{gp =} \KeywordTok{gpar}\NormalTok{(}\DataTypeTok{fontsize =} \DecValTok{18}\NormalTok{))}
+\KeywordTok{grid.text}\NormalTok{(}\StringTok{"An example of "}\NormalTok{, }
+          \DataTypeTok{y =} \FloatTok{0.1}\NormalTok{, }
+          \DataTypeTok{just =} \KeywordTok{c}\NormalTok{(}\StringTok{"right"}\NormalTok{, }\StringTok{"bottom"}\NormalTok{), }
+          \DataTypeTok{gp =} \KeywordTok{gpar}\NormalTok{(}\DataTypeTok{fontsize =} \DecValTok{18}\NormalTok{))}
 \KeywordTok{grid.latex}\NormalTok{(texText, }\DataTypeTok{y =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{just =} \KeywordTok{c}\NormalTok{(}\StringTok{"left"}\NormalTok{, }\StringTok{"bottom"}\NormalTok{))}
 \KeywordTok{grid.lines}\NormalTok{(}\DataTypeTok{y =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{gp =} \KeywordTok{gpar}\NormalTok{(}\DataTypeTok{lwd =} \FloatTok{0.5}\NormalTok{))}
 \end{Highlighting}
@@ -1387,25 +1402,26 @@ To fix this, \texttt{dvir} needs to obtain or calculate a value for the
 baseline for any given piece of text to use as an offset for the
 bounding box alignment when it is rendering the text. From this point
 on, this offset will be referred to as a baseline value. All of
-\texttt{dvir}'s information comes from the DVI file so we either need to
-extract a baseline value from the DVI file itself, or calculate it
+\texttt{dvir}'s information comes from the DVI file so it either needs
+to extract a baseline value from the DVI file itself, or calculate it
 \emph{from} information in the DVI file. Unfortunately plain DVI files
 do not state a baseline value, rather they only detail specific
-placement of each character, so some possible methods to obtain a
+placement of each character. As such, some possible methods to obtain a
 baseline value were explored. These methods are referred to as
 algorithms from here on due to their heuristic nature.
 
 \subsection{Implementation}\label{implementation}
 
 To explore the algorithms detailed below and evaluate their usefulness
-an R function, \texttt{baselines()} has been created. This function
-takes several arguments, including the baseline selection algorithm as
-detailed below, any additional information needed for that particular
-algorithm, and the \TeX{} code as you would use with
-\texttt{grid.latex()}. The output of this function is the distance, or
-in some case distances, from the bottom of the bounding box of the text
-to the possible baseline value. These distances are returned as
-\texttt{grid} units.
+an R function, \texttt{baselines()} has been created. This function can
+be found in the appendix in the R script file \texttt{algorithms.R}.
+This function takes several arguments, including the baseline selection
+algorithm as detailed below, any additional information needed for that
+particular algorithm, and the \TeX{} code as you would use with
+\texttt{grid.latex()}. The output of this function is the baseline value
+or values. These values are returned as \texttt{grid} units as they are
+distances from the bottom of the bounding box of the text to its
+baseline.
 
 Once the baselines have been calculated the bounding box of the text can
 be bottom aligned with the y-value specified but then moved down by the
@@ -1416,9 +1432,6 @@ This function has been written to easily allow integration of other
 algorithms and most of the function could be directly implemented in the
 \texttt{dvir} package, should this baseline algorithm feature be
 implemented into \texttt{dvir} formally.
-
-This function can be found in the R script file \texttt{algorithms.R},
-in the appendix.
 
 \subsection{Potential solutions}\label{potential-solutions}
 
@@ -1444,8 +1457,8 @@ the bounding box to the bottom left), and then a move upward before the
 first character is drawn. This algorithms take the cursor location after
 that upward move to be the baseline. In instances where the entire text
 has no descenders (i.e.~the baseline is the bottom of the bounding box)
-there will be no upward move before the first character and a value of 0
-is returned as the baseline.
+there will be no upward move before the first character and the baseline
+value returned is 0.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1458,12 +1471,8 @@ is returned as the baseline.
 ## [1] 127431scaledpts
 \end{verbatim}
 
-For plain text this algorithm works quite well. Unfortunately for many
-equations, particularly ones with superscripts or subscripts, and
-multiline text the first upward move is \emph{not} to where the baseline
-is.
-
 \begin{figure}
+\label{alexAlgo}
 \begin{center}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
@@ -1495,31 +1504,40 @@ The equation is $x + \frac{\mu^2}{2}$
 $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
-\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
+\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
+\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
 \raisebox{\dimexpr -\dvidepth+1700295sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}
+\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}
 
 \vspace{0.3cm}
 \end{center}
 \caption{The baselines as calculated using the \texttt{alex} algorithm}
 \end{figure}
 
+For plain text this algorithm works quite well. Unfortunately for many
+equations, particularly ones with superscripts or subscripts, the first
+upward move is \emph{not} to where the baseline is. Note in figure
+\ref{alexAlgo} the \texttt{alex} algorithm has calculated the baseline
+of the fifth example to be the bottom of the \(\mu\). This demonstrates
+that this algorithm is only practical when the first character's
+baseline is the one to be aligned, and in the case of the second
+example, does not serve much purpose at all.
+
 \subsubsection{\texorpdfstring{\texttt{dviMoves}
 algorithm}{dviMoves algorithm}}\label{dvimoves-algorithm}
 
 This is an extension of the \texttt{alex} algorithm. Rather than only
-taking the location after the second `down' move, this algorithm keeps
-track of \emph{all} the up and down moves of the cursor. The motivation
-behind this is that the upward and downward ``moves'' in the DVI file
-reflect the cursor moving to the baseline value of the next character to
-be typeset. Once again we assume that the first downward move after the
-``HiResBoundingBox'' statement id from the top to the bottom of the
-bounding box and so this algorithm only returns the upward and downward
-cursor moves from there, however as DVI files have the ability to save
-the current cursor location, move around a bit, then reset back to the
-saved location, all up and down moves are recorded from the start of the
-DVI file.
+taking the location after the second vertical cursor move, this
+algorithm keeps track of \emph{all} the up and down moves of the cursor.
+The motivation behind this is that the upward and downward moves in the
+DVI file should reflect the cursor moving to the baseline value of the
+next character to be typeset. Once again we assume that the first
+downward move after the ``HiResBoundingBox'' statement is from the top
+left to the bottom left of the bounding box so this algorithm only
+returns the upward and downward moves from there. As DVI files have the
+ability to save the current cursor location, move around a bit, then
+reset back to the saved location, all up and down moves are tracked from
+the start of the DVI file.
 
 There are two complications with this method:
 
@@ -1530,21 +1548,21 @@ There are two complications with this method:
   means we have to decide which of them to choose.
 \item
   There are often several up and downward moves in the DVI file between
-  typeset characters so in between the ``useful'' baselines there can be
-  some which are not so useful or duplicates.
+  typeset characters so in between the ``useful'' baseline values there
+  can be some which are duplicates or are not very useful.
 \end{itemize}
 
 To account for these considerations, along with the \texttt{dviMoves}
-algorithm, the function also allows a choice of method to select a
-\emph{single} baseline out of the many returned by the algorithm. These
-methods are:
+algorithm, the \texttt{baselines()} function also allows a choice of
+method to select a \emph{single} baseline out of the many returned by
+the algorithm.
 
 \paragraph{\texorpdfstring{\texttt{dviMoves} selection method
 \texttt{all}}{dviMoves selection method all}}\label{dvimoves-selection-method-all}
 
 This selection method will return all the baseline values as determined
-by the algorithm. This is useful for drawing the text with all the
-baseline values calculated from this method.
+by the algorithm. This is useful for drawing the text with multiple
+lines representing all the baseline values calculated from this method.
 
 \paragraph{\texorpdfstring{\texttt{dviMoves} selection method
 \texttt{index}}{dviMoves selection method index}}\label{dvimoves-selection-method-index}
@@ -1573,10 +1591,10 @@ limited for several reasons:
 \tightlist
 \item
   It cannot return a baseline value for any instance of a character
-  after the first instance
+  after the first instance of that character
 \item
   If multiple cursor moves are made before a character is drawn, the
-  earlier moves are still recorded but with a empty character label
+  earlier moves are still recorded but with an empty character label
 \item
   Some characters are hard to type on a ``normal'' keyboard, for example
   \(\mu\)
@@ -1587,6 +1605,7 @@ limited for several reasons:
 \end{itemize}
 
 \begin{figure}
+\label{dviMovesAlgo}
 \begin{center}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
@@ -1688,8 +1707,8 @@ The equation is $x + \frac{\mu^2}{2}$
 $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
-\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
+\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
+\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+1700295sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+1700295sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
@@ -1703,12 +1722,18 @@ $\frac{\mu^2}{2} + x$ is the equation
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+2155406sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+2155406sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}
+\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}
 
 \vspace{0.3cm}
 \end{center}
 \caption{Baselines as calculated using the \texttt{dviMoves} algorithm}
 \end{figure}
+
+This algorithm performs very well. In figure \ref{dviMovesAlgo} nearly
+every part of all examples has a baseline value associated with it,
+including the superscripts of math equations and every line of the
+multiline text. This means alignment would be possible with these parts
+of the examples.
 
 \subsubsection{\texorpdfstring{\texttt{preview}
 algorithm}{preview algorithm}}\label{preview-algorithm}
@@ -1739,6 +1764,7 @@ with \texttt{MatplotlibBox:} and returning the value just after the
 \texttt{+}.
 
 \begin{figure}
+\label{previewAlgo}
 \begin{center}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
@@ -1770,15 +1796,21 @@ The equation is $x + \frac{\mu^2}{2}$
 $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
-\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
+\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
+\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
 \raisebox{\dimexpr -\dvidepth+13.94444pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}
+\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}
 
 \vspace{0.3cm}
 \end{center}
 \caption{Baselines as calculated using the \texttt{preview} algorithm}
 \end{figure}
+
+This algorithm also performs very well. In all examples in figure
+\ref{previewAlgo} the natural baseline of the text has been identified
+and so this algorithm would be suitable in most use cases. For the
+multiline text, the second line of text has been identified as having
+``the'' baseline.
 
 \subsubsection{\texorpdfstring{\texttt{dvipng}
 algorithm}{dvipng algorithm}}\label{dvipng-algorithm}
@@ -1793,6 +1825,7 @@ The system call \texttt{dvipng\ -\/-depth\ test.dvi} returns
 simple search for \texttt{depth=} will find the baseline value.
 
 \begin{figure}
+\label{dvipngAlgo}
 \begin{center}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
@@ -1824,42 +1857,46 @@ The equation is $x + \frac{\mu^2}{2}$
 $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
-\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
+\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
+\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
 \raisebox{\dimexpr -\dvidepth+0.208333333333333in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}
+\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}
 
 \vspace{0.3cm}
 \end{center}
 \caption{Baselines as calculated using the \texttt{dvipng} algorithm}
 \end{figure}
 
+It may not be obvious in printed form in figure \ref{dvipngAlgo} but the
+only example with which the \texttt{dvipng} algorithm has selected a
+``good'' baseline value is one of the equations. The other examples have
+baseline values which are at least slightly off. This is likely a side
+effect of this algorithm returning the baseline value in (whole) pixels
+which does not lend itself well to this detailed application.
+
 \subsection{Discussion of these
 algorithms}\label{discussion-of-these-algorithms}
 
 Of the algorithms considered, the \texttt{dviMoves} algorithm performed
-best. While most of these algorithms perform well for some or most of
-the examples, the \texttt{dviMoves} algorithm performs well for
-\emph{all} the examples, notably for giving the option to align the
-baseline of \emph{any} line of multi-line text. Utilising how it returns
-all baseline values for all characters it is possible to align, for
-example, with any character in a mathematical equation, whether it be of
-a different size or a superscript or subscript.
+best. While these algorithms (except \texttt{dvipng}) perform well for
+some or most of the examples, the \texttt{dviMoves} algorithm performs
+well for \emph{all} the examples. Notably, it gives the option to align
+the baseline of \emph{any} line of multiline text or with almost any
+character in a mathematical equation, whether it be of a different size,
+part of a fraction, or a superscript or subscript.
 
-\begin{itemize}
-\tightlist
-\item
-  {[}Example: Show examples from start of this section with baselines
-  being used to make them aligned!{]}
-\end{itemize}
-
-The \texttt{preview} algorithm also calculated a baseline well for all
-examples, except the multi-line text. An implementation of this in
-\texttt{dvir} could perhaps use both the \texttt{dviMoves} and
-\texttt{preview} algorithms to calculate the baselines, with the default
-selection method being the baseline value from \texttt{dviMoves} that is
-closest to the baseline value calculated by the \texttt{preview}
-algorithm.
+The difficulty with the algorithm is how to choose a \emph{single}
+baseline value from all the ones calculated. It is possible to manually
+check them all the baseline values to find the right one but an
+automated selection method would be desirable. As the \texttt{preview}
+algorithm calculated baseline values for all examples except the
+multiline text, the algorithms would work well together - an
+implementation of this functionality in \texttt{dvir} could calculate
+the baseline values with both the \texttt{dviMoves} and \texttt{preview}
+algorithms with the default selection being the baseline value from
+\texttt{dviMoves} that is closest to the baseline value calculated by
+the \texttt{preview} algorithm. This could be overridden to select
+another baseline value calculated by \texttt{dviMoves}.
 
 \newpage{}
 
@@ -1873,6 +1910,12 @@ this report have made the \texttt{dvir} package better especially for
 displaying text and equations, graphics with many \texttt{grid.latex()}
 calls, or even when developing graphics with \texttt{grid.latex()} which
 requires rerunning code with small tweaks to get the perfect graphic.
+
+\begin{itemize}
+\tightlist
+\item
+  talk about how text baselines is almost there\ldots{}.
+\end{itemize}
 
 \newpage{}
 
