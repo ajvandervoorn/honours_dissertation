@@ -23,7 +23,7 @@
       (3, 0) node[circle,fill=blue!40,draw,thick] (y) {$\dfrac{\mu^2}{2}$};
 \draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);
 \end{tikzpicture}
-\caption{A picture made with \Tikz{}}
+\caption{A picture made with \Tikz{}.}
 \label{tikzRaw}
 \end{figure}
 
@@ -37,7 +37,7 @@ Some \Tikz{} features were not implemented though, notably the ability to have f
 str2lang <- getFromNamespace("str2lang", "backports")
 ```
 
-```{r gridTikz, fig.cap = "Using \\texttt{grid.tikzpicture()} to make the earlier diagram", fig.width = 2.5, fig.height = 1.5, out.width = "100%"}
+```{r gridTikz, fig.cap = "Using \\texttt{grid.tikzpicture()} to make the earlier diagram.", fig.width = 2.5, fig.height = 1.5, out.width = "100%"}
 tikzCode <- 
   paste("\\path (0, 1) node[circle,fill=red!40,draw,thick] (x) {$\\mu$}",
         "       (3, 0) node[circle,fill=blue!40,draw,thick] (y) {$\\dfrac{\\mu^2}{2}$};",
@@ -74,7 +74,7 @@ The `colours` and `stops` arguments of `linearGradient()` are simply vectors of 
 \begin{tikzpicture}
 \filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);
 \end{tikzpicture}
-\caption{A rectangle with a linear gradient fill using \Tikz{}}
+\caption{A rectangle with a linear gradient fill using \Tikz{}.}
 \label{tikzLinGrad}
 \end{figure}
 
@@ -168,7 +168,7 @@ This macro allows us to iteratively add stop positions or colours to the ones we
 \end{verbatim}
 \end{spacing}
 
-The following macros process all the stop locations, collating them into an R friendly vector suitable to parse to `linearGradient()`
+The following macros process all the stop locations, collating them into an R friendly vector suitable to parse to `linearGradient()`.
 
 \begin{spacing}{1}
 \begin{verbatim}
@@ -184,6 +184,7 @@ The following macros process all the stop locations, collating them into an R fr
   {{\pgf@sys@shading@end@pos}{\pgf@sys@shading@end@pos}}%
   \pgf@sys@dvir@addtostops{)}%
 }
+
 
 \def\pgf@sys@dvir@shading@dostoplocations#1{%
   \edef\pgf@test{#1}%

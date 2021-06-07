@@ -2,10 +2,10 @@
 
 # Discussion
 
-\TeX{} and its extensions have more functionality than could realistically be added to R but by targeting the most useful features of \TeX{}, as `dvir` did originally and as has been continued in this project, many use cases are accommodated. The changes discussed in this report have made the `dvir` package better especially for displaying text and equations, graphics with many `grid.latex()` calls, or even when developing graphics with `grid.latex()` which requires rerunning code with small tweaks to get the perfect graphic.
+\TeX{} and its extensions have more functionality than could realistically be added to R but by targeting the most useful features of \TeX{}, as `dvir` did originally and as has been continued in this project, many use cases are accommodated. 
 
+The speed improvement of the package has made the experience using `dvir` better when creating graphics with many `grid.latex()` calls and also when *developing* graphics with `grid.latex()` which require rerunning code with small tweaks often to get the perfect graphical result. The progress on aligning `grid.latex()` text output with its baseline means it is possible to professionally display text and equations when they are integrated with other text or graphical features.
 
+Of course, there are still many things which could improve `dvir` in future. Now that the font sweeping by `dvir` is much more efficient other parts of the code are becoming the "slowest". In particular the reading and writing to disk, of the DVI file for example, takes more time now relative to the rest of the code.
 
-
-- talk about how text baselines is almost there....
-- for coee speed, now it is "reading/writing to disk" thast is slow
+Implementation of a text baseline algorithm into `grid.latex()` itself to align text would also be a useful step forward. In the instance of the `dviMoves` algorithm, care is needed when choosing a method to determine the baseline value and should allow a user to manually override the choice as well. Additional testing of the algorithms could also be done to consider more advanced use cases, for example multiline text with mathematical equations and altered line spacing. Work on the \Tikz{} gradient fills could also progress as R expands its support of the gradient fills.

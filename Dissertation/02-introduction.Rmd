@@ -4,7 +4,7 @@
 
 R [@R] has the ability to display mathematical symbols and equations in graphics using the "plotmath" feature [@plotmath], interpreting everything within a call to `expression()` as a mathematical equation.
 
-```{r expressionPlot, fig.cap="A plot with axis labels made using \\texttt{expression()}.", include = TRUE, eval = TRUE, fig.asp = 1}
+```{r expressionPlot, fig.cap="A plot with axis labels made using \\texttt{expression()}.", include = TRUE, eval = TRUE, fig.asp = 1, out.width = "50%"}
 x <- 1:5
 y <- x ^ 2 / 2
 expr <- expression(frac(mu ^ 2, 2))
@@ -19,10 +19,10 @@ This provides us with most of the symbols used for equations, such as brackets a
 \begin{equation*}
 \dfrac{\mu^2}{2}
 \end{equation*}
-\caption{The y-axis title from above, created with \LaTeX}
+\caption{The y-axis title from above, created with \LaTeX{}.}
 \end{figure}
 
-The difference is stark and @murrell-dvir describes several approaches in R, and their limitations, which can get us closer to the \LaTeX{} result as motivation for the `dvir` package. The approaches are replicated here.
+The difference is stark and @murrell-dvir describes several approaches, and their limitations, in R which can get us closer to the \LaTeX{} result as motivation for the `dvir` package. The approaches are replicated here.
 
 The `extrafont` package [@pkg-extrafont] with the `fontcm` package extension [@pkg-fontcm] works for this particular example but not if we wanted to include other \TeX{} symbols.
 
@@ -37,7 +37,7 @@ dev.off()
 embed_fonts("extrafont.pdf", outfile = "extrafont-embed.pdf")
 ```
 
-```{r, fig.cap = "The axis title using the \\texttt{extrafont} package", echo = FALSE, out.width = "40%"}
+```{r, fig.cap = "The axis title using the \\texttt{extrafont} package.", echo = FALSE, out.width = "40%"}
 include_graphics("../Figures/extrafont-embed.pdf")
 ```
 
@@ -49,20 +49,20 @@ dev.off()
 embed_fonts("extrafont-2.pdf", outfile = "extrafont-2-embed.pdf")
 ```
 
-```{r bracExampleExtra, fig.cap = "Another equation using the \\texttt{extrafont} package", echo = FALSE, out.width = "40%"}
+```{r bracExampleExtra, fig.cap = "Another equation using the \\texttt{extrafont} package.", echo = FALSE, out.width = "40%"}
 include_graphics("../Figures/extrafont-2-embed.pdf")
 ```
 
 In the case of figure \@ref(fig:bracExampleExtra), note how `extrafont` has once again used the correct font for the greek symbols, but does not quite replicate the rest of the result from \LaTeX{}, as in figure \ref{bracExample}.
 
-\begin{figure}\label{bracExample}
+\begin{figure}
 \centering
 $\left(\dfrac{x - \mu}{\sigma}\right)$
-\caption{A \LaTeX{} equation with brackets}
+\caption{A \LaTeX{} equation with brackets.}
+\label{bracExample}
 \end{figure}
 
 ```{r results = FALSE}
-# Using the 'tikzDevice' package
 library(tikzDevice)
 options(tikzDocumentDeclaration = "\\documentclass[12pt]{article}")
 packages <- c(getOption("tikzLatexPackages"),
@@ -84,10 +84,11 @@ end <- which(grepl("end\\{document}", tikzTex))
 
 beginTikzPic <- which(grepl("begin\\{tikzpicture}", tikzTex))
 tikzTex[beginTikzPic] <- gsub("]", ",scale=0.5]", tikzTex[beginTikzPic])
-cat(c("\\begin{figure}\\label{tikzDevicePlot}\n\\centering\n", 
+cat(c("\\begin{figure}\n\\centering\n", 
       paste0(tikzTex[(start + 1):(end - 1)], 
              collapse = "\n"),
-      "\\caption{Drawing the plot with the \\texttt{tikzDevice} package}\n",
+      "\\caption{Drawing the plot with the \\texttt{tikzDevice} package.}\n",
+      "\\label{tikzDevicePlot}\n",
       "\\end{figure}"))
 ```
 
@@ -95,7 +96,7 @@ The `tikzDevice` package in R will draw the axis titles with \TeX{} but will als
 
 What we want is a middle ground - being able to harness the power of \TeX{} and its typesetting capabilities on *our* choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of R `grid` graphics, by way of the `grid.latex()` function. Figure \@ref(fig:plotGridLatex) recreates figure \@ref(fig:expressionPlot), but with the axis titles made using `grid.latex()`.
 
-```{r plotGridLatex, fig.cap = "Changing axis titles with \\texttt{grid.latex()}", fig.asp = 1}
+```{r plotGridLatex, fig.cap = "Changing axis titles with \\texttt{grid.latex()}.", fig.asp = 1, out.width = "50%"}
 library(dvir)
 preamble <- "\\documentclass[12pt]{standalone}\n\\usepackage{amsmath}\n\\begin{document}"
 par(mar = par()$mar + c(0, 1, 0, 0))

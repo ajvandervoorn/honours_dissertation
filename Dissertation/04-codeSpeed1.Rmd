@@ -72,25 +72,25 @@ To look into this the first task was to profile the existing code to let us see 
 include_graphics("../Figures/profilingSimpleProfvis_0.2-1.PNG")
 ```
 
-We can see the function call stack in figure \@ref(fig:prof1). At the bottom is the call to `grid.latex()`, which immediately calls `grid.draw()` which in turn calls `latexGrob()`. This calls `readDVI()` for about the first 20ms, then `dviGrob()` for the remaining time to the end of the original `grid.latex()` function call, and so on up the function call stack.
+We can see the function call stack in figure \@ref(fig:prof1). On the fifth line from the bottom is the call to `grid.latex()`, which immediately calls `grid.draw()` which in turn calls `latexGrob()`. This calls `readDVI()` for about the first 30ms, then `dviGrob()` for the remaining time to the end of the original `grid.latex()` function call, and so on up the function call stack.
 
 ```{r prof2, fig.cap = "Screenshot of \\texttt{profvis::profvis()} output for the code creating the example at the start of this section, highlighting the time spent in \\texttt{engine\\$fontDef}.", echo = FALSE, eval = TRUE, out.width='100%'}
 include_graphics("../Figures/profilingYeeProfvis_0.2-1_highlight.PNG")
 ```
 
-The `profvis::profvis()` output for our more complicated example, in figure \@ref(fig:prof2) reveals most of the time to create the figure is in `grid.latex()`. Note that the code to draw the arrows and the "(a)" in this example is so quick it occupies the very skinny call stack on the far left of the graph. `grid.latex()` and its subsequent function calls, on the other hand, take up most of the time required to produce the example.
+The `profvis::profvis()` output for our more complicated example, in figure \@ref(fig:prof2), reveals most of the time spent creating the figure is in `grid.latex()`. Note that the code to draw the arrows and the "(a)" in this example is so quick it occupies the very skinny call stack on the far left of the graph. On the other hand, `grid.latex()` and its subsequent function calls take up most of the time required to produce the example.
 
-In figure \@ref(fig:prof2) some blocks in the call stack have been highlighted - these are related to the `engine$fontDef` operation occuring. This is a part of the "font sweep", as was described in the introduction to `dvir` in section \@ref(dvirDesc).
+In figure \@ref(fig:prof2) some blocks in the call stack have been highlighted light grey. These are related to the `engine$fontDef` operation occurring. This is a part of the "font sweep", as was described in section \@ref(dvirDesc).
 
-In the top left corner of figure \@ref(fig:prof2) we are told the aggregate time spent with `engine$fontDef` is 1830ms. Compared to the total time of this run (a total of about 2700ms), `dvir` is spending a *lot* of time doing these font sweeps.
+In the top left corner of figure \@ref(fig:prof2) we are told the aggregate time spent with `engine$fontDef` is 3350ms. Compared to the total time of this run (a total of about 4750ms), `dvir` is spending a *lot* of time doing these font sweeps.
 
-What was interesting though was that after the actual font sweep the following sweeps for the metric and grid information *also* called `engine$fontDef`. As the point of the font sweep is that it finds all the font information to be used later on the following metric and grid sweeps should not need to "re-sweep" for the fonts.
+What was interesting though was that after the actual font sweep the following sweeps for the metric and grid information *also* called `engine$fontDef`. As the intention of the font sweep is that it finds all the font information to be used later on the following metric and grid sweeps should not need to "re-sweep" for the fonts.
 
 ```{r prof3, fig.cap = "Screenshot of \\texttt{profvis::profvis()} output for the simple example in \\texttt{dvir} version 0.2-1, highlighting \\texttt{engine\\$fontDef}.", echo = FALSE, eval = TRUE, out.width='100%'}
 include_graphics("../Figures/profilingSimpleProfvis_0.2-1_highlight.PNG")
 ```
 
-The effect of this is very obvious in figure \@ref(fig:prof3) which is the same as figure \@ref(fig:prof1) but highlights the time spent in `engine$fontDef`. The wrappers for the font, metric and grid sweeps are `dviFonts()`, `dviMetric()` and `dvigrid()` respectively (sixth call from the bottom of the stack). Here we can see nearly all of the time spent in the metric and grid sweeps are actually redoing the font sweep.
+The effect of this is very obvious in figure \@ref(fig:prof3) which is the same as figure \@ref(fig:prof1) but highlights the time spent in `engine$fontDef` in light grey. The wrappers for the font, metric and grid sweeps are `dviFonts()`, `dviMetric()` and `dvigrid()` respectively (tenth call from the bottom of the stack). Here nearly all of the time spent in the metric and grid sweeps are actually redoing the font sweep.
 
 The change to be made was simply stopping the metric and grid sweeps from doing the font sweep again.
 
@@ -98,14 +98,14 @@ The font sweep looks in the DVI file for op codes 243 to 246. These are the op c
 
 The following code is taken from the the `dvir` package, showing where the metric and grid sweeps also redid the font sweep. The function `op_font_def` takes the font definition in the DVI file related to that instance of the op code and searches for and records the font information.
 
-```{r metricFont_0.2-1, fig.cap="Metric sweep searching and recording font information in package version 0.2-1, in package file \\texttt{dvir/R/metric.R}", eval=FALSE}
+```{r metricFont_0.2-1, fig.cap="Metric sweep searching and recording font information in package version 0.2-1, in package file \\texttt{dvir/R/metric.R}.", eval=FALSE}
 metric_info_243 <- op_font_def
 grid_op_243 <- op_font_def
 ```
 
 The following code shows what the code was changed to in `dvir` version 0.2-2. The function `op_ignore` is an empty function, so when the metric or grid sweeps comes across that op code, they now do nothing.
 
-```{r metricFont_0.2-2, fig.cap="Metric sweep now *not* searching and recording font information in package version 0.2-2, in package file \\texttt{dvir/R/metric.R}", eval=FALSE}
+```{r metricFont_0.2-2, fig.cap="Metric sweep now *not* searching and recording font information in package version 0.2-2, in package file \\texttt{dvir/R/metric.R}.", eval=FALSE}
 metric_info_243 <- op_ignore
 grid_op_243 <- op_ignore
 ```
@@ -114,7 +114,7 @@ Unfortunately these changes alone caused an error when running `grid.latex()`. T
 
 The resetting of the global fonts list was initiated when the sweeps passed op code 247 in the DVI file, which is the preamble at the start of every DVI file. Setting the metric and grid sweeps to do nothing when they pass the preamble of the DVI file, again by way of `op_ignore`, solved this problem as the global fonts list created by the font sweep is now not overwritten.
 
-```{r metricGlobalFont_0.2-2, fig.cap="Metric sweep now *not* resetting the global fonts list in package version 0.2-2, in package file \\texttt{dvir/R/metric.R}", eval=FALSE}
+```{r metricGlobalFont_0.2-2, fig.cap="Metric sweep now *not* resetting the global fonts list in package version 0.2-2, in package file \\texttt{dvir/R/metric.R}.", eval=FALSE}
 metric_info_247 <- op_ignore
 grid_op_247 <- op_ignore
 ```
@@ -193,7 +193,7 @@ plotProfiling1 <- function(ex, versionLabels, results, levels) {
     scale_color_discrete(name = "'dvir' Version",
                          limits = c("Before", "After"),
                          labels = versionLabels) +
-    labs(x = NULL, y = "Average time\n(ms)") +
+    labs(x = NULL, y = "Average time\n(seconds)") +
     theme(axis.ticks.x = element_blank(),
           axis.text.x = element_blank(),
           panel.spacing.x = unit(1.5, "lines"))
@@ -205,13 +205,13 @@ versionLabels <- c(Before = "0.2-1 (before changes)",
 levels1 <- c("gridlatex", "metric", "grid")
 ```
 
-```{r speedUp1Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, over 20 runs of the simple example.", echo = FALSE, fig.width = 7, fig.height = 4}
+```{r speedUp1Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, over 20 runs of the simple example.", echo = FALSE, fig.width = 7, fig.height = 5}
 plotProfiling1("simple", versionLabels, results = resultDF, levels = levels1)
 ```
 
 For the simple example the time spent in the metric and grid sweeps have decreased by 76% and 83% respectively. The speed of the overall `grid.latex()` call has decreased by 30%.
 
-```{r speedUp1Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, over 20 runs of the complicated example.", echo = FALSE, fig.width = 7, fig.height = 4}
+```{r speedUp1Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function, metric sweep and grid sweep before and after these changes, over 20 runs of the complicated example.", echo = FALSE, fig.width = 7, fig.height = 5}
 plotProfiling1("yee", versionLabels, results = resultDF, levels = levels1)
 ```
 

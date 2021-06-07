@@ -13,6 +13,9 @@ testText <- c("testing",
               "$\\frac{\\mu^2}{2} + x$ is the equation",
               "\\begin{minipage}{1in}Multiline, with some line wrapping\\end{minipage}")
 
+testTextDviMoves <- paste0("{\\LARGE{", testText, "}}")
+testTextDviMoves[6] <- gsub("1in", "1.5in", testTextDviMoves[6])
+
 # Function to convert 'grid' units to LaTeX units (changing the characters at the end basically)
 unitConvert <- function(x) {
   paste0(as.numeric(x), switch(attr(x, "unit"),
@@ -88,7 +91,7 @@ returnBaselines <- function(testText,
 
 Text characters have a baseline, that is, a horizontal line on which the characters naturally sit so all the letters appear to be in line with each other. Some letters, like a lower case y or j, have a ``descender''. A descender is a part of a character that sits below the baseline. 
 
-```{r, echo = FALSE, fig.cap = "The baseline and descender of the letter y", fig.height = 0.8, fig.width = 3}
+```{r, echo = FALSE, fig.cap = "The baseline and descender of the letter y.", fig.height = 0.8, fig.width = 3}
 yAlign <- 0.25
 grid.text("y", y = yAlign, gp = gpar(fontsize = 50), just = c("left", "bottom"))
 
@@ -118,7 +121,7 @@ grid.text("descender",
 
 The `grid.text()` function accounts for this baseline so when you bottom-align text at a certain y-value, the descenders will actually fall below the y-value we defined, despite the bottom justification. Unfortunately, `dvir` does not account for text baselines and will do any alignment in relation to bounding box of the text, which, in the case of figure \@ref(fig:baselineCombine), is at the bottom of the descenders.
 
-```{r baselineCombine, fig.cap = "Combining \\texttt{grid.text()} and \\texttt{grid.latex()}", fig.height = 0.7, fig.width = 4.5}
+```{r baselineCombine, fig.cap = "Combining \\texttt{grid.text()} and \\texttt{grid.latex()}.", fig.height = 0.7, fig.width = 4.5}
 texText <- "{\\LARGE changing to \\LaTeX{}}"
 grid.text("An example of ", 
           y = 0.1, 
@@ -155,7 +158,7 @@ xxx1         k=50
 
 After this statement there appears to consistently be a downward move equal to the height of the bounding box of text (from the top left of the bounding box to the bottom left), and then a move upward before the first character is drawn. This algorithms take the cursor location after that upward move to be the baseline. In instances where the entire text has no descenders (i.e. the baseline is the bottom of the bounding box) there will be no upward move before the first character and the baseline value returned is 0.
 
-```{r baselineDemo, fig.cap = "Using the \\texttt{baselines()} function, returning the baseline of \\texttt{$x - \\mu$} with the \\texttt{alex} algorithm"}
+```{r baselineDemo, fig.cap = "Using the \\texttt{baselines()} function, returning the baseline of \\texttt{$x - \\mu$} with the \\texttt{alex} algorithm."}
 baselineValue <- baselines(tex = "$x - \\mu$", algorithm = "alex")
 baselineValue
 ```
@@ -167,7 +170,7 @@ cat(makeFigure(testText,
                                algo, 
                                dviMovesMethod = "all", 
                                dviMovesSelection = "1"), 
-               "The baselines as calculated by the \\texttt{alex} algorithm",
+               "The baselines as calculated by the \\texttt{alex} algorithm.",
                label = "alexAlgo"))
 ```
 
@@ -175,13 +178,13 @@ For plain text this algorithm works quite well. Unfortunately for many equations
 
 ### `dviMoves` algorithm
 
-This is an extension of the `alex` algorithm. Rather than only taking the location after the second vertical cursor move, this algorithm keeps track of *all* the up and down moves of the cursor. The motivation behind this is that the upward and downward moves in the DVI file should reflect the cursor moving to the baseline value of the next character to be typeset. Once again we assume that the first downward move after the "HiResBoundingBox" statement is from the top left to the bottom left of the bounding box so this algorithm only returns the upward and downward moves from there. As DVI files have the ability to save the current cursor location, move around a bit, then reset back to the saved location, all up and down moves are tracked from the start of the DVI file.
+This is an extension of the `alex` algorithm. Rather than only taking the location after the second vertical cursor move, this algorithm keeps track of *all* the up and down moves of the cursor. The motivation behind this is that the upward and downward moves in the DVI file should reflect the cursor moving to the baseline of the next character to be typeset. Once again we assume that the first downward move after the "HiResBoundingBox" statement is from the top left to the bottom left of the bounding box so this algorithm only returns the upward and downward moves from there. As DVI files have the ability to save the current cursor location, move around a bit, then reset back to the saved location, all up and down moves are tracked from the start of the DVI file.
 
 There are two complications with this method:
 
-- As it returns *all* the vertical positions the cursor moves to there are many possible baseline values returned. Any more than one means we have to decide which of them to choose.
+- As it returns *all* the vertical positions the cursor moves to there are many possible baseline values returned. Any more than one baseline value being returned means a method for choosing which baseline value is required.
 
-- There are often several up and downward moves in the DVI file between typeset characters so in between the "useful" baseline values there can be some which are duplicates or are not very useful.
+- There are often several up and downward moves in the DVI file between typeset characters so in between the "useful" baseline values there can be some that are duplicates or are not very useful.
 
 To account for these considerations, along with the `dviMoves` algorithm, the `baselines()` function also allows a choice of method to select a *single* baseline out of the many returned by the algorithm.
 
@@ -208,12 +211,12 @@ This method will return the first baseline value just after a specified characte
 
 ```{r results = "asis", echo = FALSE}
 algo <- "dviMoves"
-cat(makeFigure(testText, 
-               returnBaselines(testText, 
+cat(makeFigure(testTextDviMoves, 
+               returnBaselines(testTextDviMoves, 
                                algo, 
                                dviMovesMethod = "all", 
                                dviMovesSelection = "1"), 
-               "The baselines as calculated by the \\texttt{dviMoves} algorithm",
+               "The baselines as calculated by the \\texttt{dviMoves} algorithm.",
                label = "dviMovesAlgo"))
 ```
 
@@ -223,7 +226,7 @@ This algorithm performs very well. In figure \ref{dviMovesAlgo} nearly every par
 
 This algorithm uses the `preview` package [@man-preview] in \LaTeX{}. @preview-tug describes the use of the algorithm for `dvisvgm`, and it has been implemented here as it has in `matplotlib.texmanager` [@matplotlib]. 
 
-When this algorithm is selected, the following code is added to the header of the DVI file:
+When this algorithm is selected, the following code is added to the header of the DVI file.
 
 \begin{spacing}{1}
 \begin{verbatim}
@@ -250,7 +253,7 @@ cat(makeFigure(testText,
                                algo, 
                                dviMovesMethod = "all", 
                                dviMovesSelection = "1"), 
-               "The baselines as calculated by the \\texttt{preview} algorithm",
+               "The baselines as calculated by the \\texttt{preview} algorithm.",
                label = "previewAlgo"))
 ```
 
@@ -258,7 +261,7 @@ This algorithm also performs very well. In all examples in figure \ref{previewAl
 
 ### `dvipng` algorithm
 
-The `dvipng` program [@man-dvipng] turns DVI files into PNG images. An option of `dvipng` is `--depth` which returns the baseline value in pixels. [reference dvipng package - maybe where you egt it from linux?]
+The `dvipng` program [@man-dvipng] turns DVI files into PNG images. An option of `dvipng` is `--depth` which returns the baseline value in pixels.
 
 The system call `dvipng --depth test.dvi` returns `depth=4` within its output so after recording the output, a simple search for `depth=` will find the baseline value.
 
@@ -269,7 +272,7 @@ cat(makeFigure(testText,
                                algo, 
                                dviMovesMethod = "all", 
                                dviMovesSelection = "1"), 
-               "The baselines as calculated by the \\texttt{dvipng} algorithm",
+               "The baselines as calculated by the \\texttt{dvipng} algorithm.",
                label = "dvipngAlgo"))
 ```
 

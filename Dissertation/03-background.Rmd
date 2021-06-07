@@ -14,7 +14,7 @@ A \TeX{} or \LaTeX{} file is just plain text so there needs to be a step to tran
 
 In a simplified form, `dvir` works by providing a high level function, `grid.latex()`, to call with the \TeX{} code of the expression or text to be displayed. In this instance, the preamble is changed only because the axis title uses `\dfrac` so the `amsmath` package needs to be specified in the preamble.
 
-```{r, fig.width = 0.4, fig.height = 0.4, fig.cap = "Using the \\texttt{dvir} function \\texttt{grid.latex()}"}
+```{r, fig.width = 0.4, fig.height = 0.4, fig.cap = "Using the \\texttt{dvir} function \\texttt{grid.latex()}."}
 library(dvir)
 texCode <- "$\\dfrac{\\mu^2}{2}$"
 newPreamble <- 
@@ -41,7 +41,7 @@ The following steps are taken when `grid.latex()` runs:
 \begin{enumerate}
   \setcounter{enumi}{1}
   \item This \TeX{} document is then processed using the local \TeX{} installation to create a DVI file.
-  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then ``setting'' (i.e. printing) a character ``2''.
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then ``setting'' (i.e. printing) the character ``2''.
 \end{enumerate}
 
 \begin{spacing}{1}

@@ -13,16 +13,16 @@ fnt_def_1    fontnum=17, checksum=-1209964637, scale=786432, design=786432,
 \end{verbatim}
 \end{spacing}
 
-In fact, that example's 11 `grid.latex()` calls define fonts 29 times in total, for eight unique fonts.
+In fact, that example's 11 `grid.latex()` calls define a font 29 times in total, for eight unique fonts.
 
 Caching fonts requires several steps:
 
 \begin{itemize}
-  \item During the font sweep, search all font definitions as per usual.
+  \item During the font sweep, search for all font definitions as per usual.
   \item For each font definition, check if the font has been cached already.
   \begin{itemize}
-    \item If yes, do nothing. Refer to the existing font information in the cache when the needs to be used
-    \item If no, search for and store the font information as per usual.
+    \item If yes, do nothing. Refer to the existing font information in the cache when the font needs to be used.
+    \item If no, search for and store the system font information as per usual.
   \end{itemize}
 \end{itemize}
 
@@ -33,7 +33,7 @@ if (dvir::get("initFonts") || is.null(dvir::get("fonts")))
   dvir::set("fonts", vector("list", 255))
 ```
 
-Note in this new statement the logical variable `initFonts`, stored in the `dvir` namespace. This lets a user choose whether to intialise the font cache on a `grid.latex()` call. If `initFonts` is `FALSE` or the font list does not exist, for example after the package is loaded, the font list is initialised. Otherwise, the existing font cache remains. `initFonts` was added as an argument to `grid.latex()` with its default value being equal to the global option `dvir.initFonts`.
+Note in this new statement the logical variable `initFonts`, stored in the `dvir` namespace. This lets a user choose whether to intialise the font cache on a `grid.latex()` call. If `initFonts` is `FALSE` or the font list does not exist, for example after the package is loaded, the font list is initialised. Otherwise, the existing font cache remains. An argument, `initFonts`, was added to `grid.latex()` with its default value being equal to the global option `dvir.initFonts`.
 
 In a DVI file, each font definition gives the font a identification number, for example `fontnum=17`. In all the DVI files examined as part of this project, this font identification number is the same when that particular font is used again in another `grid.latex()` call. This number is used as the index of the fonts list where its information is stored. 
 
@@ -76,11 +76,11 @@ versionLabels2 <- c(Before = "0.3-1 (before changes)",
 levels2 <- c("gridlatex", "font")
 ```
 
-```{r speedUp2Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep, over 20 runs of the simple example.", echo = FALSE, fig.width = 5, fig.height = 4}
+```{r speedUp2Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep, over 20 runs of the simple example.", echo = FALSE, fig.height = 5, out.width = "60%"}
 plotProfiling1("simple", versionLabels2, results = results2, levels = levels2)
 ```
 
-```{r speedUp2Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep, over 20 runs of the complicated example", echo = FALSE, fig.width = 5, fig.height = 4}
+```{r speedUp2Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep, over 20 runs of the complicated example.", echo = FALSE, fig.height = 5, out.width = "60%"}
 plotProfiling1("yee", versionLabels2, results = results2, levels = levels2)
 ```
 

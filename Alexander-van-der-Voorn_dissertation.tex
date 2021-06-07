@@ -150,10 +150,10 @@ New Zealand
 typesetting, which are currently not available in R. The \texttt{dvir}
 package extends R to draw \TeX{} output on R graphics. By extending the
 usability and functionality of the \texttt{dvir} package it better
-streamlines the workflow of making R graphics with some \TeX{} output.
-Rather than making some graphics in R and exporting to \LaTeX{} itself
-or an image editor like Photoshop to add \TeX{} or \TeX{}-like output,
-this can all be done in R through a simple interface from the
+streamlines the workflow of making R graphics that include some \TeX{}
+output. Rather than making some graphics in R and exporting to \LaTeX{}
+itself or an image editor like Photoshop to add \TeX{} or \TeX{}-like
+output, this can all be done in R through a simple interface from the
 \texttt{dvir} package. Three improvements to the \texttt{dvir} package
 are investigated and discussed in this report.
 
@@ -162,7 +162,7 @@ speed of the package was increased by making two changes - removing
 redundant code that meant the \texttt{dvir} package was searching for
 fonts three times instead of once, and allowing font information to be
 cached so that once font information was found the \texttt{dvir} package
-did not need to search again for that font.
+did not need to search again for that same information.
 
 The latest version of R adds functionality of linear and radial gradient
 fills. This means gradient fill information from \Tikz{} graphics, a
@@ -177,8 +177,8 @@ bounding box of the text but aligning with the baseline of the text is
 more desirable. \TeX{} output does not explicitly state a baseline value
 for a piece of text so some algorithms for determining the text
 baselines were implemented in an R function to test their usefulness.
-One of these algorithms performs particular well for all tested
-examples, including multi-line text.
+One of these algorithms performs particularly well for all tested
+examples, including multiline text.
 
 The magnitude of the speed increase alone makes \texttt{dvir} much more
 practical as it allows much faster testing of code and allows for more
@@ -213,7 +213,7 @@ a mathematical equation.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlot-1} 
+{\centering \includegraphics[width=0.5\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/expressionPlot-1} 
 
 }
 
@@ -230,11 +230,11 @@ above with how it looks when created by \LaTeX{} in figure
 \begin{equation*}
 \dfrac{\mu^2}{2}
 \end{equation*}
-\caption{The y-axis title from above, created with \LaTeX}
+\caption{The y-axis title from above, created with \LaTeX{}.}
 \end{figure}
 
-The difference is stark and Murrell (2018) describes several approaches
-in R, and their limitations, which can get us closer to the \LaTeX{}
+The difference is stark and Murrell (2018) describes several approaches,
+and their limitations, in R which can get us closer to the \LaTeX{}
 result as motivation for the \texttt{dvir} package. The approaches are
 replicated here.
 
@@ -261,7 +261,7 @@ particular example but not if we wanted to include other \TeX{} symbols.
 
 }
 
-\caption{The axis title using the \texttt{extrafont} package}\label{fig:unnamed-chunk-2}
+\caption{The axis title using the \texttt{extrafont} package.}\label{fig:unnamed-chunk-2}
 \end{figure}
 
 \begin{Shaded}
@@ -280,7 +280,7 @@ particular example but not if we wanted to include other \TeX{} symbols.
 
 }
 
-\caption{Another equation using the \texttt{extrafont} package}\label{fig:bracExampleExtra}
+\caption{Another equation using the \texttt{extrafont} package.}\label{fig:bracExampleExtra}
 \end{figure}
 
 In the case of figure \ref{fig:bracExampleExtra}, note how
@@ -288,15 +288,15 @@ In the case of figure \ref{fig:bracExampleExtra}, note how
 symbols, but does not quite replicate the rest of the result from
 \LaTeX{}, as in figure \ref{bracExample}.
 
-\begin{figure}\label{bracExample}
+\begin{figure}
 \centering
 $\left(\dfrac{x - \mu}{\sigma}\right)$
-\caption{A \LaTeX{} equation with brackets}
+\caption{A \LaTeX{} equation with brackets.}
+\label{bracExample}
 \end{figure}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Using the 'tikzDevice' package}
 \KeywordTok{library}\NormalTok{(tikzDevice)}
 \KeywordTok{options}\NormalTok{(}\DataTypeTok{tikzDocumentDeclaration =} \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{documentclass[12pt]\{article\}"}\NormalTok{)}
 \NormalTok{packages <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{getOption}\NormalTok{(}\StringTok{"tikzLatexPackages"}\NormalTok{),}
@@ -312,7 +312,7 @@ $\left(\dfrac{x - \mu}{\sigma}\right)$
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}\label{tikzDevicePlot}
+\begin{figure}
 \centering
  
 \begin{tikzpicture}[x=1pt,y=1pt,scale=0.5]
@@ -399,7 +399,8 @@ $\left(\dfrac{x - \mu}{\sigma}\right)$
 \node[text=drawColor,anchor=base east,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 30.24,256.01) {$\dfrac{\mu^2}{2}$};
 \end{scope}
 \end{tikzpicture}
- \caption{Drawing the plot with the \texttt{tikzDevice} package}
+ \caption{Drawing the plot with the \texttt{tikzDevice} package.}
+ \label{tikzDevicePlot}
  \end{figure}
 
 The \texttt{tikzDevice} package in R will draw the axis titles with
@@ -431,11 +432,11 @@ with the axis titles made using \texttt{grid.latex()}.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/plotGridLatex-1} 
+{\centering \includegraphics[width=0.5\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/plotGridLatex-1} 
 
 }
 
-\caption{Changing axis titles with \texttt{grid.latex()}}\label{fig:plotGridLatex}
+\caption{Changing axis titles with \texttt{grid.latex()}.}\label{fig:plotGridLatex}
 \end{figure}
 
 \subsection{Where this project fits
@@ -520,7 +521,7 @@ so the \texttt{amsmath} package needs to be specified in the preamble.
 
 }
 
-\caption{Using the \texttt{dvir} function \texttt{grid.latex()}}\label{fig:unnamed-chunk-6}
+\caption{Using the \texttt{dvir} function \texttt{grid.latex()}.}\label{fig:unnamed-chunk-6}
 \end{figure}
 
 The following steps are taken when \texttt{grid.latex()} runs:
@@ -542,7 +543,7 @@ The following steps are taken when \texttt{grid.latex()} runs:
 \begin{enumerate}
   \setcounter{enumi}{1}
   \item This \TeX{} document is then processed using the local \TeX{} installation to create a DVI file.
-  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then ``setting'' (i.e. printing) a character ``2''.
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then ``setting'' (i.e. printing) the character ``2''.
 \end{enumerate}
 
 \begin{spacing}{1}
@@ -622,13 +623,13 @@ us see where in the package time was being spent. This was in
 \caption{Screenshot of \texttt{profvis::profvis()} output for the simple example in \texttt{dvir} version 0.2-1.}\label{fig:prof1}
 \end{figure}
 
-We can see the function call stack in figure \ref{fig:prof1}. At the
-bottom is the call to \texttt{grid.latex()}, which immediately calls
-\texttt{grid.draw()} which in turn calls \texttt{latexGrob()}. This
-calls \texttt{readDVI()} for about the first 20ms, then
-\texttt{dviGrob()} for the remaining time to the end of the original
-\texttt{grid.latex()} function call, and so on up the function call
-stack.
+We can see the function call stack in figure \ref{fig:prof1}. On the
+fifth line from the bottom is the call to \texttt{grid.latex()}, which
+immediately calls \texttt{grid.draw()} which in turn calls
+\texttt{latexGrob()}. This calls \texttt{readDVI()} for about the first
+30ms, then \texttt{dviGrob()} for the remaining time to the end of the
+original \texttt{grid.latex()} function call, and so on up the function
+call stack.
 
 \begin{figure}
 
@@ -640,27 +641,26 @@ stack.
 \end{figure}
 
 The \texttt{profvis::profvis()} output for our more complicated example,
-in figure \ref{fig:prof2} reveals most of the time to create the figure
-is in \texttt{grid.latex()}. Note that the code to draw the arrows and
-the ``(a)'' in this example is so quick it occupies the very skinny call
-stack on the far left of the graph. \texttt{grid.latex()} and its
-subsequent function calls, on the other hand, take up most of the time
-required to produce the example.
+in figure \ref{fig:prof2}, reveals most of the time spent creating the
+figure is in \texttt{grid.latex()}. Note that the code to draw the
+arrows and the ``(a)'' in this example is so quick it occupies the very
+skinny call stack on the far left of the graph. On the other hand,
+\texttt{grid.latex()} and its subsequent function calls take up most of
+the time required to produce the example.
 
 In figure \ref{fig:prof2} some blocks in the call stack have been
-highlighted - these are related to the \texttt{engine\$fontDef}
-operation occuring. This is a part of the ``font sweep'', as was
-described in the introduction to \texttt{dvir} in section
-\ref{dvirDesc}.
+highlighted light grey. These are related to the
+\texttt{engine\$fontDef} operation occurring. This is a part of the
+``font sweep'', as was described in section \ref{dvirDesc}.
 
 In the top left corner of figure \ref{fig:prof2} we are told the
-aggregate time spent with \texttt{engine\$fontDef} is 1830ms. Compared
-to the total time of this run (a total of about 2700ms), \texttt{dvir}
+aggregate time spent with \texttt{engine\$fontDef} is 3350ms. Compared
+to the total time of this run (a total of about 4750ms), \texttt{dvir}
 is spending a \emph{lot} of time doing these font sweeps.
 
 What was interesting though was that after the actual font sweep the
 following sweeps for the metric and grid information \emph{also} called
-\texttt{engine\$fontDef}. As the point of the font sweep is that it
+\texttt{engine\$fontDef}. As the intention of the font sweep is that it
 finds all the font information to be used later on the following metric
 and grid sweeps should not need to ``re-sweep'' for the fonts.
 
@@ -675,11 +675,11 @@ and grid sweeps should not need to ``re-sweep'' for the fonts.
 
 The effect of this is very obvious in figure \ref{fig:prof3} which is
 the same as figure \ref{fig:prof1} but highlights the time spent in
-\texttt{engine\$fontDef}. The wrappers for the font, metric and grid
-sweeps are \texttt{dviFonts()}, \texttt{dviMetric()} and
-\texttt{dvigrid()} respectively (sixth call from the bottom of the
-stack). Here we can see nearly all of the time spent in the metric and
-grid sweeps are actually redoing the font sweep.
+\texttt{engine\$fontDef} in light grey. The wrappers for the font,
+metric and grid sweeps are \texttt{dviFonts()}, \texttt{dviMetric()} and
+\texttt{dvigrid()} respectively (tenth call from the bottom of the
+stack). Here nearly all of the time spent in the metric and grid sweeps
+are actually redoing the font sweep.
 
 The change to be made was simply stopping the metric and grid sweeps
 from doing the font sweep again.
@@ -793,17 +793,17 @@ fnt_def_1    fontnum=17, checksum=-1209964637, scale=786432, design=786432,
 \end{verbatim}
 \end{spacing}
 
-In fact, that example's 11 \texttt{grid.latex()} calls define fonts 29
+In fact, that example's 11 \texttt{grid.latex()} calls define a font 29
 times in total, for eight unique fonts.
 
 Caching fonts requires several steps:
 
 \begin{itemize}
-  \item During the font sweep, search all font definitions as per usual.
+  \item During the font sweep, search for all font definitions as per usual.
   \item For each font definition, check if the font has been cached already.
   \begin{itemize}
-    \item If yes, do nothing. Refer to the existing font information in the cache when the needs to be used
-    \item If no, search for and store the font information as per usual.
+    \item If yes, do nothing. Refer to the existing font information in the cache when the font needs to be used.
+    \item If no, search for and store the system font information as per usual.
   \end{itemize}
 \end{itemize}
 
@@ -827,9 +827,9 @@ stored in the \texttt{dvir} namespace. This lets a user choose whether
 to intialise the font cache on a \texttt{grid.latex()} call. If
 \texttt{initFonts} is \texttt{FALSE} or the font list does not exist,
 for example after the package is loaded, the font list is initialised.
-Otherwise, the existing font cache remains. \texttt{initFonts} was added
-as an argument to \texttt{grid.latex()} with its default value being
-equal to the global option \texttt{dvir.initFonts}.
+Otherwise, the existing font cache remains. An argument,
+\texttt{initFonts}, was added to \texttt{grid.latex()} with its default
+value being equal to the global option \texttt{dvir.initFonts}.
 
 In a DVI file, each font definition gives the font a identification
 number, for example \texttt{fontnum=17}. In all the DVI files examined
@@ -878,7 +878,7 @@ be seen in for the example in figure \ref{fig:yeeExample} - a 76\% and
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1} 
+{\centering \includegraphics[width=0.6\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Simple-1} 
 
 }
 
@@ -887,11 +887,11 @@ be seen in for the example in figure \ref{fig:yeeExample} - a 76\% and
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Yee-1} 
+{\centering \includegraphics[width=0.6\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/speedUp2Yee-1} 
 
 }
 
-\caption{The average time spent in the \texttt{grid.latex()} function and font sweep, over 20 runs of the complicated example}\label{fig:speedUp2Yee}
+\caption{The average time spent in the \texttt{grid.latex()} function and font sweep, over 20 runs of the complicated example.}\label{fig:speedUp2Yee}
 \end{figure}
 
 \subsection{Profiling environment
@@ -947,7 +947,7 @@ pictures and diagrams in \TeX{} documents.
       (3, 0) node[circle,fill=blue!40,draw,thick] (y) {$\dfrac{\mu^2}{2}$};
 \draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);
 \end{tikzpicture}
-\caption{A picture made with \Tikz{}}
+\caption{A picture made with \Tikz{}.}
 \label{tikzRaw}
 \end{figure}
 
@@ -996,7 +996,7 @@ provides support for these fills in the \texttt{grid} package (Murrell
 
 }
 
-\caption{Using \texttt{grid.tikzpicture()} to make the earlier diagram}\label{fig:gridTikz}
+\caption{Using \texttt{grid.tikzpicture()} to make the earlier diagram.}\label{fig:gridTikz}
 \end{figure}
 
 The use of \texttt{grid.tikzpicture()} is demonstrated in figure
@@ -1057,7 +1057,7 @@ it to \texttt{dvir}.
 \begin{tikzpicture}
 \filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);
 \end{tikzpicture}
-\caption{A rectangle with a linear gradient fill using \Tikz{}}
+\caption{A rectangle with a linear gradient fill using \Tikz{}.}
 \label{tikzLinGrad}
 \end{figure}
 
@@ -1185,7 +1185,7 @@ ones we have already gathered.
 \end{spacing}
 
 The following macros process all the stop locations, collating them into
-an R friendly vector suitable to parse to \texttt{linearGradient()}
+an R friendly vector suitable to parse to \texttt{linearGradient()}.
 
 \begin{spacing}{1}
 \begin{verbatim}
@@ -1201,6 +1201,7 @@ an R friendly vector suitable to parse to \texttt{linearGradient()}
   {{\pgf@sys@shading@end@pos}{\pgf@sys@shading@end@pos}}%
   \pgf@sys@dvir@addtostops{)}%
 }
+
 
 \def\pgf@sys@dvir@shading@dostoplocations#1{%
   \edef\pgf@test{#1}%
@@ -1364,7 +1365,7 @@ baseline.
 
 }
 
-\caption{The baseline and descender of the letter y}\label{fig:unnamed-chunk-15}
+\caption{The baseline and descender of the letter y.}\label{fig:unnamed-chunk-15}
 \end{figure}
 
 The \texttt{grid.text()} function accounts for this baseline so when you
@@ -1393,7 +1394,7 @@ descenders.
 
 }
 
-\caption{Combining \texttt{grid.text()} and \texttt{grid.latex()}}\label{fig:baselineCombine}
+\caption{Combining \texttt{grid.text()} and \texttt{grid.latex()}.}\label{fig:baselineCombine}
 \end{figure}
 
 To fix this, \texttt{dvir} needs to obtain or calculate a value for the
@@ -1510,7 +1511,7 @@ $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
 \end{center}
-\caption{The baselines as calculated by the \texttt{alex} algorithm}\label{alexAlgo}
+\caption{The baselines as calculated by the \texttt{alex} algorithm.}\label{alexAlgo}
 \end{figure}
 
 For plain text this algorithm works quite well. Unfortunately for many
@@ -1529,14 +1530,14 @@ This is an extension of the \texttt{alex} algorithm. Rather than only
 taking the location after the second vertical cursor move, this
 algorithm keeps track of \emph{all} the up and down moves of the cursor.
 The motivation behind this is that the upward and downward moves in the
-DVI file should reflect the cursor moving to the baseline value of the
-next character to be typeset. Once again we assume that the first
-downward move after the ``HiResBoundingBox'' statement is from the top
-left to the bottom left of the bounding box so this algorithm only
-returns the upward and downward moves from there. As DVI files have the
-ability to save the current cursor location, move around a bit, then
-reset back to the saved location, all up and down moves are tracked from
-the start of the DVI file.
+DVI file should reflect the cursor moving to the baseline of the next
+character to be typeset. Once again we assume that the first downward
+move after the ``HiResBoundingBox'' statement is from the top left to
+the bottom left of the bounding box so this algorithm only returns the
+upward and downward moves from there. As DVI files have the ability to
+save the current cursor location, move around a bit, then reset back to
+the saved location, all up and down moves are tracked from the start of
+the DVI file.
 
 There are two complications with this method:
 
@@ -1544,11 +1545,12 @@ There are two complications with this method:
 \item
   As it returns \emph{all} the vertical positions the cursor moves to
   there are many possible baseline values returned. Any more than one
-  means we have to decide which of them to choose.
+  baseline value being returned means a method for choosing which
+  baseline value is required.
 \item
   There are often several up and downward moves in the DVI file between
   typeset characters so in between the ``useful'' baseline values there
-  can be some which are duplicates or are not very useful.
+  can be some that are duplicates or are not very useful.
 \end{itemize}
 
 To account for these considerations, along with the \texttt{dviMoves}
@@ -1605,126 +1607,126 @@ limited for several reasons:
 
 \begin{figure}
 \begin{center}
-\settodepth{\dvidepth} {testing}%
-\settowidth{\dviwidth} {testing}%
+\settodepth{\dvidepth} {{\LARGE{testing}}}%
+\settowidth{\dviwidth} {{\LARGE{testing}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+127431sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+220273sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+565119sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+565119sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-testing
+\raisebox{\dimexpr -\dvidepth+963145sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+963145sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+{\LARGE{testing}}
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$\sum_{n=1}^{\infty} 2^{-n} = 1$}%
-\settowidth{\dviwidth} {$\sum_{n=1}^{\infty} 2^{-n} = 1$}%
+\settodepth{\dvidepth} {{\LARGE{$\sum_{n=1}^{\infty} 2^{-n} = 1$}}}%
+\settowidth{\dviwidth} {{\LARGE{$\sum_{n=1}^{\infty} 2^{-n} = 1$}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+688135sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+890763sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+526117sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+526117sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+196611sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+434436sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+196611sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+690925sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+690925sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+723635sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+723635sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$\sum_{n=1}^{\infty} 2^{-n} = 1$
+\raisebox{\dimexpr -\dvidepth+279964sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+690925sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+279964sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1149677sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1149677sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+{\LARGE{$\sum_{n=1}^{\infty} 2^{-n} = 1$}}
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$\sum\limits_{n=1}^{\infty} 2^{-n} = 1$}%
-\settowidth{\dviwidth} {$\sum\limits_{n=1}^{\infty} 2^{-n} = 1$}%
+\settodepth{\dvidepth} {{\LARGE{$\sum\limits_{n=1}^{\infty} 2^{-n} = 1$}}}%
+\settowidth{\dviwidth} {{\LARGE{$\sum\limits_{n=1}^{\infty} 2^{-n} = 1$}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1256841sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1256841sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1125770sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1468012sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1468012sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+726142sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1336941sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+726142sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+726142sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+65536sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+65536sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+872071sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+726142sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1137103sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+726142sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1519895sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1519895sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$\sum\limits_{n=1}^{\infty} 2^{-n} = 1$
+\raisebox{\dimexpr -\dvidepth+1872150sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1872150sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+{\LARGE{$\sum\limits_{n=1}^{\infty} 2^{-n} = 1$}}
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {The equation is $x + \frac{\mu^2}{2}$}%
-\settowidth{\dviwidth} {The equation is $x + \frac{\mu^2}{2}$}%
+\settodepth{\dvidepth} {{\LARGE{The equation is $x + \frac{\mu^2}{2}$}}}%
+\settowidth{\dviwidth} {{\LARGE{The equation is $x + \frac{\mu^2}{2}$}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+716130sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+376729sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+390519sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+865870sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1151260sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+865870sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+865870sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+660528sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+1sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+1sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+390519sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+390519sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+390519sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+927301sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+927301sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-The equation is $x + \frac{\mu^2}{2}$
+\raisebox{\dimexpr -\dvidepth+1573603sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1573603sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+{\LARGE{The equation is $x + \frac{\mu^2}{2}$}}
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$\frac{\mu^2}{2} + x$ is the equation}%
-\settowidth{\dviwidth} {$\frac{\mu^2}{2} + x$ is the equation}%
+\settodepth{\dvidepth} {{\LARGE{$\frac{\mu^2}{2} + x$ is the equation}}}%
+\settowidth{\dviwidth} {{\LARGE{$\frac{\mu^2}{2} + x$ is the equation}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+716130sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+376729sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+865870sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1151260sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+865870sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+865870sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+660528sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+1sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+1sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+390519sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+927301sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+927301sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$\frac{\mu^2}{2} + x$ is the equation
+\raisebox{\dimexpr -\dvidepth+1573603sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1573603sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+{\LARGE{$\frac{\mu^2}{2} + x$ is the equation}}
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
-\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}}%
+\settodepth{\dvidepth} {{\LARGE{\begin{minipage}{1.5in}Multiline, with some line wrapping\end{minipage}}}}%
+\settowidth{\dviwidth} {{\LARGE{\begin{minipage}{1.5in}Multiline, with some line wrapping\end{minipage}}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1700295sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1700295sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+913863sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+913863sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+127431sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+127431sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+3103857sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+3103857sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1662065sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+1662065sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+220273sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+220273sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+2155406sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+2155406sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\begin{minipage}{1in}Multiline, with some line wrapping\end{minipage}
+\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+3890289sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+\raisebox{\dimexpr -\dvidepth+3890289sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
+{\LARGE{\begin{minipage}{1.5in}Multiline, with some line wrapping\end{minipage}}}
 
 \vspace{0.3cm}
 \end{center}
-\caption{The baselines as calculated by the \texttt{dviMoves} algorithm}\label{dviMovesAlgo}
+\caption{The baselines as calculated by the \texttt{dviMoves} algorithm.}\label{dviMovesAlgo}
 \end{figure}
 
 This algorithm performs very well. In figure \ref{dviMovesAlgo} nearly
@@ -1742,7 +1744,7 @@ This algorithm uses the \texttt{preview} package (Kastrup 2017) in
 \texttt{matplotlib.texmanager} (Hunter 2007).
 
 When this algorithm is selected, the following code is added to the
-header of the DVI file:
+header of the DVI file.
 
 \begin{spacing}{1}
 \begin{verbatim}
@@ -1804,7 +1806,7 @@ $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
 \end{center}
-\caption{The baselines as calculated by the \texttt{preview} algorithm}\label{previewAlgo}
+\caption{The baselines as calculated by the \texttt{preview} algorithm.}\label{previewAlgo}
 \end{figure}
 
 This algorithm also performs very well. In all examples in figure
@@ -1818,8 +1820,7 @@ algorithm}{dvipng algorithm}}\label{dvipng-algorithm}
 
 The \texttt{dvipng} program (Larsson 2020) turns DVI files into PNG
 images. An option of \texttt{dvipng} is \texttt{-\/-depth} which returns
-the baseline value in pixels. {[}reference dvipng package - maybe where
-you egt it from linux?{]}
+the baseline value in pixels.
 
 The system call \texttt{dvipng\ -\/-depth\ test.dvi} returns
 \texttt{depth=4} within its output so after recording the output, a
@@ -1864,7 +1865,7 @@ $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
 \end{center}
-\caption{The baselines as calculated by the \texttt{dvipng} algorithm}\label{dvipngAlgo}
+\caption{The baselines as calculated by the \texttt{dvipng} algorithm.}\label{dvipngAlgo}
 \end{figure}
 
 It may not be obvious in printed form in figure \ref{dvipngAlgo} but the
@@ -1905,19 +1906,32 @@ another baseline value calculated by \texttt{dviMoves}.
 \TeX{} and its extensions have more functionality than could
 realistically be added to R but by targeting the most useful features of
 \TeX{}, as \texttt{dvir} did originally and as has been continued in
-this project, many use cases are accommodated. The changes discussed in
-this report have made the \texttt{dvir} package better especially for
-displaying text and equations, graphics with many \texttt{grid.latex()}
-calls, or even when developing graphics with \texttt{grid.latex()} which
-requires rerunning code with small tweaks to get the perfect graphic.
+this project, many use cases are accommodated.
 
-\begin{itemize}
-\tightlist
-\item
-  talk about how text baselines is almost there\ldots{}.
-\item
-  for coee speed, now it is ``reading/writing to disk'' thast is slow
-\end{itemize}
+The speed improvement of the package has made the experience using
+\texttt{dvir} better when creating graphics with many
+\texttt{grid.latex()} calls and also when \emph{developing} graphics
+with \texttt{grid.latex()} which require rerunning code with small
+tweaks often to get the perfect graphical result. The progress on
+aligning \texttt{grid.latex()} text output with its baseline means it is
+possible to professionally display text and equations when they are
+integrated with other text or graphical features.
+
+Of course, there are still many things which could improve \texttt{dvir}
+in future. Now that the font sweeping by \texttt{dvir} is much more
+efficient other parts of the code are becoming the ``slowest''. In
+particular the reading and writing to disk, of the DVI file for example,
+takes more time now relative to the rest of the code.
+
+Implementation of a text baseline algorithm into \texttt{grid.latex()}
+itself to align text would also be a useful step forward. In the
+instance of the \texttt{dviMoves} algorithm, care is needed when
+choosing a method to determine the baseline value and should allow a
+user to manually override the choice as well. Additional testing of the
+algorithms could also be done to consider more advanced use cases, for
+example multiline text with mathematical equations and altered line
+spacing. Work on the \Tikz{} gradient fills could also progress as R
+expands its support of the gradient fills.
 
 \newpage{}
 
@@ -1940,7 +1954,7 @@ from DVI and EPS Files.'' \emph{TUGboat} 38 (3).
 
 \hypertarget{ref-matplotlib}{}
 Hunter, John. 2007. ``Matplotlib: A 2d Graphics Environment.''
-\emph{Computing in Science \& Engineering} 9 (3). IEEE COMPUTER SOC:
+\emph{Computing in Science \& Engineering} 9 (3). IEEE Computer Soc:
 90--95.
 doi:\href{https://doi.org/10.1109/MCSE.2007.55}{10.1109/MCSE.2007.55}.
 
