@@ -477,23 +477,23 @@ were:
 
 \TeX{} is a program to format and typeset text, and includes some basic
 macros to do this. \LaTeX{} is a higher-level implementation that sits
-on top of \TeX{}, basically consisting of a lot more macros, creating a
-much more user-friendly interface to \TeX{}. For example, \LaTeX{}
-allows one to create a document with numbered sections, title pages and
-bibliographies without having to write complicated \TeX{} macros
-oneself.
+on top of \TeX{}, essentially consisting of a lot more macros, creating
+a much more user-friendly interface to \TeX{}. For example, \LaTeX{}
+allows the creation of a document with numbered sections, title pages
+and bibliographies without having to explicitly include complicated
+\TeX{} macros.
 
-\subsection{DVI}\label{dvi}
+\subsection{DVI (DeVice Independent)}\label{dvi-device-independent}
 
 A \TeX{} or \LaTeX{} file is just plain text so there needs to be a step
 to translate this plain text to what you will see on a formatted
-document on a screen or page. \TeX{} ``engine'' like \texttt{pdflatex}
-normally processes \TeX{} to PDF but it can also produce a DVI (DeVice
-Independent) file. A DVI file is a binary file describing the layout of
-the document. For example, the height of the page, what characters to
-display and where, and the fonts to be used. DVI provides a format that
-can be read into R so that we can draw the \TeX{} layout in R. This is
-what the \texttt{dvir} package does.
+document on a screen or page. A \TeX{} ``engine'' like \texttt{pdflatex}
+normally processes \TeX{} to PDF but it can also produce a DVI file. A
+DVI file is a binary file describing the layout of the document. For
+example, the height of the page, what characters to display and where,
+and the fonts to be used. DVI provides a format that can be read into R
+so that we can draw the \TeX{} layout in R. This is what the
+\texttt{dvir} package does.
 
 \subsection{\texorpdfstring{The (pre-existing) \texttt{dvir}
 package}{The (pre-existing) dvir package}}\label{dvirDesc}
@@ -529,16 +529,6 @@ The following steps are taken when \texttt{grid.latex()} runs:
   \item A \TeX{} document is created with the expression and a changeable default preamble and postamble.
 \end{enumerate}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{postamble <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{end\{document\}"}\NormalTok{)}
-\KeywordTok{cat}\NormalTok{(}\KeywordTok{paste}\NormalTok{(newPreamble,}
-\NormalTok{          texCode,}
-\NormalTok{          postamble,}
-          \DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{spacing}{1}
 \begin{itemize}[noitemsep]
   \item[] \begin{verbatim}\documentclass[12pt]{standalone}\end{verbatim}
@@ -551,7 +541,7 @@ The following steps are taken when \texttt{grid.latex()} runs:
 
 \begin{enumerate}
   \setcounter{enumi}{1}
-  \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
+  \item This \TeX{} document is then processed using the local \TeX{} installation to create a DVI file.
   \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then ``setting'' (i.e. printing) a character ``2''.
 \end{enumerate}
 
@@ -569,7 +559,7 @@ The following steps are taken when \texttt{grid.latex()} runs:
   \begin{itemize}
     \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a \texttt{fontconfig} file.
     \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a \texttt{grid} viewport which can encompass the entire \TeX{} passed to \texttt{grid.latex()} expression using the native DVI coordinates.
-    \item Grid sweep: Convert all text and symbols into \textit{grobs} (grid graphical objects) 
+    \item Grid sweep: Convert all text and symbols into \textit{grobs} (grid graphical objects).
   \end{itemize}
   \item These grobs are then displayed in the R graphics device as per the \texttt{grid} package.
 \end{enumerate}
@@ -909,12 +899,11 @@ specifications}\label{profiling-environment-specifications}
 
 The exact results obtained in this and the previous section are specific
 to the computing environment used. Specific details are provided below.
-The sampling nature of profiling (intermittent recording of the call
-stack) will give different results every time it is done.
+The sampling nature of profiling (intermittent recording of the function
+call stack) will give different results every time it is done.
 
-The profiling results are dependent on the computer setup used and could
-change depending on the exact computing environment in which the
-\texttt{dvir} package is used.
+The profiling results are also dependent on the computing environment
+with which the \texttt{dvir} package is used.
 
 The profiling results in this report, in this and the previous section,
 were calculated with the following setup:
@@ -1371,11 +1360,11 @@ baseline.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-16-1} 
+{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-15-1} 
 
 }
 
-\caption{The baseline and descender of the letter y}\label{fig:unnamed-chunk-16}
+\caption{The baseline and descender of the letter y}\label{fig:unnamed-chunk-15}
 \end{figure}
 
 The \texttt{grid.text()} function accounts for this baseline so when you

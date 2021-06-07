@@ -3,7 +3,7 @@
 \contentsline {subsection}{\numberline {2.1}Where this project fits in}{7}{subsection.2.1}
 \contentsline {section}{\numberline {3}Background}{9}{section.3}
 \contentsline {subsection}{\numberline {3.1}T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m {}{}}{9}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}DVI}{9}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}DVI (DeVice Independent)}{9}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}The (pre-existing) \texttt {dvir} package}{9}{subsection.3.3}
 \contentsline {section}{\numberline {4}Code speed (part 1) - removing redundant font sweeps}{11}{section.4}
 \contentsline {section}{\numberline {5}Code speed (part 2) - font caching}{15}{section.5}

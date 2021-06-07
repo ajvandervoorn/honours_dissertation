@@ -4,11 +4,11 @@
 
 ## \TeX{}
 
-\TeX{} is a program to format and typeset text, and includes some basic macros to do this. \LaTeX{} is a higher-level implementation that sits on top of \TeX{}, basically consisting of a lot more macros, creating a much more user-friendly interface to \TeX{}. For example, \LaTeX{} allows one to create a document with numbered sections, title pages and bibliographies without having to write complicated \TeX{} macros oneself.
+\TeX{} is a program to format and typeset text, and includes some basic macros to do this. \LaTeX{} is a higher-level implementation that sits on top of \TeX{}, essentially consisting of a lot more macros, creating a much more user-friendly interface to \TeX{}. For example, \LaTeX{} allows the creation of a document with numbered sections, title pages and bibliographies without having to explicitly include complicated \TeX{} macros.
 
-## DVI
+## DVI (DeVice Independent)
 
-A \TeX{} or \LaTeX{} file is just plain text so there needs to be a step to translate this plain text to what you will see on a formatted document on a screen or page. \TeX{} "engine" like `pdflatex` normally processes \TeX{} to PDF but it can also produce a DVI (DeVice Independent) file. A DVI file is a binary file describing the layout of the document. For example, the height of the page, what characters to display and where, and the fonts to be used. DVI provides a format that can be read into R so that we can draw the \TeX{} layout in R. This is what the `dvir` package does.
+A \TeX{} or \LaTeX{} file is just plain text so there needs to be a step to translate this plain text to what you will see on a formatted document on a screen or page. A \TeX{} "engine" like `pdflatex` normally processes \TeX{} to PDF but it can also produce a DVI file. A DVI file is a binary file describing the layout of the document. For example, the height of the page, what characters to display and where, and the fonts to be used. DVI provides a format that can be read into R so that we can draw the \TeX{} layout in R. This is what the `dvir` package does.
 
 ## The (pre-existing) `dvir` package {#dvirDesc}
 
@@ -28,14 +28,6 @@ The following steps are taken when `grid.latex()` runs:
   \item A \TeX{} document is created with the expression and a changeable default preamble and postamble.
 \end{enumerate}
 
-```{r, results = FALSE}
-postamble <- paste0("\\end{document}")
-cat(paste(newPreamble,
-          texCode,
-          postamble,
-          sep = "\n"))
-```
-
 \begin{spacing}{1}
 \begin{itemize}[noitemsep]
   \item[] \begin{verbatim}\documentclass[12pt]{standalone}\end{verbatim}
@@ -48,7 +40,7 @@ cat(paste(newPreamble,
 
 \begin{enumerate}
   \setcounter{enumi}{1}
-  \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
+  \item This \TeX{} document is then processed using the local \TeX{} installation to create a DVI file.
   \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then ``setting'' (i.e. printing) a character ``2''.
 \end{enumerate}
 
@@ -66,7 +58,7 @@ cat(paste(newPreamble,
   \begin{itemize}
     \item Font sweep: Gather the names of all fonts used in the DVI file and locate the relevant font files on the local machine. The font information is stored in a R list as well as a \texttt{fontconfig} file.
     \item Metric sweep: To determine the overall bounding box (size) of the expression to display. This bounding box is used to create a \texttt{grid} viewport which can encompass the entire \TeX{} passed to \texttt{grid.latex()} expression using the native DVI coordinates.
-    \item Grid sweep: Convert all text and symbols into \textit{grobs} (grid graphical objects) 
+    \item Grid sweep: Convert all text and symbols into \textit{grobs} (grid graphical objects).
   \end{itemize}
   \item These grobs are then displayed in the R graphics device as per the \texttt{grid} package.
 \end{enumerate}

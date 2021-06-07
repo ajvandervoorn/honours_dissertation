@@ -86,9 +86,9 @@ plotProfiling1("yee", versionLabels2, results = results2, levels = levels2)
 
 ## Profiling environment specifications
 
-The exact results obtained in this and the previous section are specific to the computing environment used. Specific details are provided below. The sampling nature of profiling (intermittent recording of the call stack) will give different results every time it is done.
+The exact results obtained in this and the previous section are specific to the computing environment used. Specific details are provided below. The sampling nature of profiling (intermittent recording of the function call stack) will give different results every time it is done.
 
-The profiling results are dependent on the computer setup used and could change depending on the exact computing environment in which the `dvir` package is used. 
+The profiling results are also dependent on the computing environment with which the `dvir` package is used. 
 
 The profiling results in this report, in this and the previous section, were calculated with the following setup:
 
