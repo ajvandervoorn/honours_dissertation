@@ -1,4 +1,4 @@
-% Created by tikzDevice version 0.12.3.1 on 2021-06-07 11:21:25
+% Created by tikzDevice version 0.12.3.1 on 2021-06-07 13:41:37
 % !TEX encoding = UTF-8 Unicode
 \documentclass[12pt]{article}\usepackage{tikz}
 
@@ -18,15 +18,11 @@
 \path[clip] ( 73.44, 73.44) rectangle (475.65,446.85);
 \definecolor{drawColor}{RGB}{0,0,0}
 
-\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 88.34, 87.27) circle (  2.70);
-
-\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (181.44,130.49) circle (  2.70);
-
-\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (274.55,202.52) circle (  2.70);
-
-\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (367.65,303.36) circle (  2.70);
-
-\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (460.75,433.02) circle (  2.70);
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 88.34, 87.27) --
+	(181.44,130.49) --
+	(274.55,202.52) --
+	(367.65,303.36) --
+	(460.75,433.02);
 \end{scope}
 \begin{scope}
 \path[clip] (  0.00,  0.00) rectangle (505.89,505.89);

@@ -60,7 +60,7 @@ Some \Tikz{} features were not implemented though, notably the ability to have f
 str2lang <- getFromNamespace("str2lang", "backports")
 ```
 
-```{r gridTikz, fig.cap = "Using \\texttt{grid.tikzpicture()} to make the diagram from earlier"}
+```{r gridTikz, fig.cap = "Using \\texttt{grid.tikzpicture()} to make the diagram from earlier", fig.width = 3, fig.height = 1.5, out.width = "100%"}
 tikzCode <- paste("\\path (0, 1) node[circle,fill=red!40,draw,thick] (x) {$\\mu$}",
                   "      (3, 0) node[circle,fill=blue!40,draw,thick] (y) {$\\dfrac{\\mu^2}{2}$};",
                   "\\draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);",
@@ -72,8 +72,6 @@ grid.tikzpicture(tikzCode, preamble = tikzPreamble)
 ```
 
 The use of `grid.tikzpicture()` is demonstrated in figure \@ref(fig:gridTikz), recreating the diagram from figure \ref{tikzRaw}. The alteration to the preamble once again only necessary due to the use of `\dfrac` from the `amsmath` package.
-
-- [**Example:** \Tikz{} radial gradient fill example]
 
 - [**Example:** Make same \Tikz{} example as above in R with dvir (obviously fill will be blank)]
 

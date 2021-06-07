@@ -13,21 +13,22 @@ Redo this plot with lattice?
 CHECK - that I haven't confused axis labela and axis titles... should be axis titles!
 --->
 
-```{r expressionPlot, fig.cap="A plot with axis labels made using \\texttt{expression()}.", include = TRUE, eval = TRUE}
+```{r expressionPlot, fig.cap="A plot with axis labels made using \\texttt{expression()}.", include = TRUE, eval = TRUE, fig.asp = 1}
 x <- 1:5
-opar <- par(mar = par()$mar + c(0, 1, 0, 0))
-plot(x, x ^ 2 / 2, xlab = expression(mu), ylab = "", yaxt = "n")
+y <- x ^ 2 / 2
+par(mar = par()$mar + c(0, 1, 0, 0))
+plot(x, y, xlab = expression(mu), ylab = "", yaxt = "n", type = "l")
 axis(2, las = 1)
 mtext(expression(frac(mu ^ 2, 2)), side = 2, line = 3, las = 1)
 ```
 
-This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX{} [@knuth-tex], but it is limited in its fonts. Compare the y-axis label above with how it looks when created by \LaTeX{} in figure \ref{muOver2}.
+This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX{} [@knuth-tex], but it is limited in its fonts. Compare the y-axis title above with how it looks when created by \LaTeX{} in figure \ref{muOver2}.
 
 \begin{figure}\label{muOver2}
 \begin{equation*}
 \dfrac{\mu^2}{2}
 \end{equation*}
-\caption{The \(y\)-axis label from above, when created in \LaTeX}
+\caption{The y-axis title from above, created with \LaTeX}
 \end{figure}
 
 <!---
@@ -38,40 +39,53 @@ Use this code for above example, just need to find a way to caption and referenc
 could use \[\dfrac{\mu^2}{2}\] if that was easier too?
 --->
 
-The difference is stark and @murrell-dvir describes several approaches in R which can get us closer to the \LaTeX{} result, and their limitations, as motivation for the `dvir` package. The approaches are replicated here.
+The difference is stark and @murrell-dvir describes several approaches in R, and their limitations, which can get us closer to the \LaTeX{} result as motivation for the `dvir` package. The approaches are replicated here.
 
-[@pkg-extrafont]
-[@pkg-fontcm]
-```{r}
-# library(grid)
-# expr <- expression(frac(mu ^ 2, 2 "hello"))
-# grid.text(expr)
-# 
-# library(extrafont)
-# font_install('fontcm')
-# loadfonts("pdf")
-# pdf("extrafont2.pdf", width=1, height=1)
-# grid.text(expr,
-#           gp = gpar(fontfamily="CM Roman"))
-# dev.off()
-# embed_fonts("extrafont2.pdf", outfile="extrafont2-embed.pdf")
+The `extrafont` package [@pkg-extrafont] with the `fontcm` package extension [@pkg-fontcm] works for this particular example but not if we wanted to include other \TeX{} symbols.
 
+```{r, eval = FALSE}
+expr <- expression(frac(mu ^ 2, 2))
+
+library(grid)
+library(extrafont)
+font_install('fontcm')
+loadfonts("pdf")
+pdf("extrafont.pdf", width = 1, height = 1)
+grid.text(expr, gp = gpar(fontfamily = "CM Roman"))
+dev.off()
+embed_fonts("extrafont.pdf", outfile = "extrafont-embed.pdf")
 ```
 
-<!---
+```{r, fig.cap = "The axis title using the \\texttt{extrafont} package", echo = FALSE, out.width = "40%"}
+include_graphics("../Figures/extrafont-embed.pdf")
+```
 
-Do plot with type = "l"?
---->
+```{r, eval = FALSE}
+expr2 <- expression(bgroup("(", frac(x - mu, sigma), ")"))
+pdf("extrafont-2.pdf", width = 1, height = 1)
+grid.text(expr2, gp = gpar(fontfamily = "CM Roman"))
+dev.off()
+embed_fonts("extrafont-2.pdf", outfile = "extrafont-2-embed.pdf")
+```
+
+```{r bracExampleExtra, fig.cap = "Another equation using the \\texttt{extrafont} package", echo = FALSE, out.width = "40%"}
+include_graphics("../Figures/extrafont-2-embed.pdf")
+```
+
+In the case of figure \@ref(fig:bracExampleExtra), note how `extrafont` has once again used the correct font for the greek symbols, but does not quite replicate the rest of the result from \LaTeX{}, as in \ref{bracExample}.
+
+\begin{figure}\label{bracExample}
+\centering
+$\left(\dfrac{x - \mu}{\sigma}\right)$
+\caption{A \LaTeX{} equation with brackets}
+\end{figure}
 
 
 <!--- 
 for these examples following, say that Paul's report descirbes the limitations of these approaches, and replicate the examples
 
-
-
 FOR THIS, SAY IT WORKS FOR OUR LABEL, BUT DOESN"T WITH OTHER THINGS, LIKE THE BRACKETS
 --->
-  - [**Example:** use `extrafont` and `fontcm` packages, embed CM fonts in PDF - say it works for our case, but not if you havem say, brackets]
 
 ```{r results = FALSE}
 # Using the 'tikzDevice' package
@@ -83,7 +97,7 @@ options("tikzLatexPackages" = packages)
 
 tikz("tikzDevice.tex", standAlone = TRUE)
 opar <- par(mar = par()$mar + c(0, 1, 0, 0))
-plot(x, x ^ 2 / 2, xlab = "$\\mu$", ylab = "", yaxt = "n")
+plot(x, y, xlab = "$\\mu$", ylab = "", yaxt = "n", type = "l")
 axis(2, las = 1)
 mtext("$\\dfrac{\\mu^2}{2}$", side = 2, line = 3, las = 1)
 dev.off()
@@ -113,29 +127,18 @@ The `tikzDevice` package in R will draw the axis titles with \TeX{} but will als
 
 What we want is a middle ground - being able to harness the power of \TeX{} and its typesetting capabilities on *our* choice of text or equation in R graphics. This is where the `dvir` package comes in - providing a simple user interface, in the style of R `grid` graphics, by way of the `grid.latex()` function.
 
-<!---
-For lattice plot, remember tick marks on top and side.... remove if have time....
-
-For lattice plot, need to see if can correctly find x and y locations relative to other stuff in the plot, rather than guessing and checking these exact values, at least navigate to other viewports? (try grid.force() maybe, and make a coloured rectangle in each one)
-
-
-DO I NEED TO USE LATTIVE F THIS?
---->
-```{r, include = FALSE}
-# Set lattice options for next plot
-lattice::lattice.options(layout.heights=list(bottom.padding=list(x=1.5)),
-                         layout.widths=list(left.padding=list(x=1.5)))
-```
-
-```{r latticeGridLatex, fig.cap = "Changing axis titles with \\texttt{grid.latex()}", }
-y <- x ^ 2 / 2
+```{r plotGridLatex, fig.cap = "Changing axis titles with \\texttt{grid.latex()}", fig.asp = 1}
+library(dvir)
 preamble <- "\\documentclass[12pt]{standalone}\n\\usepackage{amsmath}\n\\begin{document}"
-lattice::xyplot(y ~ x, xlab = "", ylab = "", aspect = 1, col = "black")
-grid.latex("$\\mu$", x = 0.53, y = 0.03)
-grid.latex("$\\dfrac{\\mu^2}{2}$", x = 0.1, preamble = preamble)
+par(mar = par()$mar + c(0, 1, 0, 0))
+plot(x, y, xlab = "", ylab = "", yaxt = "n", type = "l")
+axis(2, las = 1)
+
+grid.latex("$\\mu$", x = 0.545, y = 0.07)
+grid.latex("$\\dfrac{\\mu^2}{2}$", x = 0.06, preamble = preamble)
 ```
 
-Figure \@ref(fig:latticeGridLatex) recreates figure \@ref(fig:expressionPlot) with the axis titles made using `grid.latex()`. The function `lattice::xyplot()` [@pkg-lattice] is used as it is a readily available high-level plotting function using `grid` graphics.
+Figure \@ref(fig:plotGridLatex) recreates figure \@ref(fig:expressionPlot) with the axis titles made using `grid.latex()`.
 
 <!---
   - [**Example:** example of grid-based plot, changing labels and/or title with `grid.latex()`. Maybe ggplot2?]
