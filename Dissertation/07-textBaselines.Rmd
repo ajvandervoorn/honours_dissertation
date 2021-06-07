@@ -24,155 +24,6 @@ SHould algorithm names be monospace, or just have quotes around them? just be co
 
 # Text baselines
 
-<!---
-Section outline:
-
-- Demonstrate problem (with example using grid.text), especially try multi line text maybe?
-
-- Describe algorithms for determining baselines one by one. In dviMoves, describe then the issues with choosing which one, and the potential algorithms for that
-
-- Describe function I made to calculate all baselines using these methods
-
-- Show result of all this (in LaTeX)
---->
-
-<!---
-Superceded code:
-
-
-\newsavebox{\dvibox}
-
-\newcommand{\boxreport}[2]{%
-  \sbox{\dvibox}{\parbox[b]{2in}{#1}}% Change width to be '1in' if going back to better way of doing it. Better yet, get variable that takes width of text itself (like TeX examples from Paul) 
-  \settowidth {\dviwidth} {\usebox{\dvibox}}%
-  \usebox{\dvibox}%
-  \vspace{-#2}%
-  \hrule width \dviwidth height 0.1pt \relax
-  \vspace{#2}%
-}
-
-\newcommand{\boxpersist}[1]{%
-  \vspace{-#1}%
-  \hrule width \dviwidth height 0.1pt \relax
-  \vspace{#1}%
-}
-
-
-
-baselineFunc <- function(testText, 
-                         algo, 
-                         caption, 
-                         dviMovesMethod = "all", 
-                         dviMovesSelection = 1) {
-  algorithmBaselines <- list()
-  for (i in seq_along(testText)) {
-    algorithmBaselines[[i]] <- baselines(tex = testText[i],
-                                         algorithm = algo,
-                                         dviMovesMethod = dviMovesMethod,
-                                         dviMovesSelection = dviMovesSelection)
-  }
-  
-  
-  latexCode <- character(0)
-  baselineEnviroHead <- paste0("\\begin{adjustwidth}{0.5in}{0in}\n")
-  baselineEnviroFoot <- paste0("\\end{adjustwidth}\n")
-  latexCode <- baselineEnviroHead
-  for (i in seq_along(algorithmBaselines)) {
-    latexCode <- c(latexCode, 
-                   paste("\\boxreport{", 
-                         testText[i], 
-                         "}{", 
-                         unitConvert(algorithmBaselines[[i]][1]), 
-                         "}\n", 
-                         sep = ""))
-    if (length(algorithmBaselines[[i]]) > 1) {
-      for (j in 2:length(algorithmBaselines[[i]])) {
-        latexCode <- c(latexCode, 
-                       paste("\\boxpersist{", 
-                             unitConvert(algorithmBaselines[[i]][j]), 
-                             "}\n", 
-                             sep = ""))
-      }
-    }
-    latexCode <- c(latexCode, "\\vspace{0.3cm}\n")
-  }
-  latexCode <- c(latexCode, baselineEnviroFoot)
-  latexCode
-}
-
-
-
-
-```{r baselineAlex, eval = FALSE, echo = FALSE, results = "asis"}
-alexLatex <- baselineFunc(testText, "alex", "Using the \\texttt{alex} algorithm to calculate the baseline.")
-cat(alexLatex)
-```
-
-\begin{spacing}{1}
-
-```{r baselineDviMoves, eval = FALSE, echo = FALSE, results = "asis"}
-dviMovesLatex <- baselineFunc(testText, "dviMoves", "Using the \\texttt{dviMoves} algorithm to calculate the baselines.")
-
-cat(dviMovesLatex)
-```
-
-\end{spacing}
-
-```{r, echo = FALSE, eval = FALSE, results = "asis"}
-latexCode <- character(0)
-baselineEnviroHead <- paste0("\\begin{adjustwidth}{0.5in}{0in}\n")
-baselineEnviroFoot <- paste0("\\end{adjustwidth}")
-latexCode <- baselineEnviroHead
-for (i in seq_along(testText)) {
-    algorithmBaselines <- unit(0, "cm")
-    algorithmBaselines <- unit.c(algorithmBaselines, 
-                                 baselines(tex = testText[i],
-                                        algorithm = "dviMoves",
-                                        dviMovesMethod = "all",
-                                        dviMovesSelection = dviMovesSelection))
-
-  
-  # latexCode <- c(latexCode, baselineEnviroHead)
-  for (j in seq_along(algorithmBaselines)) {
-    latexCode <- c(latexCode, 
-                   paste("\\boxreport{", 
-                         testText[i], 
-                         "}{", 
-                         unitConvert(algorithmBaselines[j]), 
-                         "}\n\\vspace{0.3cm}\n", 
-                         sep = ""))
-    
-    # latexCode <- c(latexCode, "\\vspace{0.3cm}\n")
-  }
-}
-
-latexCode <- c(latexCode, baselineEnviroFoot)
-```
-
-\begin{spacing}{1}
-
-```{r results = "asis", eval = FALSE, echo = FALSE}
-# cat(latexCode)
-```
-
-\end{spacing}
-
-
-
-```{r baselinePreview, eval = FALSE, echo = FALSE, results = "asis"}
-previewLatex <- baselineFunc(testText, "preview", "Using the \\texttt{preview} algorithm to calculate the baseline.")
-cat(previewLatex)
-```
-
-```{r baselineDvipng, eval = FALSE, echo = FALSE, results = "asis"}
-dvipngLatex <- baselineFunc(testText, "dvipng", "Using the \\texttt{dvipng} algorithm to calculate the baseline.")
-cat(dvipngLatex)
-```
-
-
-
---->
-
 ```{r, include = FALSE}
 # Setup the functions etc. for this section
 source("../Appendices/algorithms.R")
@@ -188,6 +39,13 @@ testText <- c("test",
               "$\\frac{\\mu^2}{2} + x$ is the equation",
               "$x + \\frac{\\mu}{2}$ is the equation",
               "\\begin{minipage}{1in}Paragraph, with some line wrapping!\\end{minipage}")
+
+testText <- c("testing",
+              "$\\sum_{n=1}^{\\infty} 2^{-n} = 1$",
+              "$\\sum\\limits_{n=1}^{\\infty} 2^{-n} = 1$",
+              "The equation is $x + \\frac{\\mu^2}{2}$",
+              "$\\frac{\\mu^2}{2} + x$ is the equation",
+              "\\begin{minipage}{1in}Multiline, with some line wrapping!\\end{minipage}")
 
 # Function to convert 'grid' units to LaTeX units (changing the characters at the end basically)
 unitConvert <- function(x) {
@@ -258,17 +116,46 @@ returnBaselines <- function(testText,
 
 ## The problem
 
-Text characters have a baseline, that is, a horizontal line on which the characters naturally sit so all the letters appear to be in line with each other. Some letters, like a lower case "p" or "j", have a "descender". A descender is the part of a character that sits *below* the baseline. 
+Text characters have a baseline, that is, a horizontal line on which the characters naturally sit so all the letters appear to be in line with each other. Some letters, like a lower case *y* or *j*, have a *descender*. A descender is a part of a character that sits below the baseline. 
 
-- [Example - showing a letter, with the baseline marked and also showing what part is the "descender" part]
+```{r, echo = FALSE, fig.cap = "The baseline and descender of the letter \\textit{y}", fig.height = 0.8, fig.width = 3}
+yAlign <- 0.25
+grid.text("y", y = yAlign, gp = gpar(fontsize = 50), just = c("left", "bottom"))
 
-`grid.text()` accounts for this baseline so when you bottom align text at a certain y-value, the descenders will actually fall below the y-value we defined, despite the bottom justification. Unfortunately, `dvir` does not account for text baselines and will do any alignment with the bounding box of the text.
+xVal <- 0.48
+xOffset <- 0.015
+xOffsetDepthLabel <- 0.02
+yValBottom <- 0.073
+yValTop <- yAlign
 
-- [Example - combining `grid.text()` and `grid.latex()` on same y-value to show the difference between them]
+grid.lines(x = c(xVal + xOffset, 0.65), y = yAlign, gp = gpar(lty = "dashed"))
+grid.lines(x = xVal, y = c(yValBottom, yValTop))
+grid.lines(x = xVal + c(xOffset, 0), y = yValBottom)
+grid.lines(x = xVal + c(xOffset, 0), y = yValTop)
+grid.lines(x = xVal - c(xOffsetDepthLabel, 0), y = (yValTop + yValBottom) / 2)
 
-- [Example - more complicated example, say with several pieces of multiline text (only if I can demonstrate later that my function works for aligning them!)]
+grid.text("baseline", 
+          x = 0.662, 
+          y = yAlign - 0.005,
+          just = "left", 
+          gp = gpar(fontsize = 8, fontface = "italic"))
+grid.text("descender", 
+          x = xVal - xOffsetDepthLabel - 0.01, 
+          y = (yValTop + yValBottom) / 2, 
+          just = "right",
+          gp = gpar(fontsize = 8, fontface = "italic"))
+```
 
-To fix this, `dvir` needs to obtain or calculate a value for the baseline for any given piece of text to offset the bounding box when it is drawing text. All of `dvir`'s information comes from the DVI file we either need to extract a baseline value from the DVI file itself, or calculate it *from* information in the DVI file. Unfortunately plain DVI files do not state a baseline value, rather they only detail specific placement of each charcter, so we will explore some possible methods to obtain a baseline value. These methods are referred to as algorithms from here on due to their heuristic nature.
+`grid.text()` accounts for this baseline so when you bottom align text at a certain y-value, the descenders will actually fall below the y-value we defined, despite the bottom justification. Unfortunately, `dvir` does not account for text baselines and will do any alignment with the bounding box of the text, which, in the case of figure \@ref(fig:baselineCombine), is at the bottom of the descenders.
+
+```{r baselineCombine, fig.cap = "Combining \\texttt{grid.text()} and \\texttt{grid.latex()}", fig.height = 0.7, fig.width = 4}
+texText <- "{\\LARGE changing to \\LaTeX{}}"
+grid.text("An example of ", y = 0.1, just = c("right", "bottom"), gp = gpar(fontsize = 18))
+grid.latex(texText, y = 0.1, just = c("left", "bottom"))
+grid.lines(y = 0.1, gp = gpar(lwd = 0.5))
+```
+
+To fix this, `dvir` needs to obtain or calculate a value for the baseline for any given piece of text to use as an offset for the bounding box alignment when it is rendering the text. From this point on, this offset will be referred to as a baseline value. All of `dvir`'s information comes from the DVI file so we either need to extract a baseline value from the DVI file itself, or calculate it *from* information in the DVI file. Unfortunately plain DVI files do not state a baseline value, rather they only detail specific placement of each character, so some possible methods to obtain a baseline value were explored. These methods are referred to as algorithms from here on due to their heuristic nature.
 
 ## Implementation
 
@@ -278,6 +165,8 @@ Once the baselines have been calculated the bounding box of the text can be bott
 
 This function has been written to easily allow integration of other algorithms and most of the function could be directly implemented in the `dvir` package, should this baseline algorithm feature be implemented into `dvir` formally.
 
+This function can be found in the R script file `algorithms.R`, in the appendix. 
+
 ## Potential solutions
 
 Several different algorithms were explored to calculate the baseline for different types of text that could be used with `grid.latex()`. These algorithms are detailed here.
@@ -286,7 +175,10 @@ Several different algorithms were explored to calculate the baseline for differe
 
 This is a simple algorithm which was determined after inspection of some DVI files. In every DVI file, there is a statement specifying the size of the bounding box of the text.
 
-- [**Example** of of the HiResBoundingBox statement here]
+```
+xxx1         k=50
+             x=ps::%%HiResBoundingBox: 0 0 14.21944pt 25.85977pt.
+```
 
 After this statement there appears to consistently be a downward move equal to the height of the bounding box of text (from the top left of the bounding box to the bottom left), and then a move upward before the first character is drawn. This algorithms take the cursor location after that upward move to be the baseline. In instances where the entire text has no descenders (i.e. the baseline is the bottom of the bounding box) there will be no upward move before the first character and a value of 0 is returned as the baseline.
 
@@ -348,10 +240,6 @@ There are two complications with this method:
 To account for these considerations, along with the `dviMoves` algorithm, the function also allows a choice of method to select a *single* baseline out of the many returned by the algorithm. These methods are:
 
 #### `dviMoves` selection method `all`
-
-<!---
-Maybe add example doing length(v), just to show how many potential baselines there are for some examples
---->
 
 This selection method will return all the baseline values as determined by the algorithm. This is useful for drawing the text with all the baseline values calculated from this method.
 
@@ -471,13 +359,13 @@ Some other potential algorithms but have not yet been implemented in this functi
 ## Discussion of these algorithms
 
 <!---
-Need to plot these things with latex to see if DVI moves is actuall best? And if it works for all situations?
+Need to plot these things with latex to see if DVI moves is actuall best? And if it works for all situations? I think it is....
+
+Need to remove any reference to dviMoves going to random places - they are all logical, just repetitive
 
 --->
 
 Of the algorithms considered, the `dviMoves` algorithm performed best. While most of these algorithms perform well for some or most of the examples, the `dviMoves` algorithm performs well for *all* the examples, notably for giving the option to align the baseline of *any* line of multi-line text. Utilising how it returns all baseline values for all characters it is possible to align, for example, with any character in a mathematical equation, whether it be of a different size or a superscript or subscript.
-
-- [Example: Show examples from start of this section with baselines being used to make them aligned!]
 
 The `preview` algorithm also calculated a baseline well for all examples, except the multi-line text. An implementation of this in `dvir` could perhaps use both the `dviMoves` and `preview` algorithms to calculate the baselines, with the default selection method being the baseline value from `dviMoves` that is closest to the baseline value calculated by the `preview` algorithm.
 
@@ -487,4 +375,19 @@ The `preview` algorithm also calculated a baseline well for all examples, except
 
 - mention the "just ask TeX for answer" method
 
+--->
+
+<!---
+```{r baselineFix, fig.cap = "Combining \\texttt{grid.text()} and \\texttt{grid.latex()}, adjusting for the baseline", fig.height = 0.7, fig.width = 4}
+# baselineVal <- baselines(texText,
+#                          algorithm = "dviMoves",
+#                          dviMovesMethod = "index",
+#                          dviMovesSelection = 2)
+# yOffset <- unit(0.1, "npc") - baselineVal
+# grid.text("An example of ", y = 0.1, just = c("right", "bottom"), gp = gpar(fontsize = 18))
+# grid.latex(texText, y = yOffset, just = c("left", "bottom"))
+# grid.lines(y = 0.1, gp = gpar(lwd = 0.5))
+```
+
+Adjusting the y-value in the call to `grid.latex()` by subtracting the calculated baseline value, figure \@ref(fig:baselineFix) vertically aligns the two parts of the text from \@ref(fig:baselineCombine).
 --->

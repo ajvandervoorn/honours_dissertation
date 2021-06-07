@@ -93,13 +93,13 @@ levels2 <- c("gridlatex", "font")
 Check width/height of these plots compared to plots in previous section (want bars the same width)
 --->
 
-```{r speedUp2Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep for each of the 20 runs of the simple example.", echo = FALSE, fig.width = 5, fig.height = 3.5}
+```{r speedUp2Simple, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep for each of the 20 runs of the simple example.", echo = FALSE, fig.width = 5, fig.height = 4}
 plotProfiling1("simple", versionLabels2, results = results2, levels = levels2)
 ```
 
 For the simple example the time for the font sweep has reduced by 71%, with `grid.latex()` overall taking 45% less time.
 
-```{r speedUp2Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep for each of the 20 runs of the complicated example", echo = FALSE, fig.width = 5, fig.height = 3.5}
+```{r speedUp2Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep for each of the 20 runs of the complicated example", echo = FALSE, fig.width = 5, fig.height = 4}
 plotProfiling1("yee", versionLabels2, results = results2, levels = levels2)
 ```
 

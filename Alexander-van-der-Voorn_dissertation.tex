@@ -203,10 +203,11 @@ a mathematical equation.
 \begin{Highlighting}[]
 \NormalTok{x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{5}
 \NormalTok{y <-}\StringTok{ }\NormalTok{x }\OperatorTok{^}\StringTok{ }\DecValTok{2} \OperatorTok{/}\StringTok{ }\DecValTok{2}
-\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar =} \KeywordTok{par}\NormalTok{()}\OperatorTok{$}\NormalTok{mar }\OperatorTok{+}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\NormalTok{expr <-}\StringTok{ }\KeywordTok{expression}\NormalTok{(}\KeywordTok{frac}\NormalTok{(mu }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\CommentTok{# par(mar = par()$mar + c(0, 1, 0, 0))}
 \KeywordTok{plot}\NormalTok{(x, y, }\DataTypeTok{xlab =} \KeywordTok{expression}\NormalTok{(mu), }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{, }\DataTypeTok{yaxt =} \StringTok{"n"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
 \KeywordTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DataTypeTok{las =} \DecValTok{1}\NormalTok{)}
-\KeywordTok{mtext}\NormalTok{(}\KeywordTok{expression}\NormalTok{(}\KeywordTok{frac}\NormalTok{(mu }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\DataTypeTok{side =} \DecValTok{2}\NormalTok{, }\DataTypeTok{line =} \DecValTok{3}\NormalTok{, }\DataTypeTok{las =} \DecValTok{1}\NormalTok{)}
+\KeywordTok{mtext}\NormalTok{(expr, }\DataTypeTok{side =} \DecValTok{2}\NormalTok{, }\DataTypeTok{line =} \DecValTok{3}\NormalTok{, }\DataTypeTok{las =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -243,8 +244,6 @@ particular example but not if we wanted to include other \TeX{} symbols.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{expr <-}\StringTok{ }\KeywordTok{expression}\NormalTok{(}\KeywordTok{frac}\NormalTok{(mu }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
-
 \KeywordTok{library}\NormalTok{(grid)}
 \KeywordTok{library}\NormalTok{(extrafont)}
 \KeywordTok{font_install}\NormalTok{(}\StringTok{'fontcm'}\NormalTok{)}
@@ -258,7 +257,7 @@ particular example but not if we wanted to include other \TeX{} symbols.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth]{../Figures/extrafont-embed} 
+{\centering \includegraphics[width=0.4\linewidth]{../Figures/extrafont-embed} 
 
 }
 
@@ -277,7 +276,7 @@ particular example but not if we wanted to include other \TeX{} symbols.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth]{../Figures/extrafont-2-embed} 
+{\centering \includegraphics[width=0.4\linewidth]{../Figures/extrafont-2-embed} 
 
 }
 
@@ -1071,22 +1070,43 @@ information we need to get from \Tikz{} in the DVI file so we can pass
 it to \texttt{dvir}.
 
 Let us consider a simple example, a rectangle with an orange to green
-linear gradient fill:
+linear gradient fill, like that in figure \ref{tikzLinGrad}.
 
-\begin{figure}
+\begin{figure}\label{tikzLinGrad}
 \centering
 \begin{tikzpicture}
 \filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);
 \end{tikzpicture}
+\caption{A rectangle with a linear gradient fill using \Tikz{}}
 \end{figure}
 
 The following is an extract of the DVI file when the rectangle above is
 generated using the SVG DVI driver included with the common \TeX{}
 distributions, \texttt{pgfsys-dvisvgm.def}. It has been edited slightly
-for readability by adding line breaks and removing a line break
-``character'', \texttt{\{?nl\}}.
+for readability by adding line breaks and removing the line break
+character string \texttt{\{?nl\}}.
 
-\texttt{\{\ dviGradientOutput,\ eval=FALSE\}\ xxx1\ \ \ \ \ \ \ \ \ k=67\ \ \ \ \ \ \ \ \ \ \ \ \ \ x=dvisvgm:raw\ \textless{}g\ transform="matrix(1,0,0,1,56.90549,28.45274)"\textgreater{}\ \ xxx1\ \ \ \ \ \ \ \ \ k=67\ \ \ \ \ \ \ \ \ \ \ \ \ \ x=dvisvgm:raw\ \textless{}g\ transform="matrix(2.26802,0,0,1.134,0.0,0.0)"\textgreater{}\ xxx1\ \ \ \ \ \ \ \ \ k=66\ \ \ \ \ \ \ \ \ \ \ \ \ \ x=dvisvgm:raw\ \textless{}g\ transform="matrix(0.0,1.0,-1.0,0.0,0.0,0.0)"\textgreater{}\ xxx4\ \ \ \ \ \ \ \ \ k=425\ \ \ \ \ \ \ \ \ \ \ \ \ \ x=dvisvgm:raw\ \ \textless{}linearGradient\ id="pgfsh2"\ gradientTransform="rotate(90)"\textgreater{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textless{}stop\ offset="\ 0.0"\ stop-color="\ rgb(0.0\%,100.0\%,0.0\%)\ "/\textgreater{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textless{}stop\ offset="\ 0.25"\ stop-color="\ rgb(0.0\%,100.0\%,0.0\%)\ "/\textgreater{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textless{}stop\ offset="\ 0.5"\ stop-color="\ rgb(50.0\%,75.0\%,0.0\%)\ "/\textgreater{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textless{}stop\ offset="\ 0.75"\ stop-color="\ rgb(100.0\%,50.0\%,0.0\%)\ "/\textgreater{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textless{}stop\ offset="\ 1.0"\ stop-color="\ rgb(100.0\%,50.0\%,0.0\%)\ "/\textgreater{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textless{}/linearGradient\textgreater{}\ xxx1\ \ \ \ \ \ \ \ \ k=57\ \ \ \ \ \ \ \ \ \ \ \ \ \ x=dvisvgm:raw\ \textless{}g\ transform="translate(-50.1875,-50.1875)"\textgreater{}\ \ xxx1\ \ \ \ \ \ \ \ \ k=97\ \ \ \ \ \ \ \ \ \ \ \ \ \ x=dvisvgm:raw\ \textless{}rect\ width="100.375"\ height="100.375"\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ style="fill:url(\#pgfsh2);\ stroke:none"/\textgreater{}}
+\begin{verbatim}
+xxx1         k=67
+             x=dvisvgm:raw <g transform="matrix(1,0,0,1,56.90549,28.45274)"> 
+xxx1         k=67
+             x=dvisvgm:raw <g transform="matrix(2.26802,0,0,1.134,0.0,0.0)">
+xxx1         k=66
+             x=dvisvgm:raw <g transform="matrix(0.0,1.0,-1.0,0.0,0.0,0.0)">
+xxx4         k=425
+             x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)"> 
+                            <stop offset=" 0.0" stop-color=" rgb(0.0%,100.0%,0.0%) "/> 
+                            <stop offset=" 0.25" stop-color=" rgb(0.0%,100.0%,0.0%) "/>
+                            <stop offset=" 0.5" stop-color=" rgb(50.0%,75.0%,0.0%) "/>
+                            <stop offset=" 0.75" stop-color=" rgb(100.0%,50.0%,0.0%) "/>
+                            <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>
+                            </linearGradient>
+xxx1         k=57
+             x=dvisvgm:raw <g transform="translate(-50.1875,-50.1875)"> 
+xxx1         k=97
+             x=dvisvgm:raw <rect width="100.375" height="100.375" 
+                            style="fill:url(#pgfsh2); stroke:none"/> 
+\end{verbatim}
 
 We can see from this that the linear gradient definition with stops and
 colours is defined within a
@@ -1325,42 +1345,55 @@ function used as in step 3.
 
 Text characters have a baseline, that is, a horizontal line on which the
 characters naturally sit so all the letters appear to be in line with
-each other. Some letters, like a lower case ``p'' or ``j'', have a
-``descender''. A descender is the part of a character that sits
-\emph{below} the baseline.
+each other. Some letters, like a lower case \emph{y} or \emph{j}, have a
+\emph{descender}. A descender is a part of a character that sits below
+the baseline.
 
-\begin{itemize}
-\tightlist
-\item
-  {[}Example - showing a letter, with the baseline marked and also
-  showing what part is the ``descender'' part{]}
-\end{itemize}
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/unnamed-chunk-16-1} 
+
+}
+
+\caption{The baseline and descender of the letter \textit{y}}\label{fig:unnamed-chunk-16}
+\end{figure}
 
 \texttt{grid.text()} accounts for this baseline so when you bottom align
 text at a certain y-value, the descenders will actually fall below the
 y-value we defined, despite the bottom justification. Unfortunately,
 \texttt{dvir} does not account for text baselines and will do any
-alignment with the bounding box of the text.
+alignment with the bounding box of the text, which, in the case of
+figure \ref{fig:baselineCombine}, is at the bottom of the descenders.
 
-\begin{itemize}
-\item
-  {[}Example - combining \texttt{grid.text()} and \texttt{grid.latex()}
-  on same y-value to show the difference between them{]}
-\item
-  {[}Example - more complicated example, say with several pieces of
-  multiline text (only if I can demonstrate later that my function works
-  for aligning them!){]}
-\end{itemize}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{texText <-}\StringTok{ "\{}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{LARGE changing to }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{LaTeX\{\}\}"}
+\KeywordTok{grid.text}\NormalTok{(}\StringTok{"An example of "}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{just =} \KeywordTok{c}\NormalTok{(}\StringTok{"right"}\NormalTok{, }\StringTok{"bottom"}\NormalTok{), }\DataTypeTok{gp =} \KeywordTok{gpar}\NormalTok{(}\DataTypeTok{fontsize =} \DecValTok{18}\NormalTok{))}
+\KeywordTok{grid.latex}\NormalTok{(texText, }\DataTypeTok{y =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{just =} \KeywordTok{c}\NormalTok{(}\StringTok{"left"}\NormalTok{, }\StringTok{"bottom"}\NormalTok{))}
+\KeywordTok{grid.lines}\NormalTok{(}\DataTypeTok{y =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{gp =} \KeywordTok{gpar}\NormalTok{(}\DataTypeTok{lwd =} \FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{Alexander-van-der-Voorn_dissertation_files/figure-latex/baselineCombine-1} 
+
+}
+
+\caption{Combining \texttt{grid.text()} and \texttt{grid.latex()}}\label{fig:baselineCombine}
+\end{figure}
 
 To fix this, \texttt{dvir} needs to obtain or calculate a value for the
-baseline for any given piece of text to offset the bounding box when it
-is drawing text. All of \texttt{dvir}'s information comes from the DVI
-file we either need to extract a baseline value from the DVI file
-itself, or calculate it \emph{from} information in the DVI file.
-Unfortunately plain DVI files do not state a baseline value, rather they
-only detail specific placement of each charcter, so we will explore some
-possible methods to obtain a baseline value. These methods are referred
-to as algorithms from here on due to their heuristic nature.
+baseline for any given piece of text to use as an offset for the
+bounding box alignment when it is rendering the text. From this point
+on, this offset will be referred to as a baseline value. All of
+\texttt{dvir}'s information comes from the DVI file so we either need to
+extract a baseline value from the DVI file itself, or calculate it
+\emph{from} information in the DVI file. Unfortunately plain DVI files
+do not state a baseline value, rather they only detail specific
+placement of each character, so some possible methods to obtain a
+baseline value were explored. These methods are referred to as
+algorithms from here on due to their heuristic nature.
 
 \subsection{Implementation}\label{implementation}
 
@@ -1384,6 +1417,9 @@ algorithms and most of the function could be directly implemented in the
 \texttt{dvir} package, should this baseline algorithm feature be
 implemented into \texttt{dvir} formally.
 
+This function can be found in the R script file \texttt{algorithms.R},
+in the appendix.
+
 \subsection{Potential solutions}\label{potential-solutions}
 
 Several different algorithms were explored to calculate the baseline for
@@ -1397,11 +1433,10 @@ This is a simple algorithm which was determined after inspection of some
 DVI files. In every DVI file, there is a statement specifying the size
 of the bounding box of the text.
 
-\begin{itemize}
-\tightlist
-\item
-  {[}\textbf{Example} of of the HiResBoundingBox statement here{]}
-\end{itemize}
+\begin{verbatim}
+xxx1         k=50
+             x=ps::%%HiResBoundingBox: 0 0 14.21944pt 25.85977pt.
+\end{verbatim}
 
 After this statement there appears to consistently be a downward move
 equal to the height of the bounding box of text (from the top left of
@@ -1430,28 +1465,10 @@ is.
 
 \begin{figure}
 \begin{center}
-\settodepth{\dvidepth} {test}%
-\settowidth{\dviwidth} {test}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-test
-
-\vspace{0.3cm}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
 \raisebox{\dimexpr -\dvidepth+127431sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 testing
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {var}%
-\settowidth{\dviwidth} {var}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-var
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {varying}%
-\settowidth{\dviwidth} {varying}%
-\raisebox{\dimexpr -\dvidepth+127431sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-varying
 
 \vspace{0.3cm}
 \settodepth{\dvidepth} {$\sum_{n=1}^{\infty} 2^{-n} = 1$}%
@@ -1466,22 +1483,10 @@ $\sum_{n=1}^{\infty} 2^{-n} = 1$
 $\sum\limits_{n=1}^{\infty} 2^{-n} = 1$
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$\sum\limits_{n=1}^{} 2^{-n} = 1$}%
-\settowidth{\dviwidth} {$\sum\limits_{n=1}^{} 2^{-n} = 1$}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$\sum\limits_{n=1}^{} 2^{-n} = 1$
-
-\vspace{0.3cm}
 \settodepth{\dvidepth} {The equation is $x + \frac{\mu^2}{2}$}%
 \settowidth{\dviwidth} {The equation is $x + \frac{\mu^2}{2}$}%
 \raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 The equation is $x + \frac{\mu^2}{2}$
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {The equation is $x + \frac{\mu}{2}$}%
-\settowidth{\dviwidth} {The equation is $x + \frac{\mu}{2}$}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-The equation is $x + \frac{\mu}{2}$
 
 \vspace{0.3cm}
 \settodepth{\dvidepth} {$\frac{\mu^2}{2} + x$ is the equation}%
@@ -1490,16 +1495,10 @@ The equation is $x + \frac{\mu}{2}$
 $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$x + \frac{\mu}{2}$ is the equation}%
-\settowidth{\dviwidth} {$x + \frac{\mu}{2}$ is the equation}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$x + \frac{\mu}{2}$ is the equation
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}%
-\settowidth{\dviwidth} {\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}%
+\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
+\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
 \raisebox{\dimexpr -\dvidepth+1700295sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}
+\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}
 
 \vspace{0.3cm}
 \end{center}
@@ -1589,17 +1588,6 @@ limited for several reasons:
 
 \begin{figure}
 \begin{center}
-\settodepth{\dvidepth} {test}%
-\settowidth{\dviwidth} {test}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+403098sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+403098sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-test
-
-\vspace{0.3cm}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
@@ -1610,29 +1598,6 @@ test
 \raisebox{\dimexpr -\dvidepth+565119sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+565119sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 testing
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {var}%
-\settowidth{\dviwidth} {var}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+282168sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+282168sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-var
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {varying}%
-\settowidth{\dviwidth} {varying}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+127431sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+565119sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+565119sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-varying
 
 \vspace{0.3cm}
 \settodepth{\dvidepth} {$\sum_{n=1}^{\infty} 2^{-n} = 1$}%
@@ -1679,27 +1644,6 @@ $\sum_{n=1}^{\infty} 2^{-n} = 1$
 $\sum\limits_{n=1}^{\infty} 2^{-n} = 1$
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$\sum\limits_{n=1}^{} 2^{-n} = 1$}%
-\settowidth{\dviwidth} {$\sum\limits_{n=1}^{} 2^{-n} = 1$}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1125770sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+65536sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+65536sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+872071sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+634246sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1322377sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1322377sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$\sum\limits_{n=1}^{} 2^{-n} = 1$
-
-\vspace{0.3cm}
 \settodepth{\dvidepth} {The equation is $x + \frac{\mu^2}{2}$}%
 \settowidth{\dviwidth} {The equation is $x + \frac{\mu^2}{2}$}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
@@ -1720,26 +1664,6 @@ $\sum\limits_{n=1}^{} 2^{-n} = 1$
 \raisebox{\dimexpr -\dvidepth+927301sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+927301sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 The equation is $x + \frac{\mu^2}{2}$
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {The equation is $x + \frac{\mu}{2}$}%
-\settowidth{\dviwidth} {The equation is $x + \frac{\mu}{2}$}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+376729sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+715874sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+715874sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-The equation is $x + \frac{\mu}{2}$
 
 \vspace{0.3cm}
 \settodepth{\dvidepth} {$\frac{\mu^2}{2} + x$ is the equation}%
@@ -1764,28 +1688,8 @@ The equation is $x + \frac{\mu}{2}$
 $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$x + \frac{\mu}{2}$ is the equation}%
-\settowidth{\dviwidth} {$x + \frac{\mu}{2}$ is the equation}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+518356sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+376729sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+1sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+225995sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+715874sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\raisebox{\dimexpr -\dvidepth+715874sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$x + \frac{\mu}{2}$ is the equation
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}%
-\settowidth{\dviwidth} {\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}%
+\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
+\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+1700295sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+1700295sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
@@ -1799,7 +1703,7 @@ $x + \frac{\mu}{2}$ is the equation
 \raisebox{\dimexpr -\dvidepth+0sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+2155406sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 \raisebox{\dimexpr -\dvidepth+2155406sp}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}
+\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}
 
 \vspace{0.3cm}
 \end{center}
@@ -1836,28 +1740,10 @@ with \texttt{MatplotlibBox:} and returning the value just after the
 
 \begin{figure}
 \begin{center}
-\settodepth{\dvidepth} {test}%
-\settowidth{\dviwidth} {test}%
-\raisebox{\dimexpr -\dvidepth+0pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-test
-
-\vspace{0.3cm}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
 \raisebox{\dimexpr -\dvidepth+1.94444pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 testing
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {var}%
-\settowidth{\dviwidth} {var}%
-\raisebox{\dimexpr -\dvidepth+0pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-var
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {varying}%
-\settowidth{\dviwidth} {varying}%
-\raisebox{\dimexpr -\dvidepth+1.94444pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-varying
 
 \vspace{0.3cm}
 \settodepth{\dvidepth} {$\sum_{n=1}^{\infty} 2^{-n} = 1$}%
@@ -1872,22 +1758,10 @@ $\sum_{n=1}^{\infty} 2^{-n} = 1$
 $\sum\limits_{n=1}^{\infty} 2^{-n} = 1$
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$\sum\limits_{n=1}^{} 2^{-n} = 1$}%
-\settowidth{\dviwidth} {$\sum\limits_{n=1}^{} 2^{-n} = 1$}%
-\raisebox{\dimexpr -\dvidepth+9.67783pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$\sum\limits_{n=1}^{} 2^{-n} = 1$
-
-\vspace{0.3cm}
 \settodepth{\dvidepth} {The equation is $x + \frac{\mu^2}{2}$}%
 \settowidth{\dviwidth} {The equation is $x + \frac{\mu^2}{2}$}%
 \raisebox{\dimexpr -\dvidepth+3.44841pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 The equation is $x + \frac{\mu^2}{2}$
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {The equation is $x + \frac{\mu}{2}$}%
-\settowidth{\dviwidth} {The equation is $x + \frac{\mu}{2}$}%
-\raisebox{\dimexpr -\dvidepth+3.44841pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-The equation is $x + \frac{\mu}{2}$
 
 \vspace{0.3cm}
 \settodepth{\dvidepth} {$\frac{\mu^2}{2} + x$ is the equation}%
@@ -1896,16 +1770,10 @@ The equation is $x + \frac{\mu}{2}$
 $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$x + \frac{\mu}{2}$ is the equation}%
-\settowidth{\dviwidth} {$x + \frac{\mu}{2}$ is the equation}%
-\raisebox{\dimexpr -\dvidepth+3.44841pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$x + \frac{\mu}{2}$ is the equation
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}%
-\settowidth{\dviwidth} {\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}%
+\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
+\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
 \raisebox{\dimexpr -\dvidepth+13.94444pt}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}
+\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}
 
 \vspace{0.3cm}
 \end{center}
@@ -1926,28 +1794,10 @@ simple search for \texttt{depth=} will find the baseline value.
 
 \begin{figure}
 \begin{center}
-\settodepth{\dvidepth} {test}%
-\settowidth{\dviwidth} {test}%
-\raisebox{\dimexpr -\dvidepth+0in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-test
-
-\vspace{0.3cm}
 \settodepth{\dvidepth} {testing}%
 \settowidth{\dviwidth} {testing}%
 \raisebox{\dimexpr -\dvidepth+0.03125in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 testing
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {var}%
-\settowidth{\dviwidth} {var}%
-\raisebox{\dimexpr -\dvidepth+0.0104166666666667in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-var
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {varying}%
-\settowidth{\dviwidth} {varying}%
-\raisebox{\dimexpr -\dvidepth+0.03125in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-varying
 
 \vspace{0.3cm}
 \settodepth{\dvidepth} {$\sum_{n=1}^{\infty} 2^{-n} = 1$}%
@@ -1962,22 +1812,10 @@ $\sum_{n=1}^{\infty} 2^{-n} = 1$
 $\sum\limits_{n=1}^{\infty} 2^{-n} = 1$
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$\sum\limits_{n=1}^{} 2^{-n} = 1$}%
-\settowidth{\dviwidth} {$\sum\limits_{n=1}^{} 2^{-n} = 1$}%
-\raisebox{\dimexpr -\dvidepth+0.125in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$\sum\limits_{n=1}^{} 2^{-n} = 1$
-
-\vspace{0.3cm}
 \settodepth{\dvidepth} {The equation is $x + \frac{\mu^2}{2}$}%
 \settowidth{\dviwidth} {The equation is $x + \frac{\mu^2}{2}$}%
 \raisebox{\dimexpr -\dvidepth+0.0520833333333333in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
 The equation is $x + \frac{\mu^2}{2}$
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {The equation is $x + \frac{\mu}{2}$}%
-\settowidth{\dviwidth} {The equation is $x + \frac{\mu}{2}$}%
-\raisebox{\dimexpr -\dvidepth+0.0520833333333333in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-The equation is $x + \frac{\mu}{2}$
 
 \vspace{0.3cm}
 \settodepth{\dvidepth} {$\frac{\mu^2}{2} + x$ is the equation}%
@@ -1986,16 +1824,10 @@ The equation is $x + \frac{\mu}{2}$
 $\frac{\mu^2}{2} + x$ is the equation
 
 \vspace{0.3cm}
-\settodepth{\dvidepth} {$x + \frac{\mu}{2}$ is the equation}%
-\settowidth{\dviwidth} {$x + \frac{\mu}{2}$ is the equation}%
-\raisebox{\dimexpr -\dvidepth+0.0520833333333333in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-$x + \frac{\mu}{2}$ is the equation
-
-\vspace{0.3cm}
-\settodepth{\dvidepth} {\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}%
-\settowidth{\dviwidth} {\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}}%
+\settodepth{\dvidepth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
+\settowidth{\dviwidth} {\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}}%
 \raisebox{\dimexpr -\dvidepth+0.208333333333333in}{\makebox[0in][l]{\rule{\dviwidth}{.1pt}}}%
-\begin{minipage}{1in}Paragraph, with some line wrapping!\end{minipage}
+\begin{minipage}{1in}Multiline, with some line wrapping!\end{minipage}
 
 \vspace{0.3cm}
 \end{center}

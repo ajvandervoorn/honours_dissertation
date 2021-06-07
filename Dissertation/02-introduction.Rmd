@@ -11,15 +11,20 @@ Need to think of a better example than this one, ideally one that brings in our 
 Redo this plot with lattice?
 
 CHECK - that I haven't confused axis labela and axis titles... should be axis titles!
+
+I removed plot margi space - should I add it back....?
+
+Note the slightly differening sizes in the text in this section (maybe scale included images as appropriate to match the "raw" latex code)
 --->
 
 ```{r expressionPlot, fig.cap="A plot with axis labels made using \\texttt{expression()}.", include = TRUE, eval = TRUE, fig.asp = 1}
 x <- 1:5
 y <- x ^ 2 / 2
-par(mar = par()$mar + c(0, 1, 0, 0))
+expr <- expression(frac(mu ^ 2, 2))
+# par(mar = par()$mar + c(0, 1, 0, 0))
 plot(x, y, xlab = expression(mu), ylab = "", yaxt = "n", type = "l")
 axis(2, las = 1)
-mtext(expression(frac(mu ^ 2, 2)), side = 2, line = 3, las = 1)
+mtext(expr, side = 2, line = 3, las = 1)
 ```
 
 This provides us with most of the symbols used for equations, such as brackets and fractions, and formats them in a layout resembling \TeX{} [@knuth-tex], but it is limited in its fonts. Compare the y-axis title above with how it looks when created by \LaTeX{} in figure \ref{muOver2}.
@@ -44,8 +49,6 @@ The difference is stark and @murrell-dvir describes several approaches in R, and
 The `extrafont` package [@pkg-extrafont] with the `fontcm` package extension [@pkg-fontcm] works for this particular example but not if we wanted to include other \TeX{} symbols.
 
 ```{r, eval = FALSE}
-expr <- expression(frac(mu ^ 2, 2))
-
 library(grid)
 library(extrafont)
 font_install('fontcm')

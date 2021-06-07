@@ -101,7 +101,7 @@ The information we require for the gradient fills from \Tikz{} via the DVI file 
 
 The `colours` and `stops` arguments of `linearGradient()` are simply vectors of colours (a character vector of colour names of hexadecimal RGB values) and locations of those colours as a proportion of the distance between the start and end points of the gradient respectively. This obviously guides us as to what information we need to get from \Tikz{} in the DVI file so we can pass it to `dvir`.
 
-Let us consider a simple example, a rectangle with an orange to green linear gradient fill:
+Let us consider a simple example, a rectangle with an orange to green linear gradient fill, like that in figure \ref{tikzLinGrad}.
 <!---
 
 OLD CODE FOR SOME REASON:
@@ -130,14 +130,15 @@ cat(latexRect)
 ```
 --->
 
-\begin{figure}
+\begin{figure}\label{tikzLinGrad}
 \centering
 \begin{tikzpicture}
 \filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);
 \end{tikzpicture}
+\caption{A rectangle with a linear gradient fill using \Tikz{}}
 \end{figure}
 
-The following is an extract of the DVI file when the rectangle above is generated using the SVG DVI driver included with the common \TeX{} distributions, `pgfsys-dvisvgm.def`. It has been edited slightly for readability by adding line breaks and removing a line break "character", `{?nl}`.
+The following is an extract of the DVI file when the rectangle above is generated using the SVG DVI driver included with the common \TeX{} distributions, `pgfsys-dvisvgm.def`. It has been edited slightly for readability by adding line breaks and removing the line break character string `{?nl}`.
 <!---
 The output of the linear gradient info below was element 52 after reading in the DVI file into R using 'readDVI()', in case we want to automate this later
 
@@ -146,7 +147,7 @@ CHECK THIS OUTPUT FOR THE 'matrix()' FUNCTION. WHERE DID IT COME FROM? - I think
 Maybe remove some spaces if want it this code to go into left margin, or think of where else I could line breaks
 --->
 
-```{ dviGradientOutput, eval=FALSE}
+```{}
 xxx1         k=67
              x=dvisvgm:raw <g transform="matrix(1,0,0,1,56.90549,28.45274)"> 
 xxx1         k=67
