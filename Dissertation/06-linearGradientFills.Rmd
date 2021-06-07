@@ -16,7 +16,7 @@
 \end{verbatim}
 \end{spacing}
 
-\begin{figure}\label{tikzRaw}
+\begin{figure}
 \centering
 \begin{tikzpicture}
 \path (0, 1) node[circle,fill=red!40,draw,thick] (x) {$\mu$} 
@@ -24,11 +24,12 @@
 \draw[->] (x) .. controls (1, 0.5) and (2, 0.5).. (y);
 \end{tikzpicture}
 \caption{A picture made with \Tikz{}}
+\label{tikzRaw}
 \end{figure}
 
 The original DVI specification only needed to account for text, typesetting and the most basic of rectangles and so was not designed with drawing and graphics in mind. The type of instruction in the DVI file are labelled with an "op code". Each op code described a type of instruction like defining fonts, setting characters to display and vertical and horizontal cursor movements. There were four op codes however, called *DVI specials*, that can contain almost any form of instruction or values needed, such as text colour, to create a document based on the DVI file, such as Postscript or PDF.
 
-The \Tikz{} package uses these DVI specials to describe shapes, drawings and colours in PGF (portable graphics format) which can be translated to instructions for other viewing formats, like Postscript, PDF or SVG. How the instructions are translated is controlled by a \Tikz{} driver. The `dvir` package [@murrell-tikz] includes its own \Tikz{} driver to translate the drawing instructions into a form useful to draw the things with R grid graphics [reference Paul dvir \Tikz{} report].
+The \Tikz{} package uses these DVI specials to describe shapes, drawings and colours in PGF (portable graphics format) which can be translated to instructions for other viewing formats, like Postscript, PDF or SVG. How the instructions are translated is controlled by a \Tikz{} driver. The `dvir` package [@murrell-tikz] includes its own \Tikz{} driver to translate the drawing instructions into a form useful to draw the things with R grid graphics.
 
 Some \Tikz{} features were not implemented though, notably the ability to have fill colours of shapes as linear or radial gradients or patterns. The primary reason for this is that R did not support these types of fills but the latest R release in May 2021, version 4.1.0, provides support for these fills in the `grid` package [@murrell-grad-fills], on which `dvir` is built.
 
@@ -36,7 +37,7 @@ Some \Tikz{} features were not implemented though, notably the ability to have f
 str2lang <- getFromNamespace("str2lang", "backports")
 ```
 
-```{r gridTikz, fig.cap = "Using \\texttt{grid.tikzpicture()} to make the earlier diagram", fig.width = 3, fig.height = 1.5, out.width = "100%"}
+```{r gridTikz, fig.cap = "Using \\texttt{grid.tikzpicture()} to make the earlier diagram", fig.width = 2.5, fig.height = 1.5, out.width = "100%"}
 tikzCode <- 
   paste("\\path (0, 1) node[circle,fill=red!40,draw,thick] (x) {$\\mu$}",
         "       (3, 0) node[circle,fill=blue!40,draw,thick] (y) {$\\dfrac{\\mu^2}{2}$};",
@@ -48,7 +49,7 @@ tikzPreamble <- gsub("\\\\usepackage\\{tikz}",
 grid.tikzpicture(tikzCode, preamble = tikzPreamble)
 ```
 
-The use of `grid.tikzpicture()` is demonstrated in figure \@ref(fig:gridTikz), recreating the diagram from figure \ref{tikzRaw}. The alteration to the preamble once again only necessary due to the use of `\dfrac` from the `amsmath` package.
+The use of `grid.tikzpicture()` is demonstrated in figure \@ref(fig:gridTikz), recreating the diagram from figure \ref{tikzRaw}. The alteration to the preamble is once again only necessary due to the use of `\dfrac` from the `amsmath` package.
 
 As it is, the \Tikz{} driver simply ignores any gradient or pattern fill information when creating the DVI file for `dvir`.
 
@@ -68,17 +69,18 @@ The information we require for the gradient fills from \Tikz{} via the DVI file 
 
 The `colours` and `stops` arguments of `linearGradient()` are simply vectors of colours (a character vector of colour names of hexadecimal RGB values) and locations of those colours as a proportion of the distance between the start and end points of the gradient respectively. This obviously guides us as to what information we need to get from \Tikz{} in the DVI file so we can pass it to `dvir`.
 
-Let us consider a simple example, a rectangle with an orange to green linear gradient fill, like that in figure \ref{tikzLinGrad}.
-
-\begin{figure}\label{tikzLinGrad}
+\begin{figure}
 \centering
 \begin{tikzpicture}
 \filldraw [draw=black, left color=orange, right color=green] (0,0) rectangle (4,2);
 \end{tikzpicture}
 \caption{A rectangle with a linear gradient fill using \Tikz{}}
+\label{tikzLinGrad}
 \end{figure}
 
-The following is an extract of the DVI file when the rectangle above is generated using the SVG DVI driver included with the common \TeX{} distributions, `pgfsys-dvisvgm.def`. It has been edited slightly for readability by adding line breaks and removing the line break character string `{?nl}`.
+Let us consider a simple example, a rectangle with an orange to green linear gradient fill, like that in figure \ref{tikzLinGrad}.
+
+The following is an extract of the DVI file when the rectangle above is generated using the SVG DVI driver included with common \TeX{} distributions, `pgfsys-dvisvgm.def`. It has been edited slightly for readability by adding line breaks and removing the line break character string `{?nl}`.
 
 \begin{spacing}{1}
 \begin{verbatim}
@@ -90,11 +92,11 @@ xxx1         k=66
              x=dvisvgm:raw <g transform="matrix(0.0,1.0,-1.0,0.0,0.0,0.0)">
 xxx4         k=425
              x=dvisvgm:raw  <linearGradient id="pgfsh2" gradientTransform="rotate(90)"> 
-                            <stop offset=" 0.0" stop-color=" rgb(0.0%,100.0%,0.0%) "/> 
+                            <stop offset=" 0.0"  stop-color=" rgb(0.0%,100.0%,0.0%) "/> 
                             <stop offset=" 0.25" stop-color=" rgb(0.0%,100.0%,0.0%) "/>
-                            <stop offset=" 0.5" stop-color=" rgb(50.0%,75.0%,0.0%) "/>
+                            <stop offset=" 0.5"  stop-color=" rgb(50.0%,75.0%,0.0%) "/>
                             <stop offset=" 0.75" stop-color=" rgb(100.0%,50.0%,0.0%) "/>
-                            <stop offset=" 1.0" stop-color=" rgb(100.0%,50.0%,0.0%) "/>
+                            <stop offset=" 1.0"  stop-color=" rgb(100.0%,50.0%,0.0%) "/>
                             </linearGradient>
 xxx1         k=57
              x=dvisvgm:raw <g transform="translate(-50.1875,-50.1875)"> 

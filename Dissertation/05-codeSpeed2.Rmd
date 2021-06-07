@@ -13,7 +13,7 @@ fnt_def_1    fontnum=17, checksum=-1209964637, scale=786432, design=786432,
 \end{verbatim}
 \end{spacing}
 
-In fact, the example's 11 `grid.latex()` calls define fonts 29 times in total, for eight unique fonts.
+In fact, that example's 11 `grid.latex()` calls define fonts 29 times in total, for eight unique fonts.
 
 Caching fonts requires several steps:
 
@@ -54,7 +54,7 @@ The updated font list is stored in the `dvir` environment to be retrieved the ne
 
 The only weakness of this process is if in a *single* DVI file different fonts are defined with the same font number. In this case the second font will be stored in the font cache in that index and so will be used in place of the first font. No instances of this occurring were discovered during this project.
 
-To examine the effect of these changes on code speed we performed profiling as was detailed in the previous section.
+To examine the effect of these changes on code speed we performed profiling as was detailed in the previous section. For the simple example the time for the font sweep has reduced by 71%, with `grid.latex()` overall taking 45% less time. Similar results can be seen in for the example in figure \@ref(fig:yeeExample) - a 76% and 46% decrease in the font sweep and `grid.latex()` respectively.
 
 ```{r echo = FALSE, eval = TRUE}
 results2 <- data.frame(time = c(results[[3]][[2]],
@@ -67,7 +67,7 @@ results2 <- data.frame(time = c(results[[3]][[2]],
                                 results[[8]][[5]]),
                        version = rep(c("Before", "After"), 
                                      each = 4),
-                       func = rep(c("'grid.latex()'", "font"),
+                       func = rep(c("'gridlatex'", "font"),
                                   each = 2),
                        example = c("simple", "yee"))
 results2$time <- results2$time / 20
@@ -80,13 +80,9 @@ levels2 <- c("gridlatex", "font")
 plotProfiling1("simple", versionLabels2, results = results2, levels = levels2)
 ```
 
-For the simple example the time for the font sweep has reduced by 71%, with `grid.latex()` overall taking 45% less time.
-
 ```{r speedUp2Yee, fig.cap = "The average time spent in the \\texttt{grid.latex()} function and font sweep, over 20 runs of the complicated example", echo = FALSE, fig.width = 5, fig.height = 4}
 plotProfiling1("yee", versionLabels2, results = results2, levels = levels2)
 ```
-
-Similar results can be seen in for the example in figure \@ref(fig:yeeExample) - a 76% and 46% decrease in the font sweep and `grid.latex()` respectively.
 
 ## Profiling environment specifications
 

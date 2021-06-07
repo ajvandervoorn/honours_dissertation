@@ -74,7 +74,6 @@ returnBaselines <- function(testText,
   }
   algorithmBaselines
 }
-
 ```
 
 \newlength{\dviwidth}
@@ -87,9 +86,9 @@ returnBaselines <- function(testText,
 
 ## The problem
 
-Text characters have a baseline, that is, a horizontal line on which the characters naturally sit so all the letters appear to be in line with each other. Some letters, like a lower case *y* or *j*, have a *descender*. A descender is a part of a character that sits below the baseline. 
+Text characters have a baseline, that is, a horizontal line on which the characters naturally sit so all the letters appear to be in line with each other. Some letters, like a lower case y or j, have a ``descender''. A descender is a part of a character that sits below the baseline. 
 
-```{r, echo = FALSE, fig.cap = "The baseline and descender of the letter \\textit{y}", fig.height = 0.8, fig.width = 3}
+```{r, echo = FALSE, fig.cap = "The baseline and descender of the letter y", fig.height = 0.8, fig.width = 3}
 yAlign <- 0.25
 grid.text("y", y = yAlign, gp = gpar(fontsize = 50), just = c("left", "bottom"))
 
@@ -119,23 +118,23 @@ grid.text("descender",
 
 The `grid.text()` function accounts for this baseline so when you bottom-align text at a certain y-value, the descenders will actually fall below the y-value we defined, despite the bottom justification. Unfortunately, `dvir` does not account for text baselines and will do any alignment in relation to bounding box of the text, which, in the case of figure \@ref(fig:baselineCombine), is at the bottom of the descenders.
 
-```{r baselineCombine, fig.cap = "Combining \\texttt{grid.text()} and \\texttt{grid.latex()}", fig.height = 0.7, fig.width = 4}
+```{r baselineCombine, fig.cap = "Combining \\texttt{grid.text()} and \\texttt{grid.latex()}", fig.height = 0.7, fig.width = 4.5}
 texText <- "{\\LARGE changing to \\LaTeX{}}"
 grid.text("An example of ", 
           y = 0.1, 
           just = c("right", "bottom"), 
           gp = gpar(fontsize = 18))
 grid.latex(texText, y = 0.1, just = c("left", "bottom"))
-grid.lines(y = 0.1, gp = gpar(lwd = 0.5))
+grid.lines(x = c(0.1, 1), y = 0.1, gp = gpar(lwd = 0.5))
 ```
 
 To fix this, `dvir` needs to obtain or calculate a value for the baseline for any given piece of text to use as an offset for the bounding box alignment when it is rendering the text. From this point on, this offset will be referred to as a baseline value. All of `dvir`'s information comes from the DVI file so it either needs to extract a baseline value from the DVI file itself, or calculate it *from* information in the DVI file. Unfortunately plain DVI files do not state a baseline value, rather they only detail specific placement of each character. As such, some possible methods to obtain a baseline value were explored. These methods are referred to as algorithms from here on due to their heuristic nature.
 
 ## Implementation
 
-To explore the algorithms detailed below and evaluate their usefulness an R function, `baselines()` has been created. This function can be found in the appendix in the file `algorithms.R`. This function takes several arguments, including the baseline selection algorithm as detailed below, any additional information needed for that particular algorithm, and the \TeX{} code as you would use with `grid.latex()`. The output of this function is the baseline value or values. These values are returned as `grid` units as they are distances from the bottom of the bounding box of the text to its baseline.
+To explore the algorithms detailed below and evaluate their usefulness an R function, `baselines()`, has been created. This function can be found in the appendix in the file `algorithms.R`. This function takes several arguments, including the baseline selection algorithm as detailed below, any additional information needed for that particular algorithm, and the \TeX{} code as you would use with `grid.latex()`. The output of this function is the baseline value or values. These values are returned as `grid` units as they are distances from the bottom of the bounding box of the text to the text's baseline.
 
-Once the baselines have been calculated the bounding box of the text can be bottom aligned with the y-value specified but then moved down by the value of the baseline. This means the baseline of the text will be at the specified y-value.
+Once the baseline values have been calculated the bounding box of the text can be bottom-aligned with the y-value specified but then moved down by the baseline value. This means the baseline of the text, should the algorithms work correctly, will be aligned at the specified y-value.
 
 This function has been written to easily allow integration of other algorithms and most of the function could be directly implemented in the `dvir` package, should this baseline algorithm feature be implemented into `dvir` formally.
 
@@ -168,7 +167,7 @@ cat(makeFigure(testText,
                                algo, 
                                dviMovesMethod = "all", 
                                dviMovesSelection = "1"), 
-               "The baselines as calculated using the \\texttt{alex} algorithm",
+               "The baselines as calculated by the \\texttt{alex} algorithm",
                label = "alexAlgo"))
 ```
 
@@ -214,7 +213,7 @@ cat(makeFigure(testText,
                                algo, 
                                dviMovesMethod = "all", 
                                dviMovesSelection = "1"), 
-               "Baselines as calculated using the \\texttt{dviMoves} algorithm",
+               "The baselines as calculated by the \\texttt{dviMoves} algorithm",
                label = "dviMovesAlgo"))
 ```
 
@@ -251,7 +250,7 @@ cat(makeFigure(testText,
                                algo, 
                                dviMovesMethod = "all", 
                                dviMovesSelection = "1"), 
-               "Baselines as calculated using the \\texttt{preview} algorithm",
+               "The baselines as calculated by the \\texttt{preview} algorithm",
                label = "previewAlgo"))
 ```
 
@@ -270,7 +269,7 @@ cat(makeFigure(testText,
                                algo, 
                                dviMovesMethod = "all", 
                                dviMovesSelection = "1"), 
-               "Baselines as calculated using the \\texttt{dvipng} algorithm",
+               "The baselines as calculated by the \\texttt{dvipng} algorithm",
                label = "dvipngAlgo"))
 ```
 

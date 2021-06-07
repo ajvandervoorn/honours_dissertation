@@ -170,7 +170,7 @@ resultDF <- data.frame(time = c(results[[1]][[2]],
                                 results[[6]][[4]]),
                        version = rep(c("Before", "After"), 
                                      each = 6),
-                       func = rep(c("'grid.latex()'", "metric sweep", "grid sweep"),
+                       func = rep(c("gridlatex", "metric", "grid"),
                                   each = 2),
                        example = c("simple", "yee"))
 resultDF$time <- resultDF$time / 20

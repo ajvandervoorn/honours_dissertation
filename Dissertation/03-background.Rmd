@@ -49,7 +49,7 @@ cat(paste(newPreamble,
 \begin{enumerate}
   \setcounter{enumi}{1}
   \item This TeX document is then processed using the local \TeX{} installation to create a DVI (DeVice Independent) file.
-  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then \textit{setting}, that is, printing, a character ``2''.
+  \item The DVI file is read into R. As DVI files are binary they are not easily readable by humans but the \texttt{dvir} function \texttt{readDVI()} translates the DVI file into readable text. This is an extract of a DVI file after using \texttt{readDVI()}, stating the definition of a font and then ``setting'' (i.e. printing) a character ``2''.
 \end{enumerate}
 
 \begin{spacing}{1}
