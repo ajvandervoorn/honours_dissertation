@@ -14,7 +14,6 @@ Examples/
 
 Appendices/algorithms_examples.R
 Figures/profile-Thomas_files/
-Profling
+Profiling/
 
-.gitignore
-
+gitignore
