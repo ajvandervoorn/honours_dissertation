@@ -11,3 +11,10 @@ Dissertation/gradientOrangeGreen_SVG.*
 Dissertation/Alexander-van-der-Voorn_dissertation.*
 *.tex
 Examples/
+
+Appendices/algorithms_examples.R
+Figures/profile-Thomas_files/
+Profling
+
+.gitignore
+
